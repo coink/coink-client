@@ -15,7 +15,6 @@
 
 (defroutes app-routes
   (GET "/" [] application)
-  (GET "/:page" [] application)
   (route/resources "/")
   (route/not-found not-found))
 
