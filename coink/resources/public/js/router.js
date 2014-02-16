@@ -2,6 +2,7 @@ define(['backbone', 'react'], function(Backbone, React) {
     var Router = Backbone.Router.extend({
         routes: {
             '': 'handleDefaultRoute',
+            'wallet': 'wallet',
             'dashboard': 'dashboard'
         },
 
@@ -22,6 +23,12 @@ define(['backbone', 'react'], function(Backbone, React) {
                 React.renderComponent(getView.apply(this, modules),
                     node);
             }.bind(this));
+        },
+
+        wallet: function() {
+            this.setView(['components/wallet'], function(Wallet) {
+                return Wallet();
+            });
         },
 
         dashboard: function() {

@@ -14,7 +14,8 @@
   [:h1 "Not Found"])
 
 (defroutes app-routes
-  (GET "/" [] (application))
+  (GET "/" [] application)
+  (GET "/:page" [] application)
   (route/resources "/")
   (route/not-found not-found))
 

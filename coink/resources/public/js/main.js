@@ -28,8 +28,17 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router'], fun
         React.renderComponent(app, document.getElementById('coink'));
     });
 
+    /* WITHOUT JQUERY
+    document.addEventListener("DOMContentLoaded", function() {
+        var app = Application();
+        React.renderComponent(app, document.getElementById('coink'));
+    });
+    */
+
+    router.setDefaultRoute("wallet");
+
     Backbone.history.start({
-        pushState: true,
+        pushState: false, // fasle until compojure routing is figured out
         root: "/"
     });
 
