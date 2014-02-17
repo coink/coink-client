@@ -1,4 +1,4 @@
-coink_client
+Coink Web Client
 ============
 
 Coink.io Web Client
@@ -9,3 +9,11 @@ To start the server:
 
 cd into /coink
 run `lein ring server -headless`
+
+Docker Install
+--------------
+
+```bash
+sudo docker build -t coink/web-client .
+sudo docker run -d -v $PWD:/data coink/web-client
+```
