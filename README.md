@@ -1,18 +1,23 @@
-Coink Web Client
-============
+# Coink Web Client
 
-Coink.io Web Client
+Make it rain with Coink.io's useful and tasty web client.
 
-Deps: leiningen clojure util
+## Building
 
-To start the server:
+There are two ways currently of running the webclient.
 
-cd into /coink
+### Traditional Method
+
+[Leiningen][1] 2.3.4  - Clojure without exploding
+
+[1]: https://github.com/technomancy/leiningen
+
+```bash
 run `lein ring server-headless`
 Point to localhost:3000 in your browser of choice.
+```
 
-Docker Install
---------------
+### Docker Method
 
 ```bash
 sudo docker build -t coink/web-client .
