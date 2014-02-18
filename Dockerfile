@@ -18,4 +18,4 @@ WORKDIR     /data
 
 # Run server
 EXPOSE      3000
-CMD cd /data/coink && LEIN_ROOT=1 lein ring server-headless
+CMD LEIN_ROOT=1 lein ring server-headless
