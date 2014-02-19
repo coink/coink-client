@@ -1,5 +1,5 @@
 define(['react', 'collections/wallets'], function(React, Wallets) {
-    var Wallet = React.createClass({
+    var WalletsList = React.createClass({
 
         getInitialState: function() {
             return {"wallets" : null};
@@ -22,7 +22,6 @@ define(['react', 'collections/wallets'], function(React, Wallets) {
             var wallets = this.state.wallets;
 
             console.log(wallets);
-            //_.each(wallets, console.log(wallets.models.attributes.address));
 
             var wallet_items = wallets.map(function(model) {
                 return React.DOM.li({}, model.get('address'),
@@ -37,5 +36,5 @@ define(['react', 'collections/wallets'], function(React, Wallets) {
 
         }
     });
-    return Wallet;
+    return WalletsList;
 });

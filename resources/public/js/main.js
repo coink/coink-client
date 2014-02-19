@@ -35,11 +35,11 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router'], fun
     });
     */
 
-    router.setDefaultRoute("wallet");
+    // Backbone Router is defined in router.js
+    router.setDefaultRoute("wallets");
 
     Backbone.history.start({
-        pushState: false, // fasle until compojure routing is figured out
+        pushState: false, // False until compojure routing is figured out
         root: "/"
     });
-
 });

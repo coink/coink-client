@@ -2,7 +2,7 @@ define(['backbone', 'react'], function(Backbone, React) {
     var Router = Backbone.Router.extend({
         routes: {
             '': 'handleDefaultRoute',
-            'wallet': 'wallet',
+            'wallets': 'wallets',
             'dashboard': 'dashboard'
         },
 
@@ -20,14 +20,13 @@ define(['backbone', 'react'], function(Backbone, React) {
             React.renderComponent(loading, node);
             require(requirements, function() {
                 var modules = arguments;
-                React.renderComponent(getView.apply(this, modules),
-                    node);
+                React.renderComponent(getView.apply(this, modules), node);
             }.bind(this));
         },
 
-        wallet: function() {
-            this.setView(['components/wallet'], function(Wallet) {
-                return Wallet();
+        wallets: function() {
+            this.setView(['components/wallets'], function(Wallets) {
+                return Wallets();
             });
         },
 
