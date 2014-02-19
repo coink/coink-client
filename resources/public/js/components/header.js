@@ -19,15 +19,15 @@ define(['react', 'profile'], function(React, profile) {
 
             return React.DOM.header({'className': 'clearfix'},
                 React.DOM.a(
-                    {href: '/', id: 'logo'}, 
+                    {href: '/', id: 'logo'},
                     React.DOM.img({
-                        src: '/resources/images/mini_logo.png', 
-                        alt: 'iPlant Cloud Services',
+                        src: '/resources/images/mini_logo.png',
+                        alt: 'Coink.io Crypto services',
                         height: '30',
                         width: '30'
-                    }), 
-                    "Atmosphere ",
-                    React.DOM.span({id: 'tagline'}, "iPlant Cloud Services")
+                    }),
+                    "Coink.io",
+                    React.DOM.span({id: 'tagline'}, " Your Crypto Portfolio")
                 ),
                 React.DOM.div({id: 'header-nav'}, rightChild)
             );
