@@ -8,7 +8,7 @@
 (defn application [& body]
   (html
     [:head 
-        [:title "Coink: Cryptocurrency Management"] 
+        [:title "Coink: Your Cryptocoin Portfolio"]
         [:meta {:name "description" :content "Cryptocurrency management online"}] 
         [:meta {:charset "UTF-8"}]]
     [:body
