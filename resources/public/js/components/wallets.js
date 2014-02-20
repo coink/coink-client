@@ -3,7 +3,7 @@ define(['react', 'collections/wallets'], function(React, Wallets) {
     var Wallet = React.createClass({
         render: function() {
             var wallet = this.props.wallet;
-            return React.DOM.li({}, wallet.get('address'),
+            return React.DOM.li({key: wallet.get('address')}, wallet.get('address'),
                 React.DOM.ul({} , React.DOM.li({},
                     wallet.get('type'), " ", wallet.get('value'))));
         }
@@ -26,22 +26,21 @@ define(['react', 'collections/wallets'], function(React, Wallets) {
         },
 
         render: function() {
-            if (this.state.wallets == null) {
-                return React.DOM.h1({}, "Loading");
+            var content, wallets = this.state.wallets;
+
+            if (!wallets)
+                content = React.DOM.p({}, "Loading");
+            else if (wallets.isEmpty())
+                content = React.DOM.div({}, "No wallets");
+            else {
+                var wallet_items = wallets.map(function(model) {
+                    return Wallet({ "wallet" : model });
+                });
+                content = React.DOM.ul({id: 'wallet-list'}, wallet_items);
             }
-            var wallets = this.state.wallets;
 
-            console.log(wallets);
-
-            var wallet_items = wallets.map(function(model) {
-                return Wallet({ "wallet" : model });
-            });
-
-            if (wallet_items.length)
-                return React.DOM.ul({id: 'wallet-list'}, wallet_items);
-            else
-                return React.DOM.div({}, "No wallets");
-
+            return React.DOM.div({}, React.DOM.h1({}, "My Wallets"),
+                content);
         }
     });
     return WalletsList;
