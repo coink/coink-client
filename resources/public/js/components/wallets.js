@@ -1,14 +1,5 @@
 define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallets, Wallet) {
 
-    var WalletListItem = React.createClass({
-        render: function() {
-            var wallet = this.props.wallet;
-            return React.DOM.li({key: wallet.get('address')}, wallet.get('address'),
-                React.DOM.ul({} , React.DOM.li({},
-                    wallet.get('type'), " ", wallet.get('value'))));
-        }
-    });
-
     var AddWalletForm = React.createClass({
         getInitialState: function() {
             return {address: ''};
@@ -39,7 +30,53 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         }
     });
 
-    var WalletsList = React.createClass({
+    var WalletRow = React.createClass({
+        handleDelete: function(e) {
+            e.preventDefault();
+
+            if (!confirm("Are you sure you want to delete address " + 
+                this.props.wallet.get('address') + "?"))
+                return;
+
+            this.props.wallet.destroy({success: function() {
+                this.props.onDelete();
+            }.bind(this)});
+        },
+        render: function() {
+            var wallet = this.props.wallet;
+            return React.DOM.tr({},
+                React.DOM.td({}, wallet.get('type')),
+                React.DOM.td({}, wallet.get('address')),
+                React.DOM.td({}, wallet.get('value')),
+                React.DOM.td({}, React.DOM.a({
+                    href: '#', 
+                    onClick: this.handleDelete
+                }, "Delete")));
+        }
+    });
+
+    var WalletTable = React.createClass({
+        handleDelete: function() {
+            this.props.wallets.fetch();
+        },
+        render: function() {
+            var wallets = this.props.wallets;
+
+            var wallet_rows = wallets.map(function(model) {
+                return WalletRow({wallet: model, onDelete: this.handleDelete});
+            }.bind(this));
+
+            return React.DOM.table({id: 'wallet-table'},
+                React.DOM.tr({},
+                    React.DOM.th({}, "Currency"),
+                    React.DOM.th({}, "Address"),
+                    React.DOM.th({}, "Balance"),
+                    React.DOM.th({}, "Action")),
+                wallet_rows);
+        }
+    });
+
+    var WalletsPage = React.createClass({
 
         getInitialState: function() {
             return {"wallets" : null};
@@ -64,16 +101,14 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
                 content = [AddWalletForm({wallets: wallets}), 
                     React.DOM.div({}, "No wallets")];
             else {
-                var wallet_items = wallets.map(function(model) {
-                    return WalletListItem({ "wallet" : model });
-                });
                 content = [AddWalletForm({wallets: wallets}), 
-                    React.DOM.ul({id: 'wallet-list'}, wallet_items)];
+                    WalletTable({wallets: wallets})];
             }
 
             return React.DOM.div({}, React.DOM.h1({}, "My Wallets"),
                 content);
         }
     });
-    return WalletsList;
+
+    return WalletsPage;
 });
