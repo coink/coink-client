@@ -5,10 +5,16 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]))
 
-(defhtml application [& body]
-  [:script
-    {:data-main "js/main" :src "/js/scripts/require.js"}]
-  [:div#coink])
+(defn application [& body]
+  (html
+    [:head 
+        [:title "Coink: Cryptocurrency Management"] 
+        [:meta {:name "description" :content "Cryptocurrency management online"}] 
+        [:meta {:charset "UTF-8"}]]
+    [:body
+      [:script
+        {:data-main "js/main" :src "/js/scripts/require.js"}]
+      [:div#coink]]))
 
 (defhtml not-found [& body]
   [:h1 "Not Found"])
