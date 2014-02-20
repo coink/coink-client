@@ -21,7 +21,9 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router'], function($, Backbone, React, Application, router) {
+require(['jquery', 'backbone', 'react', 'components/application', 'router', 
+    'token_store'], function($, Backbone, React, Application, router, 
+    TokenStore) {
 
     $(document).ready(function() {
         var app = Application();
@@ -35,8 +37,11 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router'], fun
     });
     */
 
-    // Backbone Router is defined in router.js
-    router.setDefaultRoute("wallets");
+    var auth_token = TokenStore.get();
+    if (!auth_token)
+        router.setDefaultRoute('login');
+    else
+        router.setDefaultRoute("wallets");
 
     Backbone.history.start({
         pushState: false, // False until compojure routing is figured out
