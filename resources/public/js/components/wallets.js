@@ -1,4 +1,14 @@
 define(['react', 'collections/wallets'], function(React, Wallets) {
+
+    var Wallet = React.createClass({
+        render: function() {
+            var wallet = this.props.wallet;
+            return React.DOM.li({}, wallet.get('address'),
+                React.DOM.ul({} , React.DOM.li({},
+                    wallet.get('type'), " ", wallet.get('value'))));
+        }
+    });
+
     var WalletsList = React.createClass({
 
         getInitialState: function() {
@@ -24,9 +34,7 @@ define(['react', 'collections/wallets'], function(React, Wallets) {
             console.log(wallets);
 
             var wallet_items = wallets.map(function(model) {
-                return React.DOM.li({}, model.get('address'),
-                    React.DOM.ul({} , React.DOM.li({},
-                        model.get('type'), " ", model.get('value'))));
+                return Wallet({ "wallet" : model });
             });
 
             if (wallet_items.length)
