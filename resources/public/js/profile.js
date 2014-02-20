@@ -3,7 +3,7 @@ define(['models/profile', 'collections/wallets'], function(Profile, Wallets) {
     /* TODO: Do this server side */
 
     var profile = new Profile();
-    profile.fetch({
+    /*profile.fetch({
         async: false,
         success: function(model) {
             var wallets = new Wallets();
@@ -20,7 +20,7 @@ define(['models/profile', 'collections/wallets'], function(Profile, Wallets) {
                 console.error("Error fetching profile");
             }
         }
-    });
+    });*/
 
     return profile.isNew() ? null : profile;
 });
