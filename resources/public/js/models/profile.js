@@ -2,6 +2,10 @@ define(['backbone'], function(Backbone) {
 
     var Profile = Backbone.Model.extend({
 
+        initialize: function() {
+            var token = this.getToken() ? true : false;
+            this.set("logged_in", token);
+        },
         getToken: function() {
             var auth_token = sessionStorage.getItem('auth_token');
             var expires = sessionStorage.getItem('expires');
@@ -10,7 +14,6 @@ define(['backbone'], function(Backbone) {
             return null;
         },
         setToken: function(token, expires) {
-            console.log("set");
             sessionStorage.setItem('auth_token', token);
             sessionStorage.setItem('expires', expires);
             this.set("logged_in", true);

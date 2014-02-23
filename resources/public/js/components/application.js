@@ -10,7 +10,6 @@ function (React, _, Header, Footer, Sidebar, profile) {
 
         render: function() {
             var loggedIn = profile.getToken() != null;
-            console.log(loggedIn);
             return React.DOM.div({},
                 Header({loggedIn: loggedIn}),
                 Sidebar({loggedIn: loggedIn}),

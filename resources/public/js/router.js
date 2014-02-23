@@ -1,4 +1,6 @@
-define(['backbone', 'react'], function(Backbone, React) {
+define(['backbone', 'react', 'models/profile'],
+function(Backbone, React, profile) {
+
     var Router = Backbone.Router.extend({
         routes: {
             '': 'handleDefaultRoute',
@@ -15,7 +17,11 @@ define(['backbone', 'react'], function(Backbone, React) {
             this.navigate(this.defaultRoute, {trigger: true, replace: true});
         },
 
-        setView: function(requirements, getView) {
+        setView: function(requirements, getView, requiresLogin) {
+            if(requiresLogin && !profile.get("logged_in")) {
+                this.navigate('login', {trigger: true});
+                return;
+            }
             var node = document.getElementById('main');
             var loading = React.DOM.div({className: 'loading'});
             React.renderComponent(loading, node);
@@ -28,19 +34,19 @@ define(['backbone', 'react'], function(Backbone, React) {
         login: function() {
             this.setView(['components/login'], function(Login) {
                 return Login();
-            });
+            }, false);
         },
 
         register: function() {
             this.setView(['components/register'], function(Register) {
                 return Register();
-            });
+            }, false);
         },
 
         wallets: function() {
             this.setView(['components/wallets'], function(Wallets) {
                 return Wallets();
-            });
+            }, true);
         }
     });
 

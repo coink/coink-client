@@ -11,12 +11,25 @@ define(['react', 'models/profile', 'router'], function(React, profile, router) {
         }
     });
 
-    var LogoutLink = React.createClass({
+    var RegisterLink = React.createClass({
         handleClick: function(e) {
-            profile.destroyToken();
+            e.preventDefault();
+            router.navigate('register', {trigger : true});
         },
         render: function() {
-            return React.DOM.a({href: '/', onClick: this.handleClick},
+            return React.DOM.a({href: 'register', onClick: this.handleClick},
+                "Register");
+        }
+    });
+
+    var LogoutLink = React.createClass({
+        handleClick: function(e) {
+            e.preventDefault();
+            profile.destroyToken();
+            router.navigate('/', {trigger : true});
+        },
+        render: function() {
+            return React.DOM.a({href: 'logout', onClick: this.handleClick},
                 "Logout " + profile.getToken());
         }
     });
@@ -24,7 +37,9 @@ define(['react', 'models/profile', 'router'], function(React, profile, router) {
     var Header = React.createClass({
         render: function() {
 
-            var loginLink = this.props.loggedIn ? LogoutLink() : LoginLink();
+            var loginLink = profile.getToken() != null ?
+                LogoutLink() :
+                React.DOM.span({}, LoginLink(), " ", RegisterLink());
 
             return React.DOM.header({'className': 'clearfix'},
                 React.DOM.a(

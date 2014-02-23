@@ -27,7 +27,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
                     onChange: this.setAddress
                 }),
                 React.DOM.input({type: 'submit', value: "Add"}));
-        }
+       }
     });
 
     var WalletRow = React.createClass({
@@ -76,7 +76,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         }
     });
 
-    var WalletsPage = React.createClass({
+    var WalletsView = React.createClass({
 
         getInitialState: function() {
             return {"wallets" : null};
@@ -107,5 +107,5 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         }
     });
 
-    return WalletsPage;
+    return WalletsView;
 });
