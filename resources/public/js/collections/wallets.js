@@ -4,7 +4,7 @@ define(['backbone', 'models/wallet'], function(Backbone, Wallet) {
         model: Wallet,
         urlRoot: "http://private-d789-coink.apiary.io/v1/wallets",
         parse: function(response) {
-            return response.wallets;
+            return response.data;
         },
         url: function() {
             return this.urlRoot;

@@ -8,7 +8,7 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
             $.post("http://private-d789-coink.apiary.io/v1/session",
                 JSON.stringify(payload), function(data, textStatus, jqXHR) {
                 if (textStatus == 'success') {
-                    profile.setToken(data.token.token, data.token.expires);
+                    profile.setToken(data.data.token, data.data.expires);
                     router.navigate('wallets', {trigger: true});
                 } else {
                     router.navigate('/', {trigger: true});
