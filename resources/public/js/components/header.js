@@ -13,7 +13,7 @@ define(['react', 'models/profile', 'router'], function(React, profile, router) {
 
     var LogoutLink = React.createClass({
         handleClick: function(e) {
-            profile.tokenDestroy();
+            profile.destroyToken();
         },
         render: function() {
             return React.DOM.a({href: '/', onClick: this.handleClick},

@@ -21,9 +21,7 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router', 
-    'token_store'], function($, Backbone, React, Application, router, 
-    TokenStore) {
+require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile'], function($, Backbone, React, Application, router, profile) {
 
     $(document).ready(function() {
         var app = Application();
@@ -37,8 +35,8 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router',
     });
     */
 
-    var auth_token = TokenStore.get();
-    if (auth_token)
+    var loggedIn = profile.getToken() != null;
+    if (loggedIn)
         router.setDefaultRoute('wallets');
     else
         router.setDefaultRoute("login");
