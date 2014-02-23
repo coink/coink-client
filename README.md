@@ -21,5 +21,5 @@ Point to localhost:3000 in your browser of choice.
 
 ```bash
 sudo docker build -t coink/web-client .
-sudo docker run -d -v $PWD:/data coink/web-client
+sudo docker run -d -p 3000 coink/web-client
 ```
