@@ -1,21 +1,30 @@
-define(['react', 'profile'], function(React, profile) {
+define(['react', 'token_store', 'router'], function(React, TokenStore, router) {
 
     var LoginLink = React.createClass({
+        handleClick: function(e) {
+            e.preventDefault();
+            router.navigate('login', {trigger : true});
+        },
         render: function() {
-            return React.DOM.a({'href': '/login'}, "Login");
+            return React.DOM.a({href: 'login', onClick: this.handleClick},
+                "Login");
         }
     });
 
     var LogoutLink = React.createClass({
+        handleClick: function(e) {
+            TokenStore.destroy();
+        },
         render: function() {
-            return React.DOM.a({'href': '/logout'}, "Logout " + profile.get('username'));
+            return React.DOM.a({href: '/', onClick: this.handleClick},
+                "Logout " + TokenStore.get('username'));
         }
     });
 
     var Header = React.createClass({
         render: function() {
 
-            var rightChild = profile ? LogoutLink() : LoginLink();
+            var loginLink = this.props.loggedIn ? LogoutLink() : LoginLink();
 
             return React.DOM.header({'className': 'clearfix'},
                 React.DOM.a(
@@ -29,7 +38,7 @@ define(['react', 'profile'], function(React, profile) {
                     "Coink.io",
                     React.DOM.span({id: 'tagline'}, " Your Crypto Portfolio")
                 ),
-                React.DOM.div({id: 'header-nav'}, rightChild)
+                React.DOM.div({id: 'header-nav'}, loginLink)
             );
         }
     });

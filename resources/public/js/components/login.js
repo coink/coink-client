@@ -2,16 +2,21 @@ define(['react', 'token_store', 'jquery', 'router'], function(React, TokenStore,
     var Login = React.createClass({
         render: function() {
             var payload = {};
-            payload.username = prompt("What's your usename?");
-            payload.password = prompt("What's your password? (Trust me it's safe.)");
+            payload.username = prompt("What is your username?");
+            payload.password = prompt("What is your password? (Coink.io takes security seriously.)");
 
-            $.post("http://private-d789-coink.apiary.io/v1/login", JSON.stringify(payload), function(data, textStatue, jqXHR) {
-                TokenStore.set(data.token, data.expires);
-                router.navigate('wallets', {trigger: true});
+            $.post("http://private-d789-coink.apiary.io/v1/session", JSON.stringify(payload), function(data, textStatus, jqXHR) {
+                if (textStatus == 'success') {
+                    TokenStore.set(data.token, data.expires);
+                    router.navigate('wallets', {trigger: true});
+                } else {
+                    router.navigate('/', {trigger: true});
+                }
             });
-            return React.DOM.div({}, "login please");
+            return React.DOM.div({}, "");
         }
     });
 
     return Login;
+
 });

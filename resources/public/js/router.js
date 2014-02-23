@@ -3,8 +3,8 @@ define(['backbone', 'react'], function(Backbone, React) {
         routes: {
             '': 'handleDefaultRoute',
             'login': 'login',
-            'wallets': 'wallets',
-            'dashboard': 'dashboard'
+            'register': 'register',
+            'wallets': 'wallets'
         },
 
         setDefaultRoute: function(route) {
@@ -31,15 +31,15 @@ define(['backbone', 'react'], function(Backbone, React) {
             });
         },
 
-        wallets: function() {
-            this.setView(['components/wallets'], function(Wallets) {
-                return Wallets();
+        register: function() {
+            this.setView(['components/register'], function(Register) {
+                return Register();
             });
         },
 
-        dashboard: function() {
-            this.setView(['components/dashboard'], function(Dashboard) {
-                return Dashboard();
+        wallets: function() {
+            this.setView(['components/wallets'], function(Wallets) {
+                return Wallets();
             });
         }
     });

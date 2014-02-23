@@ -38,10 +38,10 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router',
     */
 
     var auth_token = TokenStore.get();
-    if (!auth_token)
-        router.setDefaultRoute('login');
+    if (auth_token)
+        router.setDefaultRoute('wallets');
     else
-        router.setDefaultRoute("wallets");
+        router.setDefaultRoute("login");
 
     Backbone.history.start({
         pushState: false, // False until compojure routing is figured out

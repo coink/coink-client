@@ -18,7 +18,7 @@ define([], function() {
         sessionStorage.setItem('expires', expires);
     };
 
-    TokenStore.clear = function() {
+    TokenStore.destroy = function() {
         sessionStorage.removeItem('auth_token'),
         sessionStorage.removeItem('expires')
     };
