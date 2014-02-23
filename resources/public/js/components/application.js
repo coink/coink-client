@@ -5,7 +5,6 @@ function (React, _, Header, Footer, Sidebar, profile) {
     var Application = React.createClass({
 
         getInitialState: function () {
-            console.log(profile);
             return {'profile' : profile};
         },
 
