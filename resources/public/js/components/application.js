@@ -3,12 +3,15 @@ define(['react', 'underscore', 'components/header', 'components/footer',
 function (React, _, Header, Footer, Sidebar, profile) {
 
     var Application = React.createClass({
+
         getInitialState: function () {
+            console.log(profile);
             return {'profile' : profile};
         },
 
         render: function() {
             var loggedIn = profile.getToken() != null;
+            console.log(loggedIn);
             return React.DOM.div({},
                 Header({loggedIn: loggedIn}),
                 Sidebar({loggedIn: loggedIn}),
