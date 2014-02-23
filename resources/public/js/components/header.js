@@ -1,4 +1,4 @@
-define(['react', 'token_store', 'router'], function(React, TokenStore, router) {
+define(['react', 'models/profile', 'router'], function(React, profile, router) {
 
     var LoginLink = React.createClass({
         handleClick: function(e) {
@@ -13,11 +13,11 @@ define(['react', 'token_store', 'router'], function(React, TokenStore, router) {
 
     var LogoutLink = React.createClass({
         handleClick: function(e) {
-            TokenStore.destroy();
+            profile.tokenDestroy();
         },
         render: function() {
             return React.DOM.a({href: '/', onClick: this.handleClick},
-                "Logout " + TokenStore.get('username'));
+                "Logout " + profile.getToken());
         }
     });
 

@@ -19,8 +19,8 @@ define([], function() {
     };
 
     TokenStore.destroy = function() {
-        sessionStorage.removeItem('auth_token'),
-        sessionStorage.removeItem('expires')
+        sessionStorage.removeItem('auth_token');
+        sessionStorage.removeItem('expires');
     };
 
     return TokenStore;

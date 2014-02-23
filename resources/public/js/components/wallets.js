@@ -34,7 +34,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         handleDelete: function(e) {
             e.preventDefault();
 
-            if (!confirm("Are you sure you want to delete address " + 
+            if (!confirm("Are you sure you want to delete address " +
                 this.props.wallet.get('address') + "?"))
                 return;
 
@@ -49,7 +49,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
                 React.DOM.td({}, wallet.get('address')),
                 React.DOM.td({}, wallet.get('value')),
                 React.DOM.td({}, React.DOM.a({
-                    href: '#', 
+                    href: '#',
                     onClick: this.handleDelete
                 }, "Delete")));
         }
@@ -81,27 +81,24 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         getInitialState: function() {
             return {"wallets" : null};
         },
-
         componentDidMount: function() {
             var wallets = new Wallets();
             wallets.on("sync", this.updateWallets);
             wallets.fetch();
         },
-
         updateWallets: function(wallets) {
             this.setState({"wallets" : wallets});
         },
-
         render: function() {
             var content, wallets = this.state.wallets;
 
             if (!wallets)
                 content = React.DOM.p({}, "Loading");
             else if (wallets.isEmpty())
-                content = [AddWalletForm({wallets: wallets}), 
+                content = [AddWalletForm({wallets: wallets}),
                     React.DOM.div({}, "No wallets")];
             else {
-                content = [AddWalletForm({wallets: wallets}), 
+                content = [AddWalletForm({wallets: wallets}),
                     WalletTable({wallets: wallets})];
             }
 
