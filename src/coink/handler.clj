@@ -7,6 +7,7 @@
             [compojure.route :as route]))
 
 (defhtml application [& body]
+  (html5
     [:head
         [:title "Coink: Your Cryptocoin Portfolio"]
         [:meta {:name "description" :content "Cryptocurrency management online"}]
@@ -14,15 +15,16 @@
     [:body
       [:script
         {:data-main "js/main" :src "/js/scripts/require.js"}]
-      [:div#coink]])
+      [:div#coink]]))
 
 (defhtml not-found [& body]
-  [:h1 "Not Found"])
+  (html5
+    [:h1 "Not Found"]))
 
 (defroutes app-routes
-  (GET "/" [] html5 (application))
+  (GET "/" [] application)
   (route/resources "/")
-  (route/not-found html5 (not-found)))
+  (route/not-found not-found))
 
 (def app
   (handler/site app-routes))
