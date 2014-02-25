@@ -4,17 +4,16 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
         handleSubmit: function(e) {
             e.preventDefault();
             var username = this.refs.username.getDOMNode().value.trim();
-            var passOriginal = this.refs.password.getDOMNode().value.trim();
-            var passConfirm = this.refs.confirm.getDOMNode().value.trim();
+            var password = this.refs.password.getDOMNode().value.trim();
+            var confirm = this.refs.confirm.getDOMNode().value.trim();
 
-            if (passOriginal != passConfirm) {
-                this.differentPasswords();
+            if (!this.validateRegistration(username, password, confirm)){
                 return;
             }
 
             var payload = {
                 "username" : username,
-                "password" : passOriginal
+                "password" : password
             };
 
             $.post(router.url_root + "/v1/account", JSON.stringify(payload),
@@ -22,7 +21,7 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
                     this.loginAfterRegistration(payload);
                 }.bind(this)).fail(
                 function() {
-                    console.log("registration-error");
+                    console.log("error: ajax registration-error");
                     router.navigate('/', {trigger: true});
                 });
 
@@ -35,13 +34,20 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
                     router.navigate('wallets', {trigger: true});
                 }).fail(
                 function() {
-                    console.log("login-error");
+                    console.log("error: ajax login-error");
                     router.navigate('login', {trigger: true});
                 });
         },
 
-        differentPasswords: function() {
-           console.log("different passwords");
+        validateRegistration: function(username, password, confirm) {
+            if (password != confirm) {
+                console.log("error: different passwords");
+                return false;
+            } else if (password.length < 6) {
+                console.log("error: length less than 6");
+                return false;
+            }
+            return true;
         },
 
         render: function() {
