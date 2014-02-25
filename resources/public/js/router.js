@@ -1,13 +1,17 @@
 define(['backbone', 'react', 'models/profile'],
 function(Backbone, React, profile) {
 
+
     var Router = Backbone.Router.extend({
+
         routes: {
             '': 'handleDefaultRoute',
             'login': 'login',
             'register': 'register',
             'wallets': 'wallets'
         },
+
+        url_root: "http://private-d789-coink.apiary.io",
 
         setDefaultRoute: function(route) {
             this.defaultRoute = route;

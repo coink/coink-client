@@ -1,18 +1,18 @@
 define(['react', 'jquery', 'router', 'models/profile'], function(React, $, router, profile) {
 
-    var Login = React.createClass({
+    var Register = React.createClass({
         handleSubmit: function(e) {
             e.preventDefault();
             var payload = {};
-            $.post(router.url_root + "/v1/session", JSON.stringify(payload),
+            $.post(router.url_root + "/v1/account", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
-                    profile.setToken(data.data.token, data.data.expires);
                     router.navigate('wallets', {trigger: true});
                 }).fail(
                 function() {
-                    console.log("login-error");
-                    router.navigate('login', {trigger: true});
+                    console.log("registration-error");
+                    router.navigate('/', {trigger: true});
                 });
+
         },
 
         render: function() {
@@ -31,10 +31,17 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
                     ref: 'password',
                 }),
                 React.DOM.br(),
+                React.DOM.label({htmlFor: 'confirm'}),
+                React.DOM.input({
+                    placeholder: "Confirm",
+                    type: 'password',
+                    ref: 'confirm',
+                }),
+                React.DOM.br(),
                 React.DOM.input({type: 'submit', value: "Login"}));
         }
     });
 
-    return Login;
+    return Register;
 
 });
