@@ -5,7 +5,7 @@ require.config({
         'jquery': '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery',
         'backbone': '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min',
         'underscore': '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min',
-        'react': '//cdnjs.cloudflare.com/ajax/libs/react/0.8.0/react',
+        'react': '//cdnjs.cloudflare.com/ajax/libs/react/0.9.0/react',
         'fastclick': '/js/scripts/fastclick',
         'modernizr': '/js/scripts/modernizr-latest'
 
@@ -27,13 +27,6 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router', 'mod
         var app = Application();
         React.renderComponent(app, document.getElementById('coink'));
     });
-
-    /* WITHOUT JQUERY
-    document.addEventListener("DOMContentLoaded", function() {
-        var app = Application();
-        React.renderComponent(app, document.getElementById('coink'));
-    });
-    */
 
     var loggedIn = profile.getToken() != null;
     if (loggedIn)
