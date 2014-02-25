@@ -7,6 +7,11 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
             var passOriginal = this.refs.password.getDOMNode().value.trim();
             var passConfirm = this.refs.confirm.getDOMNode().value.trim();
 
+            if (passOriginal != passConfirm) {
+                this.differentPasswords();
+                return;
+            }
+
             var payload = {
                 "username" : username,
                 "password" : passOriginal
@@ -14,13 +19,29 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
 
             $.post(router.url_root + "/v1/account", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
-                    router.navigate('wallets', {trigger: true});
-                }).fail(
+                    this.loginAfterRegistration(payload);
+                }.bind(this)).fail(
                 function() {
                     console.log("registration-error");
                     router.navigate('/', {trigger: true});
                 });
 
+        },
+
+        loginAfterRegistration: function(payload) {
+            $.post(router.url_root + "/v1/session", JSON.stringify(payload),
+                function(data, textStatus, jqXHR) {
+                    profile.setToken(data.data.token, data.data.expires);
+                    router.navigate('wallets', {trigger: true});
+                }).fail(
+                function() {
+                    console.log("login-error");
+                    router.navigate('login', {trigger: true});
+                });
+        },
+
+        differentPasswords: function() {
+           console.log("different passwords");
         },
 
         render: function() {
