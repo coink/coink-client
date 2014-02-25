@@ -3,7 +3,12 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
     var Login = React.createClass({
         handleSubmit: function(e) {
             e.preventDefault();
-            var payload = {};
+
+            var payload = {
+                "username" : this.refs.username.getDOMNode().value.trim(),
+                "password" : this.refs.password.getDOMNode().value.trim()
+            };
+
             $.post(router.url_root + "/v1/session", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.setToken(data.data.token, data.data.expires);

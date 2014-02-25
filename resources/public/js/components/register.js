@@ -3,7 +3,15 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
     var Register = React.createClass({
         handleSubmit: function(e) {
             e.preventDefault();
-            var payload = {};
+            var username = this.refs.username.getDOMNode().value.trim();
+            var passOriginal = this.refs.password.getDOMNode().value.trim();
+            var passConfirm = this.refs.confirm.getDOMNode().value.trim();
+
+            var payload = {
+                "username" : username,
+                "password" : passOriginal
+            };
+
             $.post(router.url_root + "/v1/account", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     router.navigate('wallets', {trigger: true});
