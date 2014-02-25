@@ -15,8 +15,9 @@ RUN         LEIN_ROOT=1 /usr/local/bin/lein
 
 # Install key
 RUN	    mkdir -p /root/.ssh
-ADD         id_rsa /root/.ssh/id_rsa
+ADD         coink-deploy.pem /root/.ssh/id_rsa
 RUN         chown -R root:root /root/.ssh
+RUN         chmod 600 /root/.ssh/id_rsa
 
 # Pull source
 RUN         apt-get install -y git
