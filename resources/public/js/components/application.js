@@ -5,7 +5,7 @@ function (React, _, Header, Footer, Sidebar, profile) {
     var Application = React.createClass({
 
         getInitialState: function () {
-            return {'profile' : profile};
+            return {profile: profile};
         },
 
         render: function() {
@@ -13,6 +13,7 @@ function (React, _, Header, Footer, Sidebar, profile) {
             return React.DOM.div({},
                 Header({loggedIn: loggedIn}),
                 Sidebar({loggedIn: loggedIn}),
+                React.DOM.div({id: 'notification'}),
                 React.DOM.div({id: 'main'}),
                 Footer()
             );

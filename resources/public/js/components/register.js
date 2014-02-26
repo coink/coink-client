@@ -1,4 +1,5 @@
-define(['react', 'jquery', 'router', 'models/profile'], function(React, $, router, profile) {
+define(['react', 'jquery', 'router', 'utils', 'models/profile'],
+function(React, $, router, Utils, profile) {
 
     var Register = React.createClass({
         handleSubmit: function(e) {
@@ -27,7 +28,26 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
 
         },
 
+        validateRegistration: function(username, password, confirm) {
+            if ((username + password + confirm).length == 0)
+              Utils.updateNotification("error: please fill out the form");
+            else if (username.length == 0)
+              Utils.updateNotification("error: please enter a username");
+            else if (password.length == 0)
+              Utils.updateNotification("error: please enter a password");
+            else if (password.length < 6)
+              Utils.updateNotification("error: password must be at least six characters");
+            else if (confirm.length == 0)
+              Utils.updateNotification("error: please confirm your password");
+            else if (password != confirm)
+              Utils.updateNotification("error: passwords do not match");
+            else
+                return true;
+            return false;
+        },
+
         loginAfterRegistration: function(payload) {
+            Utils.clearNotification();
             $.post(router.url_root + "/v1/session", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.setToken(data.data.token, data.data.expires);
@@ -39,19 +59,12 @@ define(['react', 'jquery', 'router', 'models/profile'], function(React, $, route
                 });
         },
 
-        validateRegistration: function(username, password, confirm) {
-            if (password != confirm) {
-                console.log("error: different passwords");
-                return false;
-            } else if (password.length < 6) {
-                console.log("error: length less than 6");
-                return false;
-            }
-            return true;
-        },
 
         render: function() {
-            return React.DOM.form({onSubmit: this.handleSubmit},
+            return React.DOM.form({
+                    onEnter: this.handleSubmit,
+                    onSubmit: this.handleSubmit
+                },
                 React.DOM.label({htmlFor: 'username'}),
                 React.DOM.input({
                     placeholder: "Username",
