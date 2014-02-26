@@ -8,23 +8,22 @@ function(React, $, router, Utils, profile) {
             var password = this.refs.password.getDOMNode().value.trim();
             var confirm = this.refs.confirm.getDOMNode().value.trim();
 
-            if (!this.validateRegistration(username, password, confirm)){
-                return;
+            if (this.validateRegistration(username, password, confirm)){
+                var payload = {
+                    "username" : username,
+                    "password" : password
+                };
+
+                $.post(router.url_root + "/v1/account", JSON.stringify(payload),
+                    function(data, textStatus, jqXHR) {
+                        this.loginAfterRegistration(payload);
+                    }.bind(this)).fail(
+                    function() {
+                        Utils.updateNotification("error: ajax-registration-error");
+                        router.navigate('/', {trigger: true});
+                    }
+                );
             }
-
-            var payload = {
-                "username" : username,
-                "password" : password
-            };
-
-            $.post(router.url_root + "/v1/account", JSON.stringify(payload),
-                function(data, textStatus, jqXHR) {
-                    this.loginAfterRegistration(payload);
-                }.bind(this)).fail(
-                function() {
-                    console.log("error: ajax registration-error");
-                    router.navigate('/', {trigger: true});
-                });
 
         },
 
@@ -47,14 +46,14 @@ function(React, $, router, Utils, profile) {
         },
 
         loginAfterRegistration: function(payload) {
-            Utils.clearNotification();
             $.post(router.url_root + "/v1/session", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.setToken(data.data.token, data.data.expires);
+                    Utils.clearNotification();
                     router.navigate('wallets', {trigger: true});
                 }).fail(
                 function() {
-                    console.log("error: ajax login-error");
+                    Utils.updateNotification("error: ajax-login-error");
                     router.navigate('login', {trigger: true});
                 });
         },
