@@ -13,14 +13,19 @@ define(['backbone'], function(Backbone) {
                 return auth_token;
             return null;
         },
-        setToken: function(token, expires) {
+        getUsername: function() {
+            return sessionStorage.getItem('username');
+        },
+        createSession: function(token, expires, username) {
             sessionStorage.setItem('auth_token', token);
             sessionStorage.setItem('expires', expires);
+            sessionStorage.setItem('username', username);
             this.set("logged_in", true);
         },
-        destroyToken: function() {
+        destroySession: function() {
             sessionStorage.removeItem('auth_token');
             sessionStorage.removeItem('expires');
+            sessionStorage.removeItem('username');
             this.set("logged_in", false);
         }
 

@@ -16,7 +16,7 @@ function(React, $, router, profile, Utils) {
             if (this.validateLogin(username, password)){
                 $.post(router.url_root + "/v1/session", JSON.stringify(payload),
                     function(data, textStatus, jqXHR) {
-                        profile.setToken(data.data.token, data.data.expires);
+                        profile.createSession(data.data.token, data.data.expires, username);
                         Utils.clearNotification();
                         router.navigate('wallets', {trigger: true});
                     }).fail(

@@ -10,8 +10,8 @@ function(React, $, router, Utils, profile) {
 
             if (this.validateRegistration(username, password, confirm)){
                 var payload = {
-                    "username" : username,
-                    "password" : password
+                    'username' : username,
+                    'password' : password
                 };
 
                 $.post(router.url_root + "/v1/account", JSON.stringify(payload),
@@ -48,7 +48,7 @@ function(React, $, router, Utils, profile) {
         loginAfterRegistration: function(payload) {
             $.post(router.url_root + "/v1/session", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
-                    profile.setToken(data.data.token, data.data.expires);
+                    profile.createSession(data.data.token, data.data.expires, payload['username']);
                     Utils.clearNotification();
                     router.navigate('wallets', {trigger: true});
                 }).fail(

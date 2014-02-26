@@ -25,12 +25,12 @@ define(['react', 'models/profile', 'router'], function(React, profile, router) {
     var LogoutLink = React.createClass({
         handleClick: function(e) {
             e.preventDefault();
-            profile.destroyToken();
+            profile.destroySession();
             router.navigate('/', {trigger : true});
         },
         render: function() {
             return React.DOM.a({href: 'logout', onClick: this.handleClick},
-                "Logout " + profile.getToken());
+                "Logout " + profile.getUsername());
         }
     });
 
