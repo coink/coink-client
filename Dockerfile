@@ -1,3 +1,6 @@
+# To build `docker build -t coink/coink-client .
+# To run `docker run -p 8000:3000 coink/coink-client
+
 FROM        base
 
 # Install Java
