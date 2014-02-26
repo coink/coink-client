@@ -35,15 +35,18 @@ define(['react', 'models/profile', 'router'], function(React, profile, router) {
     });
 
     var Header = React.createClass({
+        handleClick: function(e) {
+            e.preventDefault();
+            router.navigate('/', {trigger : true});
+        },
         render: function() {
-
             var loginLink = profile.getToken() != null ?
                 LogoutLink() :
                 React.DOM.span({}, LoginLink(), " ", RegisterLink());
 
             return React.DOM.header({'className': 'clearfix'},
                 React.DOM.a(
-                    {href: '/', id: 'logo'},
+                    {href: '/', id: 'logo', onClick: this.handleClick},
                     React.DOM.img({
                         src: '/resources/images/mini_logo.png',
                         alt: 'Coink.io Crypto services',

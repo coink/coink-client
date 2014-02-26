@@ -22,8 +22,12 @@ function(Backbone, React, profile) {
         },
 
         setView: function(requirements, getView, requiresLogin) {
+            // Don't render views that require user login
             if(requiresLogin && !profile.get("logged_in")) {
                 this.navigate('login', {trigger: true});
+                return;
+            // Don't render views that require user is not logged in
+            } else if (!requiresLogin && profile.get("logged_in")) {
                 return;
             }
             var node = document.getElementById('main');
