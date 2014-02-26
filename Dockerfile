@@ -13,17 +13,8 @@ RUN         curl https://raw.github.com/technomancy/leiningen/stable/bin/lein > 
 RUN         chmod a+x /usr/local/bin/lein
 RUN         LEIN_ROOT=1 /usr/local/bin/lein
 
-# Install key
-RUN	    mkdir -p /root/.ssh
-ADD         coink-deploy.pem /root/.ssh/id_rsa
-RUN         chown -R root:root /root/.ssh
-RUN         chmod 600 /root/.ssh/id_rsa
-
-# Pull source
-RUN         apt-get install -y git
-WORKDIR	    /data
-RUN         ssh-keyscan github.com >> /root/.ssh/known_hosts
-RUN         git clone git@github.com:coink/coink-client.git
+# Add source
+ADD         . /data/coink-client
 
 # Run server
 WORKDIR	    /data/coink-client
