@@ -1,12 +1,19 @@
 # Coink Web Client
 
-Make it rain with Coink.io's useful and tasty web client.
+Breathe insight into your data with Coink.io.
 
 ## Building
 
 There are two ways currently of running the webclient.
 
-### Traditional Method
+### Docker Method
+
+```bash
+sudo docker build -t coink/web-client .
+sudo docker run -d -p 3000 coink/web-client
+```
+
+### Boring Method
 
 [Leiningen][1] 2.3.4  - Clojure without exploding
 
@@ -17,9 +24,3 @@ run `lein ring server-headless`
 Point to localhost:3000 in your browser of choice.
 ```
 
-### Docker Method
-
-```bash
-sudo docker build -t coink/web-client .
-sudo docker run -d -p 3000 coink/web-client
-```
