@@ -1,4 +1,4 @@
-define(['react', 'models/profile', 'router'], function(React, profile, router) {
+define(['react', 'router', 'models/profile'], function(React, router, profile) {
 
     var LoginLink = React.createClass({
         handleClick: function(e) {
@@ -25,8 +25,21 @@ define(['react', 'models/profile', 'router'], function(React, profile, router) {
     var LogoutLink = React.createClass({
         handleClick: function(e) {
             e.preventDefault();
-            profile.destroySession();
-            router.navigate('/', {trigger : true});
+            var token = profile.getToken();
+            if(token == null) {
+                router.navigate('/', {trigger : true});
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: router.url_root + "/v1/logout",
+                data: {"token" : token},
+                success: function(msg) {
+                    profile.destroySession();
+                    router.setDefaultRoute("login");
+                    router.navigate('/', {trigger : true});
+                }
+            });
         },
         render: function() {
             return React.DOM.a({href: 'logout', onClick: this.handleClick},

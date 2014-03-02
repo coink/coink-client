@@ -1,13 +1,34 @@
-define(['react', 'jquery', 'utils'],
-function(React, $, Utils) {
+define(['react', 'jquery', 'router', 'utils', 'models/profile'],
+function(React, $, router, Utils, profile) {
 
     var Login = React.createClass({
         handleSubmit: function(e) {
             e.preventDefault();
-
             var username = this.refs.username.getDOMNode().value.trim();
             var password = this.refs.password.getDOMNode().value.trim();
 
+            if(this.validateLogin(username, password)) {
+                var payload = {
+                    "username" : username,
+                    "password" : password
+                };
+
+                $.post(router.url_root + "/v1/login", JSON.stringify(payload),
+                    function(data, textStatus, jqXHR) {
+                        profile.createSession(data.data.token, data.data.expires, username);
+                        Utils.clearNotification();
+                        router.navigate('wallets', {trigger: true});
+                    })
+                .fail(
+                    function() {
+                        updateNotification("error: login-error");
+                        router.navigate('login', {trigger: true});
+                    }
+                );
+            }
+        },
+
+        validateLogin: function(username, password) {
             if ((username + password).length == 0)
                 Utils.updateNotification("error: please enter your email address and password");
             else if (username.length == 0)
@@ -15,7 +36,8 @@ function(React, $, Utils) {
             else if (password.length == 0)
                 Utils.updateNotification("error: please enter your password");
             else
-                Utils.login(username, password);
+                return true;
+            return false;
         },
 
         render: function() {

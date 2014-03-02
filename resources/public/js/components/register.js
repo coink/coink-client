@@ -6,18 +6,21 @@ function(React, $, router, Utils, profile) {
             e.preventDefault();
             var username = this.refs.username.getDOMNode().value.trim();
             var password = this.refs.password.getDOMNode().value.trim();
+            var email = this.refs.email.getDOMNode().value.trim();
             var confirm = this.refs.confirm.getDOMNode().value.trim();
 
             if (this.validateRegistration(username, password, confirm)){
                 var payload = {
                     'username' : username,
+                    'email' : email,
                     'password' : password
                 };
 
                 $.post(router.url_root + "/v1/account", JSON.stringify(payload),
                     function(data, textStatus, jqXHR) {
                         this.loginAfterRegistration(payload);
-                    }.bind(this)).fail(
+                    }.bind(this)
+                ).fail(
                     function() {
                         Utils.updateNotification("error: ajax-registration-error");
                         router.navigate('/', {trigger: true});
@@ -46,7 +49,7 @@ function(React, $, router, Utils, profile) {
         },
 
         loginAfterRegistration: function(payload) {
-            $.post(router.url_root + "/v1/session", JSON.stringify(payload),
+            $.post(router.url_root + "/v1/login", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.createSession(data.data.token, data.data.expires, payload['username']);
                     Utils.clearNotification();
@@ -69,6 +72,13 @@ function(React, $, router, Utils, profile) {
                     placeholder: "Username",
                     type: 'text',
                     ref: 'username',
+                }),
+                React.DOM.br(),
+                React.DOM.label({htmlFor: 'email'}),
+                React.DOM.input({
+                    placeholder: "Email",
+                    type: 'email',
+                    ref: 'email',
                 }),
                 React.DOM.br(),
                 React.DOM.label({htmlFor: 'password'}),

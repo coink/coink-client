@@ -28,8 +28,16 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router', 'mod
         React.renderComponent(app, document.getElementById('coink'));
     });
 
-    var loggedIn = profile.getToken() != null;
-    if (loggedIn)
+
+    $.ajaxSetup({
+        beforeSend: function (request) {
+            if(profile.getToken() != null) {
+                request.setRequestHeader("Authorization", profile.getToken());
+            }
+        }
+    });
+
+    if (profile.getToken() != null)
         router.setDefaultRoute('wallets');
     else
         router.setDefaultRoute("login");
