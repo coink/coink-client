@@ -18,6 +18,7 @@ RUN         LEIN_ROOT=1 /usr/local/bin/lein
 
 # Add source
 ADD         . /data/coink-client
+RUN         cd /data/coink-client && lein deps
 
 # Run server
 WORKDIR	    /data/coink-client
