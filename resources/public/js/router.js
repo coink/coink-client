@@ -8,7 +8,8 @@ function(Backbone, React, profile) {
             '': 'handleDefaultRoute',
             'login': 'login',
             'register': 'register',
-            'wallets': 'wallets'
+            'wallets': 'wallets',
+            'exchanges': 'exchanges'
         },
 
         url_root: "http://private-d789-coink.apiary.io",
@@ -54,6 +55,12 @@ function(Backbone, React, profile) {
         wallets: function() {
             this.setView(['components/wallets'], function(Wallets) {
                 return Wallets();
+            }, true);
+        },
+
+        exchanges: function() {
+            this.setView(['components/exchange_accounts'], function(ExchangeAccounts) {
+                return ExchangeAccounts();
             }, true);
         }
     });

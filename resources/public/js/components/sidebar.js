@@ -52,6 +52,12 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
             }*/
         },
         {
+            text: 'Exchanges',
+            route: ['exchanges'],
+            icon: 'exchange',
+            login_required: true
+        },
+        {
             text: 'Help',
             route: ['help'],
             icon: 'help',
