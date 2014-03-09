@@ -3,7 +3,7 @@ define(['react', 'collections/exchange_accounts'],
 
     var ExchangeAccounts = React.createClass({
         render: function() {
-            return React.DOM.div({}, "HELLO");
+            return React.DOM.div({}, React.DOM.h1({}, "Exchanges"));
         }
     });
 
