@@ -12,8 +12,6 @@ function(Backbone, React, profile) {
             'exchanges': 'exchanges'
         },
 
-        url_root: "http://private-d789-coink.apiary.io",
-
         setDefaultRoute: function(route) {
             this.defaultRoute = route;
         },
