@@ -13,18 +13,21 @@ function(React, $, router, Utils, profile) {
                     "password" : password
                 };
 
-                $.post(router.url_root + "/v1/login", JSON.stringify(payload),
-                    function(data, textStatus, jqXHR) {
-                        profile.createSession(data.data.token, data.data.expires, username);
-                        Utils.clearNotification();
-                        router.navigate('wallets', {trigger: true});
-                    })
-                .fail(
-                    function() {
-                        updateNotification("error: login-error");
-                        router.navigate('login', {trigger: true});
-                    }
-                );
+                $.ajax(router.url_root + "/v1/login", {
+                    type: 'POST',
+                    data: JSON.stringify(payload),
+                    processData: false,
+                    contentType: 'application/json'
+                })
+                .done(function(data, textStatus, jqXHR) {
+                    profile.createSession(data.data.token, data.data.expires, username);
+                    Utils.clearNotification();
+                    router.navigate('wallets', {trigger: true});
+                })
+                .fail(function() {
+                    updateNotification("error: login-error");
+                    router.navigate('login', {trigger: true});
+                });
             }
         },
 
