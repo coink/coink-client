@@ -12,6 +12,8 @@ function(Backbone, React, profile) {
             'exchanges': 'exchanges'
         },
 
+        url_root: urlRoot,
+
         setDefaultRoute: function(route) {
             this.defaultRoute = route;
         },

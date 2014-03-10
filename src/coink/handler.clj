@@ -13,6 +13,7 @@
         [:meta {:name "description" :content "Cryptocurrency management online"}]
         [:meta {:charset "UTF-8"}]]
     [:body
+      [:script "var urlRoot = 'https://api.coink.io';"]
       [:script
         {:data-main "js/main" :src "/js/scripts/require.js"}]
       [:div#coink]]))
