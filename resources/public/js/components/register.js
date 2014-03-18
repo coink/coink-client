@@ -16,11 +16,15 @@ function(React, $, router, Utils, profile) {
                     'password' : password
                 };
 
-                $.post(router.url_root + "/v1/account", JSON.stringify(payload),
-                    function(data, textStatus, jqXHR) {
-                        this.loginAfterRegistration(payload);
-                    }.bind(this)
-                ).fail(
+                $.ajax(router.url_root + "/v1/account", {
+                    type: 'POST',
+                    data: JSON.stringify(payload),
+                    processData: false,
+                    contentType: 'application/json'
+                }).done(function(data, textStatus, jqXHR) {
+                    this.loginAfterRegistration(payload);
+                }.bind(this))
+                .fail(
                     function() {
                         Utils.updateNotification("error: ajax-registration-error");
                         router.navigate('/', {trigger: true});
