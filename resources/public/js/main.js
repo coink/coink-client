@@ -1,12 +1,15 @@
 require.config({
     baseUrl: 'js',
     paths: {
-        /* TODO: use minified versions in production */
-        'jquery': '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery',
-        'backbone': '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min',
-        'underscore': '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min',
-        'react': '//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react',
+        'jquery': ['//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery', '/js/scripts/jquery-min'],
+        'backbone': ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min', '/js/scripts/backbone-min'],
+        'underscore': ['//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min', '/js/scripts/underscore-min'],
+        'react': ['//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react', '/js/scripts/react-min'],
+        'fastclick': ['//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.0/fastclick.min', '/js/scripts/fastclick-min'],
+        'modernizr': ['//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min', '/js/scripts/modernizr-min'],
+        'foundation': ['//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/foundation.min', '/js/scripts/foundation-min'],
 
+        'jquery.cookie': '/js/scripts/jquery.cookie-min'
     },
     shim: {
         backbone: {
@@ -16,10 +19,14 @@ require.config({
         underscore: {
             exports: '_'
         },
+        foundation: {
+            deps: ['jquery']
+        },
+
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile'], function($, Backbone, React, Application, router, profile) {
+require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile', 'fastclick', 'modernizr', 'foundation', 'jquery.cookie'], function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation, jqcookie) {
 
 
     // Auth setup, if not doesn't set request header token if not logged in
