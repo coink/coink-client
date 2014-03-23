@@ -19,7 +19,7 @@ function(React, $, router, Utils, profile) {
                     processData: false,
                     contentType: 'application/json'
                 })
-                .done(function(data, textStatus, jqXHR) {
+                .done(function(data) {
                     profile.createSession(data.data.token, data.data.expires, username);
                     Utils.clearNotification();
                     router.navigate('wallets', {trigger: true});
