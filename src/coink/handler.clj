@@ -12,6 +12,7 @@
         [:title "Coink: Your Cryptocoin Portfolio"]
         [:meta {:name "description" :content "Cryptocurrency management online"}]
         [:meta {:charset "UTF-8"}]]
+        [:link {:rel "stylesheet" :href "/css/styles.css"}]
     [:body
       (comment [:script "var urlRoot = 'https://api.coink.io';"])
       [:script "var urlRoot = 'http://private-d789-coink.apiary.io'"]
