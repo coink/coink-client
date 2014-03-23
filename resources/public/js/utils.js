@@ -1,4 +1,4 @@
-define(['react', 'components/notification', 'router', 'models/profile'], function(React, Notification, router, profile) {
+define(['react', 'components/notification'], function(React, Notification) {
 
     var Utils = function() {};
 
