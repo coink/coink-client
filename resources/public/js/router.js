@@ -9,7 +9,9 @@ function(Backbone, React, profile) {
             'login': 'login',
             'register': 'register',
             'wallets': 'wallets',
-            'exchanges': 'exchanges'
+            'exchanges': 'exchanges',
+            'help': 'help',
+            'about': 'about'
         },
 
         url_root: urlRoot,
@@ -62,6 +64,18 @@ function(Backbone, React, profile) {
             this.setView(['components/exchange_accounts'], function(ExchangeAccounts) {
                 return ExchangeAccounts();
             }, true);
+        },
+
+        help: function() {
+            this.setView(['components/help'], function(Help) {
+                return Help();
+            }, true);
+        },
+
+        about: function() {
+            this.setView(['components/about'], function(About) {
+                return About();
+            }, false);
         }
     });
 
