@@ -7,6 +7,7 @@ require.config({
         'underscore': '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min',
         'react': '//cdnjs.cloudflare.com/ajax/libs/react/0.9.0/react',
         'fastclick': '/js/scripts/fastclick',
+        'react.backbone': '/js/scripts/react.backbone',
         'modernizr': '/js/scripts/modernizr-latest'
 
     },
