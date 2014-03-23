@@ -1,7 +1,7 @@
 define(['react', 'underscore', 'components/common/glyphicon', 'router'], function (React, _, Glyphicon, router) {
 
     var SidebarListItem = React.createClass({
-
+        displayName: 'SidebarListItem',
         handleClick: function(e) {
             e.preventDefault();
             router.navigate(this.props.id.join('/'), {trigger: true});
@@ -20,6 +20,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
     });
 
     var SidebarSubmenu = React.createClass({
+        displayName: 'SidebarSubmenu',
         render: function() {
             return React.DOM.ul({}, _.map(this.props.items, function(menu_item) {
                 if (!menu_item.login_required || this.props.loggedIn) {
@@ -66,6 +67,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         ];
 
     var Sidebar = React.createClass({
+        displayName: 'Sidebar',
         getInitialState: function() {
             return {
                 active: null

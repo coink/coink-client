@@ -1,6 +1,7 @@
 define(['react', 'models/notification'], function(React, notification) {
 
     var Notification = React.createClass({
+        displayName: 'Notification',
         getInitialState: function() {
             return {model : notification};
         },

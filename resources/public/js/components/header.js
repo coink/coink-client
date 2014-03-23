@@ -1,6 +1,7 @@
 define(['react', 'router', 'models/profile'], function(React, router, profile) {
 
     var LoginLink = React.createClass({
+        displayName: 'LoginLink',
         handleClick: function(e) {
             e.preventDefault();
             router.navigate('login', {trigger : true});
@@ -12,6 +13,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
     });
 
     var RegisterLink = React.createClass({
+        displayName: 'RegisterLink',
         handleClick: function(e) {
             e.preventDefault();
             router.navigate('register', {trigger : true});
@@ -23,6 +25,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
     });
 
     var AboutLink = React.createClass({
+        displayName: 'AboutLink',
         handleClick: function(e) {
             e.preventDefault();
             router.navigate('about', {trigger: true});
@@ -34,6 +37,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
     })
 
     var LogoutLink = React.createClass({
+        displayName: 'LogoutLink',
         handleClick: function(e) {
             e.preventDefault();
             var token = profile.getToken();
@@ -59,6 +63,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
     });
 
     var Header = React.createClass({
+        displayName: 'Header',
         handleClick: function(e) {
             e.preventDefault();
             router.navigate('/', {trigger : true});

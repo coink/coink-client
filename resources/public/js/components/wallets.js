@@ -1,6 +1,7 @@
 define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallets, Wallet) {
 
     var AddWalletForm = React.createClass({
+        displayName: 'AddWalletForm',
         getInitialState: function() {
             return {address: ''};
         },
@@ -31,6 +32,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
     });
 
     var WalletRow = React.createClass({
+        displayName: 'WalletRow',
         handleDelete: function(e) {
             e.preventDefault();
 
@@ -56,6 +58,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
     });
 
     var WalletTable = React.createClass({
+        displayName: 'WalletTable',
         handleDelete: function() {
             this.props.wallets.fetch();
         },
@@ -77,7 +80,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
     });
 
     var WalletsView = React.createClass({
-
+        displayName: 'WalletsView',
         getInitialState: function() {
             return {"wallets" : null};
         },

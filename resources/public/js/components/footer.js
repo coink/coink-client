@@ -2,6 +2,8 @@ define(['react'], function(React) {
 
     var Footer = React.createClass({
 
+        displayName: 'Footer',
+
         render: function() {
             var year = new Date().getFullYear();
             return React.DOM.footer({},
