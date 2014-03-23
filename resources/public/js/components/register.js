@@ -1,5 +1,5 @@
-define(['react', 'jquery', 'router', 'utils', 'models/profile'],
-function(React, $, router, Utils, profile) {
+define(['react', 'jquery', 'router', 'models/notification', 'models/profile'],
+function(React, $, router, notification, profile) {
 
     var Register = React.createClass({
         handleSubmit: function(e) {
@@ -26,7 +26,7 @@ function(React, $, router, Utils, profile) {
                 }.bind(this))
                 .fail(
                     function() {
-                        Utils.updateNotification("error: ajax-registration-error");
+                        notification.updateNotification("error: ajax-registration-error", "error");
                         router.navigate('/', {trigger: true});
                     }
                 );
@@ -36,17 +36,17 @@ function(React, $, router, Utils, profile) {
 
         validateRegistration: function(username, password, confirm) {
             if ((username + password + confirm).length == 0)
-              Utils.updateNotification("error: please fill out the form");
+                notification.updateNotification("error: please fill out the form", "warn");
             else if (username.length == 0)
-              Utils.updateNotification("error: please enter a username");
+                notification.updateNotification("error: please enter a username", "warn");
             else if (password.length == 0)
-              Utils.updateNotification("error: please enter a password");
+                notification.updateNotification("error: please enter a password", "warn");
             else if (password.length < 6)
-              Utils.updateNotification("error: password must be at least six characters");
+                notification.updateNotification("error: password must be at least six characters", "warn");
             else if (confirm.length == 0)
-              Utils.updateNotification("error: please confirm your password");
+                notification.updateNotification("error: please confirm your password", "warn");
             else if (password != confirm)
-              Utils.updateNotification("error: passwords do not match");
+                notification.updateNotification("error: passwords do not match", "warn");
             else
                 return true;
             return false;
@@ -56,11 +56,11 @@ function(React, $, router, Utils, profile) {
             $.post(router.url_root + "/v1/login", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.createSession(data.data.token, data.data.expires, payload['username']);
-                    Utils.clearNotification();
+                    notification.clearNotification();
                     router.navigate('wallets', {trigger: true});
                 }).fail(
                 function() {
-                    Utils.updateNotification("error: ajax-login-error");
+                    notification.updateNotification("error: ajax-login-error", "error");
                     router.navigate('login', {trigger: true});
                 });
         },

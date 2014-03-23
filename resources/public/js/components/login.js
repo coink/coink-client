@@ -1,5 +1,5 @@
-define(['react', 'jquery', 'router', 'utils', 'models/profile'],
-function(React, $, router, Utils, profile) {
+define(['react', 'jquery', 'router', 'models/notification', 'models/profile'],
+function(React, $, router, notification, profile) {
 
     var Login = React.createClass({
         handleSubmit: function(e) {
@@ -21,11 +21,11 @@ function(React, $, router, Utils, profile) {
                 })
                 .done(function(data) {
                     profile.createSession(data.data.token, data.data.expires, username);
-                    Utils.clearNotification();
+                    notification.clearNotification();
                     router.navigate('wallets', {trigger: true});
                 })
                 .fail(function() {
-                    updateNotification("error: login-error");
+                    notification.updateNotification("error: login-error", "error");
                     router.navigate('login', {trigger: true});
                 });
             }
@@ -33,11 +33,11 @@ function(React, $, router, Utils, profile) {
 
         validateLogin: function(username, password) {
             if ((username + password).length == 0)
-                Utils.updateNotification("error: please enter your email address and password");
+                notification.updateNotification("Please enter your email address and password", "warn");
             else if (username.length == 0)
-                Utils.updateNotification("error: please enter your email address");
+                notification.updateNotification("Please enter your email address", "warn");
             else if (password.length == 0)
-                Utils.updateNotification("error: please enter your password");
+                notification.updateNotification("Please enter your password", "warn");
             else
                 return true;
             return false;
