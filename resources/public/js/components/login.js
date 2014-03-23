@@ -16,7 +16,8 @@ function(React, $, router, Utils, profile) {
                 $.ajax(router.url_root + "/v1/login", {
                     type: 'POST',
                     data: JSON.stringify(payload),
-                    processData: false
+                    processData: false,
+                    contentType: 'application/json'
                 })
                 .done(function(data) {
                     profile.createSession(data.data.token, data.data.expires, username);
