@@ -22,6 +22,17 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
         }
     });
 
+    var AboutLink = React.createClass({
+        handleClick: function(e) {
+            e.preventDefault();
+            router.navigate('about', {trigger: true});
+        },
+        render: function() {
+            return React.DOM.a({href: 'about', onClick: this.handleClick},
+                "About Us");
+        }
+    })
+
     var LogoutLink = React.createClass({
         handleClick: function(e) {
             e.preventDefault();
@@ -55,7 +66,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
         render: function() {
             var loginLink = profile.getToken() != null ?
                 LogoutLink() :
-                React.DOM.span({}, LoginLink(), " ", RegisterLink());
+                React.DOM.span({}, LoginLink(), " ", RegisterLink(), " ", AboutLink());
 
             return React.DOM.header({'className': 'clearfix'},
                 React.DOM.a(
