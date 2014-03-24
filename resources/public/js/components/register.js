@@ -27,7 +27,7 @@ function(React, $, router, notification, profile) {
                 }.bind(this))
                 .fail(
                     function() {
-                        notification.updateNotification("error: ajax-registration-error", "error");
+                        notification.error("error: ajax-registration-error");
                         router.navigate('/', {trigger: true});
                     }
                 );
@@ -37,17 +37,17 @@ function(React, $, router, notification, profile) {
 
         validateRegistration: function(username, password, confirm) {
             if ((username + password + confirm).length == 0)
-                notification.updateNotification("error: please fill out the form", "warn");
+                notification.warning("Please fill out the form");
             else if (username.length == 0)
-                notification.updateNotification("error: please enter a username", "warn");
+                notification.warning("Please enter a username");
             else if (password.length == 0)
-                notification.updateNotification("error: please enter a password", "warn");
+                notification.warning("Please enter a password");
             else if (password.length < 6)
-                notification.updateNotification("error: password must be at least six characters", "warn");
+                notification.warning("Password must be at least six characters");
             else if (confirm.length == 0)
-                notification.updateNotification("error: please confirm your password", "warn");
+                notification.warning("Please confirm your password");
             else if (password != confirm)
-                notification.updateNotification("error: passwords do not match", "warn");
+                notification.warning("Passwords do not match");
             else
                 return true;
             return false;
@@ -57,11 +57,11 @@ function(React, $, router, notification, profile) {
             $.post(router.url_root + "/v1/login", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.createSession(data.data.token, data.data.expires, payload['username']);
-                    notification.clearNotification();
                     router.navigate('wallets', {trigger: true});
+                    notification.success("Successfully registered username " + profile.getUsername());
                 }).fail(
                 function() {
-                    notification.updateNotification("error: ajax-login-error", "error");
+                    notification.error("error: ajax-login-error");
                     router.navigate('login', {trigger: true});
                 });
         },

@@ -10,6 +10,18 @@ define(['backbone'], function(Backbone) {
                 }
             );
         },
+        warning: function(message) {
+            this.set({message: message, type: "warning"});
+        },
+        error: function(message) {
+            this.set({message: message, type: "error"});
+        },
+        success: function(message) {
+            this.set({message: message, type: "success"});
+        },
+        info: function(message) {
+            this.set({message: message, type: "info"});
+        },
         updateNotification: function(message, type) {
             if(type) {
                 this.set({message: message, type: type});

@@ -22,11 +22,11 @@ function(React, $, router, notification, profile) {
                 })
                 .done(function(data) {
                     profile.createSession(data.data.token, data.data.expires, username);
-                    notification.clearNotification();
+                    notification.success("Successfully logged in " + profile.getUsername());
                     router.navigate('wallets', {trigger: true});
                 })
                 .fail(function() {
-                    notification.updateNotification("error: login-error", "error");
+                    notification.error("error: login-error");
                     router.navigate('login', {trigger: true});
                 });
             }
@@ -34,11 +34,11 @@ function(React, $, router, notification, profile) {
 
         validateLogin: function(username, password) {
             if ((username + password).length == 0)
-                notification.updateNotification("Please enter your email address and password", "warn");
+                notification.warning("Please enter your email address and password");
             else if (username.length == 0)
-                notification.updateNotification("Please enter your email address", "warn");
+                notification.warning("Please enter your email address");
             else if (password.length == 0)
-                notification.updateNotification("Please enter your password", "warn");
+                notification.warning("Please enter your password");
             else
                 return true;
             return false;
