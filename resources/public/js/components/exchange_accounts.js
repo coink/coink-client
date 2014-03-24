@@ -1,29 +1,61 @@
 define(['react', 'collections/exchange_accounts', 'models/exchange_account', 'collections/meta_exchanges'],
 function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
 
+    var AddExchangeAccountFormFields = React.createClass({
+        // setFields: function() {
+        //     this.setState()
+        // }
+        render: function() {
+            var currentExchange = this.props.currentExchange;
+            var exchangeName = currentExchange.get('exchangeName');
+            var fields = currentExchange.get('requiredFields').map(function(field) {
+                return React.DOM.div({},
+                        React.DOM.label({htmlFor: field.displayName}, field.displayName),
+                        React.DOM.input({
+                            type: 'text',
+                            id: field.machineName
+                        }));
+            });
+
+            return React.DOM.form({onSubmit: this.handleSubmit},
+                fields,
+                React.DOM.input({type: 'submit', value: "Add"}));
+        }
+    });
+
     var AddExchangeAccountForm = React.createClass({
         getInitialState: function() {
             var meta_exchanges = new MetaExchanges();
             meta_exchanges.on("sync", this.updateMetaExchanges);
             meta_exchanges.fetch();
 
-            return {meta_exchanges: null, exchangeName: ''};
+            return {meta_exchanges: null, currentExchange: null};
+        },
+       setExchange: function(e) {
+            var exchangeName = e.target.value;
+            var currentExchange = this.state.meta_exchanges.findWhere({exchangeName: exchangeName})
+            this.setState({"currentExchange": currentExchange});
+        },
+       updateMetaExchanges: function(meta_exchanges) {
+            var currentExchange = meta_exchanges.at(0);
+            this.setState({"meta_exchanges" : meta_exchanges, "currentExchange": currentExchange});
         },
         render: function() {
-            var exchanges = null;
+            var exchanges = null, fields = null;
             if(this.state.meta_exchanges) {
                 exchanges = this.state.meta_exchanges.map(function(model) {
                     return React.DOM.option({value: model.get('exchangeName')}, model.get('exchangeName'));
                 }.bind(this));
+                fields = AddExchangeAccountFormFields({currentExchange: this.state.currentExchange});
             } else {
                 exchanges = React.DOM.p({}, "Loading");
             }
 
-            return React.DOM.select({}, exchanges);
-       },
-       updateMetaExchanges: function(meta_exchanges) {
-            this.setState({"meta_exchanges" : meta_exchanges});
-        },
+            return React.DOM.div({},
+                React.DOM.span({}, "New Exchange Account: "),
+                React.DOM.select({onChange: this.setExchange}, exchanges),
+                fields);
+       }
     });
 
     var ExchangeAccountRow = React.createClass({
