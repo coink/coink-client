@@ -5,6 +5,17 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
         getInitialState: function() {
             return {nickname: ''}
         },
+        componentWillReceiveProps: function(nextProps) {
+            $('input.exchange-field').each(function() {
+                this.value = '';
+            });
+            var map = {};
+            map.nickname = '';
+            $.each(nextProps.currentExchange.get('requiredFields'), function(index, field) {
+                map[field.machineName] = '';
+            });
+            this.replaceState(map);
+        },
         setField: function(e) {
             var map = {};
             map[e.target.id] = e.target.value;
@@ -36,6 +47,7 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
                         React.DOM.input({
                             type: 'text',
                             id: field.machineName,
+                            className: 'exchange-field',
                             onChange: this.setField
                         }));
             }.bind(this));
@@ -46,6 +58,7 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
                 React.DOM.input({
                     type: 'text',
                     id: 'nickname',
+                    className: 'exchange-field',
                     onChange: this.setField
                 }),
                 React.DOM.input({type: 'submit', value: "Add"}));
