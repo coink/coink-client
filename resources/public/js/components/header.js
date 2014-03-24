@@ -1,4 +1,4 @@
-define(['react', 'router', 'models/profile'], function(React, router, profile) {
+define(['react', 'router', 'models/notification', 'models/profile'], function(React, router, notification, profile) {
 
     var LoginLink = React.createClass({
         displayName: 'LoginLink',
@@ -50,6 +50,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
                 url: router.url_root + "/v1/logout",
                 data: {"token" : token},
                 success: function(msg) {
+                    notification.success("Successfully logged out " + profile.getUsername());
                     profile.destroySession();
                     router.setDefaultRoute("login");
                     router.navigate('/', {trigger : true});
@@ -70,7 +71,7 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
         },
         render: function() {
             var loginLink = profile.getToken() != null ?
-                LogoutLink() :
+                React.DOM.span({}, LogoutLink(), " ", AboutLink()) :
                 React.DOM.span({}, LoginLink(), " ", RegisterLink(), " ", AboutLink());
 
             return React.DOM.header({'className': 'clearfix'},
