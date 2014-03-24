@@ -66,7 +66,11 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
             var wallets = this.props.wallets;
 
             var wallet_rows = wallets.map(function(model) {
-                return WalletRow({wallet: model, onDelete: this.handleDelete});
+                return WalletRow({
+                    key: model.cid,
+                    wallet: model,
+                    onDelete: this.handleDelete
+                });
             }.bind(this));
 
             return React.DOM.table({id: 'wallet-table'},
@@ -79,8 +83,8 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         }
     });
 
-    var WalletsView = React.createClass({
-        displayName: 'WalletsView',
+    var Wallet = React.createClass({
+        displayName: 'Wallet',
         getInitialState: function() {
             return {"wallets" : null};
         },
@@ -93,22 +97,20 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
             this.setState({"wallets" : wallets});
         },
         render: function() {
-            var content, wallets = this.state.wallets;
+            var wallets = this.state.wallets;
 
             if (!wallets)
-                content = React.DOM.p({}, "Loading");
+                return React.DOM.div({}, React.DOM.h1({}, "My Wallets"),
+                    React.DOM.p({}, "Loading"));
             else if (wallets.isEmpty())
-                content = [AddWalletForm({wallets: wallets}),
-                    React.DOM.div({}, "No wallets")];
-            else {
-                content = [AddWalletForm({wallets: wallets}),
-                    WalletTable({wallets: wallets})];
-            }
+                content = React.DOM.div({}, "No wallets");
+            else
+                content = WalletTable({wallets: wallets});
 
-            return React.DOM.div({}, React.DOM.h1({}, "My Wallets"),
-                content);
+            return React.DOM.div({id: 'wallet_container'}, React.DOM.h1({}, "My Wallets"),
+                AddWalletForm({wallets: wallets}), content);
         }
     });
 
-    return WalletsView;
+    return Wallet;
 });

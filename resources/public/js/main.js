@@ -26,8 +26,8 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile', 'fastclick', 'modernizr', 'foundation', 'jquery.cookie'], function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation, jqcookie) {
-
+require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile', 'fastclick', 'modernizr', 'foundation', 'jquery.cookie'],
+    function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation, jqcookie) {
 
     // Auth setup, if not doesn't set request header token if not logged in
     $.ajaxSetup({
