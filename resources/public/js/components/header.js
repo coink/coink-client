@@ -77,13 +77,13 @@ define(['react', 'router', 'models/profile'], function(React, router, profile) {
                 React.DOM.a(
                     {href: '/', id: 'logo', onClick: this.handleClick},
                     React.DOM.img({
-                        src: '/resources/images/mini_logo.png',
+                        src: '/img/CoinkLogoSmall.svg',
                         alt: 'Coink.io Crypto services',
-                        height: '30',
-                        width: '30'
+                        height: '50',
+                        width: '50'
                     }),
                     "Coink.io",
-                    React.DOM.span({id: 'tagline'}, " Your Crypto Portfolio")
+                    React.DOM.span({id: 'tagline'}, " What's in your wallet?")
                 ),
                 React.DOM.div({id: 'header-nav'}, loginLink)
             );
