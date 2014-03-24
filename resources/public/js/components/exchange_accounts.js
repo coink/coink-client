@@ -2,23 +2,52 @@ define(['react', 'collections/exchange_accounts', 'models/exchange_account', 'co
 function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
 
     var AddExchangeAccountFormFields = React.createClass({
-        // setFields: function() {
-        //     this.setState()
-        // }
+        getInitialState: function() {
+            return {nickname: ''}
+        },
+        setField: function(e) {
+            var map = {};
+            map[e.target.id] = e.target.value;
+            this.setState(map);
+        },
+        handleSubmit: function(e) {
+            e.preventDefault();
+            var model = new ExchangeAccount();
+            var map = {};
+            map.exchangeName = this.props.currentExchange.get('exchangeName');
+            map.nickname = this.state.nickname;
+            $.each(this.props.currentExchange.get('requiredFields'), function(index, field) {
+                map[field.machineName] = this.state[field.machineName];
+            }.bind(this));
+
+            model.save(map, {
+                success: function() {
+                    alert("Successfully added an exchange account!");
+                    //this.
+                }.bind(this)
+            });
+        },
         render: function() {
             var currentExchange = this.props.currentExchange;
             var exchangeName = currentExchange.get('exchangeName');
             var fields = currentExchange.get('requiredFields').map(function(field) {
                 return React.DOM.div({},
-                        React.DOM.label({htmlFor: field.displayName}, field.displayName),
+                        React.DOM.label({htmlFor: field.machineName}, field.displayName),
                         React.DOM.input({
                             type: 'text',
-                            id: field.machineName
+                            id: field.machineName,
+                            onChange: this.setField
                         }));
-            });
+            }.bind(this));
 
             return React.DOM.form({onSubmit: this.handleSubmit},
                 fields,
+                React.DOM.label({htmlFor: 'nickname'}, 'Nickname'),
+                React.DOM.input({
+                    type: 'text',
+                    id: 'nickname',
+                    onChange: this.setField
+                }),
                 React.DOM.input({type: 'submit', value: "Add"}));
         }
     });
