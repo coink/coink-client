@@ -1,4 +1,30 @@
-define(['react', 'collections/exchange_accounts', 'models/exchange_account'], function(React, ExchangeAccounts, ExchangeAccount) {
+define(['react', 'collections/exchange_accounts', 'models/exchange_account', 'collections/meta_exchanges'],
+function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
+
+    var AddExchangeAccountForm = React.createClass({
+        getInitialState: function() {
+            var meta_exchanges = new MetaExchanges();
+            meta_exchanges.on("sync", this.updateMetaExchanges);
+            meta_exchanges.fetch();
+
+            return {meta_exchanges: null, exchangeName: ''};
+        },
+        render: function() {
+            var exchanges = null;
+            if(this.state.meta_exchanges) {
+                exchanges = this.state.meta_exchanges.map(function(model) {
+                    return React.DOM.option({value: model.get('exchangeName')}, model.get('exchangeName'));
+                }.bind(this));
+            } else {
+                exchanges = React.DOM.p({}, "Loading");
+            }
+
+            return React.DOM.select({}, exchanges);
+       },
+       updateMetaExchanges: function(meta_exchanges) {
+            this.setState({"meta_exchanges" : meta_exchanges});
+        },
+    });
 
     var ExchangeAccountRow = React.createClass({
         handleDelete: function(e) {
@@ -66,10 +92,12 @@ define(['react', 'collections/exchange_accounts', 'models/exchange_account'], fu
                 content = React.DOM.p({}, "Loading");
             }
             else if (exchange_accounts.isEmpty()) {
-                content = React.DOM.div({}, "No exchange accounts");
+                content = [AddExchangeAccountForm({exchange_accounts: exchange_accounts}),
+                    React.DOM.div({}, "No exchange accounts")];
             }
             else {
-                content = ExchangeAccountTable({exchange_accounts: exchange_accounts});
+                content = [AddExchangeAccountForm({exchange_accounts: exchange_accounts}),
+                    ExchangeAccountTable({exchange_accounts: exchange_accounts})];
             }
 
             return React.DOM.div({}, React.DOM.h1({}, "My Exchange Accounts"),
