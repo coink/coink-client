@@ -34,7 +34,6 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
             model.save(map, {
                 success: function() {
                     alert("Successfully added an exchange account!");
-                    //this.
                 }.bind(this)
             });
         },
@@ -67,20 +66,21 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
 
     var AddExchangeAccountForm = React.createClass({
         getInitialState: function() {
-            var meta_exchanges = new MetaExchanges();
-            meta_exchanges.on("sync", this.updateMetaExchanges);
-            meta_exchanges.fetch();
-
             return {meta_exchanges: null, currentExchange: null};
         },
-       setExchange: function(e) {
+        componentWillMount: function() {
+            var meta_exchanges = new MetaExchanges();
+            meta_exchanges.fetch({
+                success: function(collection) {
+                    var currentExchange = collection.at(0);
+                    this.setState({"meta_exchanges": collection, "currentExchange": currentExchange});
+                }.bind(this)
+            });
+        },
+        setExchange: function(e) {
             var exchangeName = e.target.value;
             var currentExchange = this.state.meta_exchanges.findWhere({exchangeName: exchangeName})
             this.setState({"currentExchange": currentExchange});
-        },
-       updateMetaExchanges: function(meta_exchanges) {
-            var currentExchange = meta_exchanges.at(0);
-            this.setState({"meta_exchanges" : meta_exchanges, "currentExchange": currentExchange});
         },
         render: function() {
             var exchanges = null, fields = null;
@@ -151,13 +151,13 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
         getInitialState: function() {
             return {"exchange_accounts" : null};
         },
-        componentDidMount: function() {
+        componentWillMount: function() {
             var exchange_accounts = new ExchangeAccounts();
-            exchange_accounts.on("sync", this.updateExchangeAccounts);
-            exchange_accounts.fetch();
-        },
-        updateExchangeAccounts: function(exchange_accounts) {
-            this.setState({"exchange_accounts" : exchange_accounts});
+            exchange_accounts.fetch({
+                success: function(collection) {
+                    this.setState({"exchange_accounts": collection})
+                }.bind(this)
+            });
         },
         render: function() {
             var content, exchange_accounts = this.state.exchange_accounts;
