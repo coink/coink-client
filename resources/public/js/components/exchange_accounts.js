@@ -23,7 +23,6 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
         },
         handleSubmit: function(e) {
             e.preventDefault();
-            var model = new ExchangeAccount();
             var map = {};
             map.exchangeName = this.props.currentExchange.get('exchangeName');
             map.nickname = this.state.nickname;
@@ -31,7 +30,18 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
                 map[field.machineName] = this.state[field.machineName];
             }.bind(this));
 
-            this.props.exchange_accounts.create(map);
+            var model = new ExchangeAccount(map);
+
+            model.save({}, {
+                success: function() {
+                    alert("Successfully added an exchange account!");
+                }.bind(this),
+                error: function() {
+                    alert("Unable to add exchange account");
+                    this.props.exchange_accounts.remove(model);
+                }
+            });
+            this.props.exchange_accounts.add(model);
         },
         render: function() {
             var currentExchange = this.props.currentExchange;
@@ -157,17 +167,10 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
             exchange_accounts.on("add", this.addModel);
         },
         addModel: function(model) {
-            exchange_accounts = this.state.exchange_accounts;
-            if( exchange_accounts == null ) {
-                return;
-            }
-            exchange_accounts.add(model);
-            console.log("Setting state!");
-            this.setState({"exchange_accounts": exchange_accounts});
+            this.forceUpdate();
         },
-        updateExchangeAccounts: function(exchange_accounts) {
-            console.log("Synced!");
-            this.setState({"exchange_accounts": exchange_accounts});
+        removeModel: function(model) {
+            this.forceUpdate();
         },
         render: function() {
             var content, exchange_accounts = this.state.exchange_accounts;
