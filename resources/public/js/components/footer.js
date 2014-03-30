@@ -6,10 +6,7 @@ define(['react'], function(React) {
 
         render: function() {
             var year = new Date().getFullYear();
-            return React.DOM.footer({},
-                React.DOM.a({},
-                    "\u00a9" + year + " Coink")
-            );
+            return React.DOM.footer({}, "\u00a9 " + year + " Coink");
         }
     });
 

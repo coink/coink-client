@@ -1,7 +1,7 @@
-define(['react', 'underscore', 'components/header', 'components/footer',
+define(['react', 'underscore', 'components/header', 'components/logo', 'components/footer',
         'components/sidebar', 'components/notification', 'models/profile'],
-function (React, _, Header, Footer, Sidebar, Notification, profile) {
-
+function (React, _, Header, Logo, Footer, Sidebar, Notification, profile) {
+    
     var Application = React.createClass({
 
         displayName: 'Application',
@@ -14,10 +14,13 @@ function (React, _, Header, Footer, Sidebar, Notification, profile) {
             var loggedIn = profile.getToken() != null;
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: loggedIn}),
-                Sidebar({loggedIn: loggedIn}),
-                Notification(),
-                React.DOM.div({id: 'main'}),
-                Footer()
+                React.DOM.div({className: "row left"},
+                    Sidebar({loggedIn: loggedIn, footer: Footer(), header: Logo()}),
+                    React.DOM.div({className: 'large-9 medium-9 columns'},
+                        Notification(),
+                        React.DOM.div({id: 'main'})
+                    )
+                )
             );
         },
 

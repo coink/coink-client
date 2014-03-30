@@ -75,17 +75,6 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
                 React.DOM.span({}, LoginLink(), " ", RegisterLink(), " ", AboutLink());
 
             return React.DOM.header({'className': 'clearfix'},
-                React.DOM.a(
-                    {href: '/', id: 'logo', onClick: this.handleClick},
-                    React.DOM.img({
-                        src: '/img/CoinkLogoSmall.svg',
-                        alt: 'Coink.io Crypto services',
-                        height: '50',
-                        width: '50'
-                    }),
-                    "Coink.io",
-                    React.DOM.span({id: 'tagline'}, " What's in your wallet?")
-                ),
                 React.DOM.div({id: 'header-nav'}, loginLink)
             );
         }
