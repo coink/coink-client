@@ -72,6 +72,7 @@ function(React, $, router, notification, profile) {
                     onEnter: this.handleSubmit,
                     onSubmit: this.handleSubmit
                 },
+                React.DOM.h1({}, "Register"),
                 React.DOM.label({htmlFor: 'username'}),
                 React.DOM.input({
                     placeholder: "Username",

@@ -93,7 +93,14 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
                 }));
             }.bind(this));
 
-            return React.DOM.div({id: 'sidebar'}, React.DOM.ul({}, items));
+            return React.DOM.div({id: 'sidebar', className: 'large-3 medium-3 columns'},
+                React.DOM.div({className: 'wrap'},
+                    this.props.header,
+                    React.DOM.button({id: 'expand-btn'}, '☰'),
+                    React.DOM.ul({className: 'nav'}, items)
+                ),
+                React.DOM.div({className: 'footer'}, this.props.footer)
+            );
         }
     });
 

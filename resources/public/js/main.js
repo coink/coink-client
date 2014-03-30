@@ -26,8 +26,7 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile', 'fastclick', 'modernizr', 'foundation', 'jquery.cookie'],
-    function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation, jqcookie) {
+require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile', 'fastclick', 'modernizr', 'foundation', 'jquery.cookie'], function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation, jqcookie) {
 
     // Auth setup, if not doesn't set request header token if not logged in
     $.ajaxSetup({
@@ -42,6 +41,17 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router', 'mod
     $(document).ready(function() {
         var app = Application();
         React.renderComponent(app, document.getElementById('coink'));
+        
+        // Single page webapp routing made nice for browser navigation
+        Backbone.history.start({
+            pushState: false, // False until compojure routing is figured out
+            root: "/"
+        });
+
+        // Handle responsive navigation
+        $("#expand-btn").on("click", function(){
+            $("#sidebar").toggleClass("expanded")
+        });
     });
 
     // Default route if logged in
@@ -49,11 +59,5 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router', 'mod
         router.setDefaultRoute('wallets');
     else
         router.setDefaultRoute("login");
-
-    // Single page webapp routing made nice for browser navigation
-    Backbone.history.start({
-        pushState: false, // False until compojure routing is figured out
-        root: "/"
-    });
 
 });

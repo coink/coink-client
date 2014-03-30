@@ -1,7 +1,7 @@
 
-/* line 39 : /Users/Soumya/Documents/splash.coink.io/splash/css/styles.styl */
+/* line 43 : /Users/Soumya/Documents/splash.coink.io/splash/css/styles.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/styles\.styl}line{font-family:\0000339}}
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/styles\.styl}line{font-family:\0000343}}
 
 /* line 1 : /Applications/CodeKit.app/Contents/Resources/engines/stylus/lib/functions/index.styl */
 
@@ -5610,13 +5610,13 @@ table {
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\000038}}
 
-/* line 18 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
+/* line 35 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000318}}
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000335}}
 
-/* line 18 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/base.styl */
+/* line 35 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/base.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/base\.styl}line{font-family:\0000318}}
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/base\.styl}line{font-family:\0000335}}
 
 /* line 1 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/base.styl */
 
@@ -5652,6 +5652,10 @@ body {
     display: table-cell;
   }
 }
+
+/* line 17 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/base.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/base\.styl}line{font-family:\0000317}}
 
 /* line undefined : /Users/Soumya/Documents/splash.coink.io/splash/css/site/coins.styl */
 
@@ -5888,6 +5892,10 @@ body {
   }
 }
 
+/* line 40 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/coins.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/coins\.styl}line{font-family:\0000340}}
+
 /* line 40 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000340}}
@@ -5899,7 +5907,7 @@ body {
 /* line 3 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\000033}}
-#content h1 {
+#main h1 {
   font-size: 3em;
   color: #bf0b4e;
 }
@@ -5907,7 +5915,7 @@ body {
 /* line 7 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\000037}}
-#content .list-of-things {
+#main .list-of-things {
   padding-bottom: 1.5em;
 }
 
@@ -5918,10 +5926,10 @@ body {
 /* line 12 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000312}}
-#content .list-of-things .header:before,
-#content .list-of-things .item:before,
-#content .list-of-things .header:after,
-#content .list-of-things .item:after {
+#main .list-of-things .header:before,
+#main .list-of-things .item:before,
+#main .list-of-things .header:after,
+#main .list-of-things .item:after {
   content: "";
   display: table;
 }
@@ -5929,15 +5937,15 @@ body {
 /* line 16 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000316}}
-#content .list-of-things .header:after,
-#content .list-of-things .item:after {
+#main .list-of-things .header:after,
+#main .list-of-things .item:after {
   clear: both;
 }
 
 /* line 13 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000313}}
-#content .list-of-things .header .acct-name {
+#main .list-of-things .header .acct-name {
   color: #107f99;
   display: inline;
   margin-left: 0.6em;
@@ -5948,8 +5956,8 @@ body {
 /* line 20 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000320}}
-#content .list-of-things .thing,
-#content .list-of-things .value {
+#main .list-of-things .thing,
+#main .list-of-things .value {
   padding: 0.5em;
   display: inline-block;
 }
@@ -5957,14 +5965,14 @@ body {
 /* line 23 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000323}}
-#content .list-of-things .thing {
+#main .list-of-things .thing {
   color: #99093e;
 }
 
 /* line 25 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000325}}
-#content .list-of-things .value {
+#main .list-of-things .value {
   float: right;
   text-align: right;
   color: #68cc4e;
@@ -5973,7 +5981,7 @@ body {
 /* line 29 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000329}}
-#content .list-of-things .header {
+#main .list-of-things .header {
   background: #fbfbfb;
   font-size: 1.5em;
   border-radius: 5px;
@@ -5983,7 +5991,7 @@ body {
 /* line 34 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000334}}
-#content .list-of-things .item {
+#main .list-of-things .item {
   padding: 0.4em 0;
   border-bottom: 1px #b4b4b4 solid;
 }
@@ -5996,7 +6004,7 @@ body {
 /* line 36 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000336}}
-  #content .list-of-things .item .thing {
+  #main .list-of-things .item .thing {
     padding-left: 1em;
   }
 }
@@ -6004,24 +6012,28 @@ body {
 /* line 38 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000338}}
-#content .list-of-things .item .value {
+#main .list-of-things .item .value {
   color: #237f0a;
 }
 
 /* line 44 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000344}}
-#content .list-of-things .item:nth-child(2n+1) {
+#main .list-of-things .item:nth-child(2n+1) {
   background: #e4e8e9;
 }
 
 /* line 47 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000347}}
-#content .list-of-things .item tt {
+#main .list-of-things .item tt {
   font-size: 1.25em;
   line-height: 0.8em;
 }
+
+/* line 50 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/content-general.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/content-general\.styl}line{font-family:\0000350}}
 
 /* line 50 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
@@ -6030,17 +6042,17 @@ body {
 /* line 1 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\000031}}
-#nav {
+#sidebar {
   background: url("/img/darkbg.png");
   overflow-x: hidden;
   overflow-y: scroll;
 }
 @media only screen and (min-width: 40.063em) {
 
-/* line 6 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 7 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\000036}}
-  #nav {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\000037}}
+  #sidebar {
     -webkit-box-shadow: inset -7px 0 5px -3px rgba(91,91,91,0.4);
     box-shadow: inset -7px 0 5px -3px rgba(91,91,91,0.4);
     position: fixed;
@@ -6050,18 +6062,51 @@ body {
     max-width: 22.5em;
   }
 
-/* line 13 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 21 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000313}}
-  #nav #expand-btn {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000321}}
+  #sidebar .wrap,
+  #sidebar .footer {
+    margin: 0;
+  }
+
+/* line 24 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000324}}
+  #sidebar .wrap {
+    height: 100%;
+    min-height: 100%;
+    margin-bottom: -2em;
+  }
+
+/* line 29 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000329}}
+  #sidebar .wrap:after {
+    content: "";
+    display: block;
+  }
+
+/* line 33 : /Users/Soumya/Documents/splash.coink.io/splash/css/helpers.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/helpers\.styl}line{font-family:\0000333}}
+  #sidebar .footer,
+  #sidebar .wrap:after {
+    height: 2em;
+  }
+
+/* line 15 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000315}}
+  #sidebar #expand-btn {
     display: none;
   }
 }
 
-/* line 16 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 18 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000316}}
-#nav h1 {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000318}}
+#sidebar h1 {
   text-shadow: 0 -2px 0 rgba(255,255,255,0.4), 0 2px 0 rgba(255,255,255,0.4), 2px 0 0 rgba(255,255,255,0.4), -2px 0 0 rgba(255,255,255,0.4), -2px -2px 0 rgba(255,255,255,0.4), 2px 2px 0 rgba(255,255,255,0.4), 2px -2px 0 rgba(255,255,255,0.4), -2px 2px 0 rgba(255,255,255,0.4);
   text-align: center;
   text-transform: uppercase;
@@ -6078,10 +6123,10 @@ body {
 }
 @media only screen and (max-width: 40em) {
 
-/* line 34 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 36 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000334}}
-  #nav h1 {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000336}}
+  #sidebar h1 {
     text-shadow: 0 -1px 0 #fff, 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, -1px -1px 0 #fff, 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     bg-size: 1em;
     background: url("/img/CoinkLogoSmall.svg") left center no-repeat;
@@ -6093,12 +6138,47 @@ body {
     float: left;
   }
 }
+
+/* line 49 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000349}}
+#sidebar .nav {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 @media only screen and (min-width: 40.063em) {
 
-/* line 48 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 56 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000348}}
-  #nav a {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000356}}
+  #sidebar .nav li {
+    border-top: 1px solid #8b8b8b;
+    font-size: 1.5em;
+    margin: 1.25em -0.625em -1.25em;
+  }
+
+/* line 58 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000358}}
+  #sidebar .nav li:last-child {
+    border-bottom: 1px solid #8b8b8b;
+  }
+@media only screen and (max-width: 62.5em) {
+
+/* line 63 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000363}}
+    #sidebar .nav li {
+      font-size: 1em;
+      margin: 1.95em -0.9375em -1.95em;
+    }
+}
+
+/* line 69 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000369}}
+  #sidebar .nav a {
     display: block;
     text-shadow: 0 -2px 0 #9b9b9b, 0 2px 0 #9b9b9b, 2px 0 0 #9b9b9b, -2px 0 0 #9b9b9b, -2px -2px 0 #9b9b9b, 2px 2px 0 #9b9b9b, 2px -2px 0 #9b9b9b, -2px 2px 0 #9b9b9b;
     text-align: center;
@@ -6107,9 +6187,6 @@ body {
     font-weight: bold;
     color: #d8d8d8;
     bg-size: 2em;
-    font-size: 1.5em;
-    margin: 1.25em -0.625em -1.25em;
-    border-top: 1px solid #8b8b8b;
     padding: 0.6em;
     background: url("/img/CoinkLogo.svg") center 0.6em no-repeat;
     -webkit-background-size: 2em 2em;
@@ -6117,43 +6194,26 @@ body {
     padding-top: 2.6em;
   }
 
-/* line 58 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
-
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000358}}
-  #nav a:hover,
-  #nav a.active {
-    color: #f7f7f7;
-  }
-@media only screen and (max-width: 62.5em) {
-
-/* line 64 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
-
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000364}}
-    #nav a {
-      font-size: 1em;
-      margin: 1.95em -0.9375em -1.95em;
-    }
-}
-
-/* line 71 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
-
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000371}}
-  #nav a:last-child {
-    border-bottom: 1px solid #8b8b8b;
-  }
-
 /* line 79 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
 @media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000379}}
-  #nav a.active {
+  #sidebar .nav a:hover,
+  #sidebar .nav a.active {
+    color: #f7f7f7;
+  }
+
+/* line 89 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000389}}
+  #sidebar .nav a.active {
     position: relative;
     background-color: rgba(91,91,91,0.2);
   }
 
-/* line 83 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 93 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000383}}
-  #nav a.active:after {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000393}}
+  #sidebar .nav a.active:after {
     content: "";
     display: block;
     position: absolute;
@@ -6172,18 +6232,20 @@ body {
 }
 @media only screen and (max-width: 40em) {
 
-/* line 98 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 108 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\0000398}}
-  #nav {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003108}}
+  #sidebar .nav {
+    padding-top: 0.5em;
     text-align: right;
+    display: none;
   }
 
-/* line 102 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 114 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003102}}
-  #nav a {
-    display: none;
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003114}}
+  #sidebar .nav a {
+    display: block;
     color: #f0f0f0;
     padding: 1em;
     text-shadow: 0 -1px 0 rgba(91,91,91,0.4), 0 1px 0 rgba(91,91,91,0.4), 1px 0 0 rgba(91,91,91,0.4), -1px 0 0 rgba(91,91,91,0.4), -1px -1px 0 rgba(91,91,91,0.4), 1px 1px 0 rgba(91,91,91,0.4), 1px -1px 0 rgba(91,91,91,0.4), -1px 1px 0 rgba(91,91,91,0.4);
@@ -6191,34 +6253,129 @@ body {
     text-align: left;
   }
 
-/* line 110 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 122 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003110}}
-  #nav a:first-of-type {
-    margin-top: 0.25em;
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003122}}
+  #sidebar .nav li:last-child a {
+    border-bottom: 1px solid #5b5b5b;
+    margin-bottom: 1em;
+  }
+}
+
+/* line 126 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003126}}
+#sidebar.expanded ul.nav {
+  display: block;
+}
+
+/* line 129 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003129}}
+header {
+  z-index: 314;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0.75em;
+  border-radius: 5px;
+  background: #e4e4e4;
+  -webkit-box-shadow: inset 0 0 10px #c0c0c0;
+  box-shadow: inset 0 0 10px #c0c0c0;
+}
+
+/* line 139 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003139}}
+header a {
+  color: #99093e;
+  text-decoration: underline;
+  margin-left: 0.6em;
+  border-left: 1px solid #73072f;
+  padding-left: 0.6em;
+}
+
+/* line 147 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003147}}
+header a:first-child {
+  margin-left: 0;
+  border-left: none;
+  padding-left: 0;
+}
+
+/* line 152 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003152}}
+header a:hover {
+  text-decoration: none;
+}
+@media only screen and (max-width: 40em) {
+
+/* line 155 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003155}}
+  header {
+    display: none;
+  }
+}
+
+/* line 158 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003158}}
+
+/* line 159 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003159}}
+#sidebar footer {
+  color: #5b5b5b;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-shadow: 0 1px 0 #b4b4b4;
+}
+@media only screen and (max-width: 40em) {
+
+/* line 166 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003166}}
+  #sidebar {
+    text-align: right;
   }
 
-/* line 113 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 169 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003113}}
-  #nav #expand-btn {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003169}}
+  #sidebar #expand-btn {
     display: inline-block;
     padding: 0.125em 0.25em;
     font-size: 2em;
     margin-right: -0.46875em;
   }
 
-/* line 119 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+/* line 175 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003119}}
-  #nav.expanded a {
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003175}}
+  #sidebar footer {
+    display: none;
+  }
+
+/* line 178 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003178}}
+  #sidebar.expanded footer {
     display: block;
+    padding-bottom: 1.25em;
   }
 }
 
-/* line 121 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/splash.styl */
+/* line 181 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/nav.styl */
 
-@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/splash\.styl}line{font-family:\00003121}}
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/nav\.styl}line{font-family:\00003181}}
+
+/* line 181 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/splash.styl */
+
+@media -stylus-debug-info{filename{font-family:file\:\/\/\/Users\/Soumya\/Documents\/splash\.coink\.io\/splash\/css\/site\/splash\.styl}line{font-family:\00003181}}
 
 /* line 8 : /Users/Soumya/Documents/splash.coink.io/splash/css/site/splash.styl */
 

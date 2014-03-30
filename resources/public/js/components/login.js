@@ -46,6 +46,7 @@ function(React, $, router, notification, profile) {
 
         render: function() {
             return React.DOM.form({onSubmit: this.handleSubmit},
+                React.DOM.h1({}, "Login"),
                 React.DOM.label({htmlFor: 'username'}),
                 React.DOM.input({
                     placeholder: "Username",
