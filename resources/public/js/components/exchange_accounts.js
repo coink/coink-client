@@ -1,5 +1,5 @@
-define(['react', 'collections/exchange_accounts', 'models/exchange_account', 'collections/meta_exchanges'],
-function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
+define(['react', 'models/notification', 'models/exchange_account', 'collections/exchange_accounts', 'collections/meta_exchanges'],
+function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) {
 
     var AddExchangeAccountFormFields = React.createClass({
         displayName: "ExchangeFields",
@@ -24,6 +24,8 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
         },
         handleSubmit: function(e) {
             e.preventDefault();
+
+            //Fill map with the attributes to set in the model
             var map = {};
             map.exchangeName = this.props.currentExchange.get('exchangeName');
             map.nickname = this.state.nickname;
@@ -32,21 +34,58 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
                 map.credentials[field.machineName] = this.state[field.machineName];
             }.bind(this));
 
-            var model = new ExchangeAccount(map);
+            //Only create and save the model if the input is valid
+            if(this.validateAccount(map.credentials, map.nickname)) {
+                var model = new ExchangeAccount(map);
 
-            //This is where we save the entry on the server
-            model.save({}, {
-                success: function() {
-                    alert("Successfully added an exchange account!");
-                }.bind(this),
-                error: function(model, response, options) {
-                    alert("Unable to add exchange account");
-                    this.props.removeModel(model);
+                //This is where we save the entry on the server
+                model.save({}, {
+                    success: function(model, response, options) {
+                        notification.success("Successfully added an exchange account " + model.get('nickname'));
+                    },
+                    error: function(model, response, options) {
+                        notification.error("Unable to add exchange account " + model.get('nickname'));
+                        this.props.removeModel(model);
+                    }.bind(this)
+                });
+
+                //Optimistically add the entry to the view
+                this.props.addModel(model);
+            }
+        },
+        validateAccount: function(credentials, nickname) {
+            var arr = [];
+
+            $.each(credentials, function(key, value) {
+                if(value == null || value.length == 0) {
+                    arr.push(key);
                 }
             });
 
-            //Optimistically add the entry to the view
-            this.props.addModel(model);
+            if(nickname == null || nickname.length == 0) {
+                arr.push("nickname");
+            }
+
+            if(arr.length == 0) {
+                return true;
+            }
+            else {
+                var message = "Please enter your ";
+
+                //Go through array and add to message
+                for(var i = 0; i < arr.length; i++) {
+                    if( i == arr.length - 1) {
+                        message = message.concat(arr[i] + " ");
+                    } else {
+                        message = message.concat(arr[i] + ", ");
+                    }
+                }
+
+                //Add correct plural of field(s)
+                message = message.concat(arr.length == 1 ? "field" : "fields");
+                notification.warning(message);
+                return false;
+            }
         },
         render: function() {
             var currentExchange = this.props.currentExchange;
@@ -128,13 +167,13 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
 
             //This is where we destroy the entry on the server
             this.props.exchange_account.destroy({
-                success: function() {
-                    alert("Successfully removed exchange account!");
-                }.bind(this),
+                success: function(model, response, options) {
+                    notification.success("Successfully removed exchange account " + model.get('nickname'));
+                },
                 error: function(model, response, options) {
-                    alert("Unable to remove exchange account");
+                    notification.error("Unable to remove exchange account" + model.get('nickname'));
                     this.props.addModel(model);
-                }
+                }.bind(this)
             });
 
             //Optimistically remove the row from the view
