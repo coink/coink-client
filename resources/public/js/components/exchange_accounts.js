@@ -117,15 +117,17 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
     var AddExchangeAccountForm = React.createClass({
         displayName: "ExchangeForm",
         getInitialState: function() {
-            return {meta_exchanges: null, currentExchange: null};
+            return {meta_exchanges: new MetaExchanges(), currentExchange: new ExchangeAccount()};
         },
         componentWillMount: function() {
-            var meta_exchanges = new MetaExchanges();
-            meta_exchanges.fetch({
+            this.state.meta_exchanges.fetch({
                 success: function(collection) {
                     var currentExchange = collection.at(0);
                     this.setState({"meta_exchanges": collection, "currentExchange": currentExchange});
-                }.bind(this)
+                }.bind(this),
+                error: function() {
+                    notification.error("AJAX meta_exchanges error");
+                }
             });
         },
         setExchange: function(e) {
@@ -134,8 +136,8 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             this.setState({"currentExchange": currentExchange});
         },
         render: function() {
-            var exchanges = null, fields = null;
-            if(this.state.meta_exchanges) {
+            var content = null, fields = null;
+            if(!this.state.meta_exchanges.isEmpty()) {
                 exchanges = this.state.meta_exchanges.map(function(model) {
                     return React.DOM.option({value: model.get('exchangeName')}, model.get('exchangeName'));
                 }.bind(this));
@@ -145,14 +147,16 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
                     addModel: this.props.addModel,
                     removeModel: this.props.removeModeel
                 });
+                content = React.DOM.div({},
+                            React.DOM.span({}, "New Exchange Account: "),
+                            React.DOM.select({onChange: this.setExchange}, exchanges),
+                            fields);
+
             } else {
-                exchanges = React.DOM.p({}, "Loading");
+                content = React.DOM.p({}, "Loading");
             }
 
-            return React.DOM.div({},
-                React.DOM.span({}, "New Exchange Account: "),
-                React.DOM.select({onChange: this.setExchange}, exchanges),
-                fields);
+            return content;
        }
     });
 
