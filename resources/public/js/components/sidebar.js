@@ -36,23 +36,16 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
             text: 'Wallets',
             route: ['wallets'],
             icon: 'wallet'
-            /*menu: [
-            {
-                text: 'All',
-                route: ['wallets', 'all'],
-                login_required: true
-            },
-            {
-                text: 'Settings',
-                route: ['wallets', 'settings'],
-                icon: 'cog',
-                login_required: true
-            }*/
         },
         {
             text: 'Exchanges',
             route: ['exchanges'],
             icon: 'exchange'
+        },
+        {
+            text: 'Settings',
+            route: ['settings'],
+            icon: 'cog'
         },
         {
             text: 'Help',
@@ -62,7 +55,13 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         {
             text: 'About',
             route: ['about'],
-            icon: 'about'
+            icon: 'about',
+            menu: [
+            {
+                text: 'Contact Us',
+                route: ['about', 'contact'],
+                icon: 'contact',
+            }]
         },
         ];
 
