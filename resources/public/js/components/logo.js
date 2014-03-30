@@ -1,14 +1,14 @@
-define(['react', 'router', 'models/profile'], function(React, router, profile) {
+define(['react', 'router'], function(React, router) {
 
     var Logo = React.createClass({
         handleClick: function(e) {
             e.preventDefault();
-            router.navigate('/', {trigger : true});
+            router.navigate(router.defaultRoute, {trigger : true});
+            this.props.setActive(router.defaultRoute);
         },
         render: function() {
-            
             return React.DOM.a(
-                {href: '/', id: 'logo', onClick: this.handleClick},
+                {href: router.defaultRoute, id: 'logo', onClick: this.handleClick},
                 React.DOM.h1({}, "Coink")
             );
         }

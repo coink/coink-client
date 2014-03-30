@@ -1,6 +1,6 @@
-define(['react', 'underscore', 'components/header', 'components/logo', 'components/footer',
+define(['react', 'underscore', 'components/header', 'components/footer',
         'components/sidebar', 'components/notification', 'models/profile'],
-function (React, _, Header, Logo, Footer, Sidebar, Notification, profile) {
+function (React, _, Header, Footer, Sidebar, Notification, profile) {
 
     var Application = React.createClass({
 
@@ -14,7 +14,7 @@ function (React, _, Header, Logo, Footer, Sidebar, Notification, profile) {
             var loggedIn = profile.getToken() != null;
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: loggedIn}),
-                Sidebar({loggedIn: loggedIn, header: Logo()}),
+                Sidebar({loggedIn: loggedIn}),
                 React.DOM.div({id: 'content-wrapper', className: 'large-9 medium-9 columns'},
                     React.DOM.div({className: 'floatfix'},
                         React.DOM.div({className: 'wrap'},

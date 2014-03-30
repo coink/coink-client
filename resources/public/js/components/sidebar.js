@@ -1,10 +1,12 @@
-define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collections/menu_items'], function (React, _, Glyphicon, router, MenuItems) {
+define(['react', 'underscore', 'router', 'collections/menu_items',
+        'components/logo', 'components/common/glyphicon'],
+function (React, _, router, MenuItems, Logo, Glyphicon) {
 
     var SidebarListItem = React.createClass({
         displayName: 'SidebarListItem',
         handleClick: function(e) {
             e.preventDefault();
-            this.props.setActive(this);
+            this.props.setActive(this.props.id[0]);
             router.navigate(this.props.id.join('/'), {trigger: true});
         },
 
@@ -36,7 +38,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collect
         displayName: 'Sidebar',
         getInitialState: function() {
             return {
-                active: 'wallet'
+                active: 'wallets'
             };
         },
 
@@ -44,8 +46,9 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collect
             return {menuItems: new MenuItems()};
         },
 
-        setActive: function(e) {
-            this.setState({active: e.props.id[0]});
+        setActive: function(route) {
+            console.log(route);
+            this.setState({active: route});
         },
 
         render: function() {
@@ -66,7 +69,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collect
 
                 return React.DOM.div({id: 'sidebar', className: 'large-3 medium-3 columns'},
                     React.DOM.div({className: 'wrap'},
-                        this.props.header,
+                        Logo({setActive: this.setActive}),
                         React.DOM.button({id: 'expand-btn'}, '☰'),
                         React.DOM.ul({className: 'nav'}, items)
                     )
