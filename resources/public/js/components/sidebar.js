@@ -1,4 +1,4 @@
-define(['react', 'underscore', 'components/common/glyphicon', 'router'], function (React, _, Glyphicon, router) {
+define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collections/menu_items'], function (React, _, Glyphicon, router, MenuItems) {
 
     var SidebarListItem = React.createClass({
         displayName: 'SidebarListItem',
@@ -32,39 +32,6 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         }
     });
 
-    var menuItems = [{
-            text: 'Wallets',
-            route: ['wallets'],
-            icon: 'wallet'
-        },
-        {
-            text: 'Exchanges',
-            route: ['exchanges'],
-            icon: 'exchange'
-        },
-        {
-            text: 'Settings',
-            route: ['settings'],
-            icon: 'cog'
-        },
-        {
-            text: 'Help',
-            route: ['help'],
-            icon: 'help'
-        },
-        {
-            text: 'About',
-            route: ['about'],
-            icon: 'about',
-            menu: [
-            {
-                text: 'Contact Us',
-                route: ['about', 'contact'],
-                icon: 'contact',
-            }]
-        },
-        ];
-
     var Sidebar = React.createClass({
         displayName: 'Sidebar',
         getInitialState: function() {
@@ -74,7 +41,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         },
 
         getDefaultProps: function() {
-            return {items: menuItems};
+            return {menuItems: new MenuItems()};
         },
 
         setActive: function(e) {
@@ -83,16 +50,16 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
 
         render: function() {
             if (this.props.loggedIn) {
-                var items = _.map(this.props.items, function(item) {
+                var items = _.map(this.props.menuItems.models, function(item) {
                         return SidebarListItem({
                             setActive: this.setActive,
-                            icon: item.icon,
+                            icon: item.get("icon"),
                             active: this.state.active,
-                            text: item.text,
-                            id: item.route
+                            text: item.get("text"),
+                            id: item.get("route")
                         },
                         SidebarSubmenu({
-                            items: item.menu,
+                            items: item.get("menu"),
                             active: this.state.active
                         }));
                     }.bind(this));
