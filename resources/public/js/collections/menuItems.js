@@ -41,6 +41,6 @@ define(['backbone', 'models/menuItem'], function(Backbone, MenuItem) {
         }
     ];
 
-    return new MenuItems;
+    return MenuItems;
 
 });

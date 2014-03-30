@@ -41,7 +41,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collect
         },
 
         getDefaultProps: function() {
-            return {menuItems: MenuItems};
+            return {menuItems: new MenuItems()};
         },
 
         setActive: function(e) {
