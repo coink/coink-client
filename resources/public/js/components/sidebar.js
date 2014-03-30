@@ -1,4 +1,4 @@
-define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collections/menuItems'], function (React, _, Glyphicon, router, MenuItems) {
+define(['react', 'underscore', 'components/common/glyphicon', 'router', 'collections/menu_items'], function (React, _, Glyphicon, router, MenuItems) {
 
     var SidebarListItem = React.createClass({
         displayName: 'SidebarListItem',
