@@ -10,8 +10,8 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
 
         render: function() {
             var icon = this.props.icon ? Glyphicon({name: this.props.icon}) : null;
-            return React.DOM.li({className: this.props.active == this.props.id[0] ? 'active' : 'inactive'},
-                React.DOM.a({
+            return React.DOM.li({},
+                React.DOM.a({className: this.props.active == this.props.id[0] ? 'active' : 'inactive',
                     href: this.props.id.join('/'),
                     onClick: this.handleClick
                 }, icon, this.props.text), this.props.children
@@ -83,21 +83,21 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         },
 
         render: function() {
-            var items = _.map(this.props.items, function(item) {
-                    return SidebarListItem({
-                        setActive: this.setActive,
-                        icon: item.icon,
-                        active: this.state.active,
-                        text: item.text,
-                        id: item.route
-                    },
-                    SidebarSubmenu({
-                        items: item.menu,
-                        active: this.state.active
-                    }));
-                }.bind(this));
-
             if (this.props.loggedIn) {
+                var items = _.map(this.props.items, function(item) {
+                        return SidebarListItem({
+                            setActive: this.setActive,
+                            icon: item.icon,
+                            active: this.state.active,
+                            text: item.text,
+                            id: item.route
+                        },
+                        SidebarSubmenu({
+                            items: item.menu,
+                            active: this.state.active
+                        }));
+                    }.bind(this));
+
                 return React.DOM.div({id: 'sidebar', className: 'large-3 medium-3 columns'},
                     React.DOM.div({className: 'wrap'},
                         this.props.header,
