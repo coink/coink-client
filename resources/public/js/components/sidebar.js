@@ -4,17 +4,17 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         displayName: 'SidebarListItem',
         handleClick: function(e) {
             e.preventDefault();
+            this.props.setActive(this);
             router.navigate(this.props.id.join('/'), {trigger: true});
         },
 
         render: function() {
             var icon = this.props.icon ? Glyphicon({name: this.props.icon}) : null;
-            return React.DOM.li(
-                {className: this.props.active ? 'active' : ''},
-                React.DOM.a(
-                    {href: this.props.id.join('/'), onClick: this.handleClick},
-                   icon, this.props.text
-                ), this.props.children
+            return React.DOM.li({className: this.props.active == this.props.id[0] ? 'active' : 'inactive'},
+                React.DOM.a({
+                    href: this.props.id.join('/'),
+                    onClick: this.handleClick
+                }, icon, this.props.text), this.props.children
             );
         }
     });
@@ -23,13 +23,11 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         displayName: 'SidebarSubmenu',
         render: function() {
             return React.DOM.ul({}, _.map(this.props.items, function(menu_item) {
-                if (!menu_item.login_required || this.props.loggedIn) {
-                    return SidebarListItem({
-                        text: menu_item.text,
-                        active: this.props.active && this.props.active.join('/') == menu_item.route.join('/'), // poor man's array equality
-                        id: menu_item.route
-                    });
-                }
+                return SidebarListItem({
+                    text: menu_item.text,
+                    active: this.props.active,
+                    id: menu_item.route
+                });
             }.bind(this)));
         }
     });
@@ -72,7 +70,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         displayName: 'Sidebar',
         getInitialState: function() {
             return {
-                active: null
+                active: 'wallet'
             };
         },
 
@@ -80,20 +78,24 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
             return {items: menuItems};
         },
 
+        setActive: function(e) {
+            this.setState({active: e.props.id[0]});
+        },
+
         render: function() {
             var items = _.map(this.props.items, function(item) {
-                if (!item.login_required || this.props.loggedIn)
-                return SidebarListItem({
-                    icon: item.icon,
-                    active: this.state.active && item.route[0] == this.state.active[0],
-                    text: item.text,
-                    id: item.route
-                }, SidebarSubmenu({
-                    items: item.menu,
-                active: this.state.active,
-                loggedIn: this.props.loggedIn
-                }));
-            }.bind(this));
+                    return SidebarListItem({
+                        setActive: this.setActive,
+                        icon: item.icon,
+                        active: this.state.active,
+                        text: item.text,
+                        id: item.route
+                    },
+                    SidebarSubmenu({
+                        items: item.menu,
+                        active: this.state.active
+                    }));
+                }.bind(this));
 
             if (this.props.loggedIn) {
                 return React.DOM.div({id: 'sidebar', className: 'large-3 medium-3 columns'},
