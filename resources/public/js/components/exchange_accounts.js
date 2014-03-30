@@ -1,5 +1,5 @@
-define(['react', 'collections/exchange_accounts', 'models/exchange_account', 'collections/meta_exchanges'],
-function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
+define(['react', 'models/notification', 'models/exchange_account', 'collections/exchange_accounts', 'collections/meta_exchanges'],
+function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) {
 
     var AddExchangeAccountFormFields = React.createClass({
         displayName: "ExchangeFields",
@@ -24,6 +24,8 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
         },
         handleSubmit: function(e) {
             e.preventDefault();
+
+            //Fill map with the attributes to set in the model
             var map = {};
             map.exchangeName = this.props.currentExchange.get('exchangeName');
             map.nickname = this.state.nickname;
@@ -32,21 +34,57 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
                 map.credentials[field.machineName] = this.state[field.machineName];
             }.bind(this));
 
-            var model = new ExchangeAccount(map);
+            //Only create and save the model if the input is valid
+            if(this.validateAccount(map.credentials, map.nickname)) {
+                var model = new ExchangeAccount(map);
 
-            //This is where we save the entry on the server
-            model.save({}, {
-                success: function() {
-                    alert("Successfully added an exchange account!");
-                }.bind(this),
-                error: function(model, response, options) {
-                    alert("Unable to add exchange account");
-                    this.props.removeModel(model);
+                //This is where we save the entry on the server
+                model.save({}, {
+                    success: function(model, response, options) {
+                        notification.success("Successfully added an exchange account " + model.get('nickname'));
+                    },
+                    error: function(model, response, options) {
+                        notification.error("Unable to add exchange account " + model.get('nickname'));
+                        this.props.removeModel(model);
+                    }.bind(this)
+                });
+
+                //Optimistically add the entry to the view
+                this.props.addModel(model);
+            }
+        },
+        validateAccount: function(credentials, nickname) {
+            var errorArray = [];
+
+            $.each(credentials, function(key, value) {
+                if(value == null || value.length == 0) {
+                    errorArray.push(key);
                 }
             });
 
-            //Optimistically add the entry to the view
-            this.props.addModel(model);
+            if(nickname == null || nickname.length == 0) {
+                errorArray.push("nickname");
+            }
+
+            if(errorArray.length == 0) {
+                return true;
+            }
+            else {
+                notification.warning(this.validationError(errorArray));
+                return false;
+            }
+        },
+        validationError: function(errorArray) {
+            var message = "Please enter your ";
+            if(errorArray.length == 1) {
+                return message.concat(errorArray[0]);
+            }
+            else if(errorArray.length == 2) {
+                return message.concat(errorArray[0] + " and " + errorArray[1]);
+            } else {
+                var end = errorArray.pop();
+                return message.concat(errorArray.join(', ') + ", and " + end);
+            }
         },
         render: function() {
             var currentExchange = this.props.currentExchange;
@@ -78,15 +116,17 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
     var AddExchangeAccountForm = React.createClass({
         displayName: "ExchangeForm",
         getInitialState: function() {
-            return {meta_exchanges: null, currentExchange: null};
+            return {meta_exchanges: new MetaExchanges(), currentExchange: new ExchangeAccount()};
         },
         componentWillMount: function() {
-            var meta_exchanges = new MetaExchanges();
-            meta_exchanges.fetch({
+            this.state.meta_exchanges.fetch({
                 success: function(collection) {
                     var currentExchange = collection.at(0);
                     this.setState({"meta_exchanges": collection, "currentExchange": currentExchange});
-                }.bind(this)
+                }.bind(this),
+                error: function() {
+                    notification.error("AJAX meta_exchanges error");
+                }
             });
         },
         setExchange: function(e) {
@@ -95,8 +135,8 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
             this.setState({"currentExchange": currentExchange});
         },
         render: function() {
-            var exchanges = null, fields = null;
-            if(this.state.meta_exchanges) {
+            var content = null, fields = null;
+            if(!this.state.meta_exchanges.isEmpty()) {
                 exchanges = this.state.meta_exchanges.map(function(model) {
                     return React.DOM.option({value: model.get('exchangeName')}, model.get('exchangeName'));
                 }.bind(this));
@@ -106,14 +146,16 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
                     addModel: this.props.addModel,
                     removeModel: this.props.removeModeel
                 });
+                content = React.DOM.div({},
+                            React.DOM.span({}, "New Exchange Account: "),
+                            React.DOM.select({onChange: this.setExchange}, exchanges),
+                            fields);
+
             } else {
-                exchanges = React.DOM.p({}, "Loading");
+                content = React.DOM.p({}, "Loading");
             }
 
-            return React.DOM.div({},
-                React.DOM.span({}, "New Exchange Account: "),
-                React.DOM.select({onChange: this.setExchange}, exchanges),
-                fields);
+            return content;
        }
     });
 
@@ -128,13 +170,13 @@ function(React, ExchangeAccounts, ExchangeAccount, MetaExchanges) {
 
             //This is where we destroy the entry on the server
             this.props.exchange_account.destroy({
-                success: function() {
-                    alert("Successfully removed exchange account!");
-                }.bind(this),
+                success: function(model, response, options) {
+                    notification.success("Successfully removed exchange account " + model.get('nickname'));
+                },
                 error: function(model, response, options) {
-                    alert("Unable to remove exchange account");
+                    notification.error("Unable to remove exchange account" + model.get('nickname'));
                     this.props.addModel(model);
-                }
+                }.bind(this)
             });
 
             //Optimistically remove the row from the view
