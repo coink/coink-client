@@ -14,13 +14,15 @@ function (React, _, Header, Logo, Footer, Sidebar, Notification, profile) {
             var loggedIn = profile.getToken() != null;
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: loggedIn}),
-                React.DOM.div({className: "row left"},
-                    Sidebar({loggedIn: loggedIn, header: Logo()}),
-                    React.DOM.div({className: 'large-9 medium-9 columns'},
-                        Notification(),
-                        React.DOM.div({id: 'main'})
-                    ),
-                    Footer()
+                Sidebar({loggedIn: loggedIn, header: Logo()}),
+                React.DOM.div({id: 'content-wrapper', className: 'large-9 medium-9 columns'},
+                    React.DOM.div({className: 'floatfix'},
+                        React.DOM.div({className: 'wrap'},
+                            Notification(),
+                            React.DOM.div({id: 'main'})
+                        ),
+                        Footer()
+                    )
                 )
             );
         },

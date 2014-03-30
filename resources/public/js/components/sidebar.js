@@ -10,8 +10,8 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
 
         render: function() {
             var icon = this.props.icon ? Glyphicon({name: this.props.icon}) : null;
-            return React.DOM.li({},
-                React.DOM.a({className: this.props.active == this.props.id[0] ? 'active' : 'inactive',
+            return React.DOM.li({className: this.props.active == this.props.id[0] ? 'active' : 'inactive'},
+                React.DOM.a({
                     href: this.props.id.join('/'),
                     onClick: this.handleClick
                 }, icon, this.props.text), this.props.children
