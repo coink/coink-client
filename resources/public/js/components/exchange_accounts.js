@@ -54,37 +54,35 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             }
         },
         validateAccount: function(credentials, nickname) {
-            var arr = [];
+            var errorArray = [];
 
             $.each(credentials, function(key, value) {
                 if(value == null || value.length == 0) {
-                    arr.push(key);
+                    errorArray.push(key);
                 }
             });
 
             if(nickname == null || nickname.length == 0) {
-                arr.push("nickname");
+                errorArray.push("nickname");
             }
 
-            if(arr.length == 0) {
+            if(errorArray.length == 0) {
                 return true;
             }
             else {
-                var message = "Please enter your ";
-
-                //Go through array and add to message
-                for(var i = 0; i < arr.length; i++) {
-                    if( i == arr.length - 1) {
-                        message = message.concat(arr[i] + " ");
-                    } else {
-                        message = message.concat(arr[i] + ", ");
-                    }
-                }
-
-                //Add correct plural of field(s)
-                message = message.concat(arr.length == 1 ? "field" : "fields");
-                notification.warning(message);
+                notification.warning(this.validationError(errorArray));
                 return false;
+            }
+        },
+        validationError: function(errorArray) {
+            var message = "Please enter your ";
+            if(errorArray.length == 1) {
+                return message.concat(errorArray[0]);
+            }
+            else if(errorArray.length == 2) {
+                return message.concat(errorArray[0] + " and " + errorArray[1]);
+            } else if(errorArray.length == 3) {
+                return message.concat(errorArray[0] + ", " + errorArray[1] + ", and " + errorArray[2]);
             }
         },
         render: function() {
