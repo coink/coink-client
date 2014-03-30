@@ -37,8 +37,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
     var menuItems = [{
             text: 'Wallets',
             route: ['wallets'],
-            icon: 'wallet',
-            login_required: true
+            icon: 'wallet'
             /*menu: [
             {
                 text: 'All',
@@ -55,14 +54,17 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
         {
             text: 'Exchanges',
             route: ['exchanges'],
-            icon: 'exchange',
-            login_required: true
+            icon: 'exchange'
         },
         {
             text: 'Help',
             route: ['help'],
-            icon: 'help',
-            login_required: true
+            icon: 'help'
+        },
+        {
+            text: 'About',
+            route: ['about'],
+            icon: 'about'
         },
         ];
 

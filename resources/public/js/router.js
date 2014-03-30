@@ -30,8 +30,6 @@ function(Backbone, React, profile) {
                 this.navigate('login', {trigger: true});
                 return;
             // Don't render views that require user is not logged in
-            } else if (!requiresLogin && profile.get("logged_in")) {
-                return;
             }
             var node = document.getElementById('main');
             var loading = React.DOM.div({className: 'loading'});
@@ -75,7 +73,7 @@ function(Backbone, React, profile) {
         about: function() {
             this.setView(['components/about'], function(About) {
                 return About();
-            }, false);
+            }, true);
         }
     });
 

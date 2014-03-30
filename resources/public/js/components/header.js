@@ -24,18 +24,6 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
         }
     });
 
-    var AboutLink = React.createClass({
-        displayName: 'AboutLink',
-        handleClick: function(e) {
-            e.preventDefault();
-            router.navigate('about', {trigger: true});
-        },
-        render: function() {
-            return React.DOM.a({href: 'about', onClick: this.handleClick},
-                "About Us");
-        }
-    })
-
     var LogoutLink = React.createClass({
         displayName: 'LogoutLink',
         handleClick: function(e) {
@@ -71,8 +59,8 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
         },
         render: function() {
             var loginLink = profile.getToken() != null ?
-                React.DOM.span({}, LogoutLink(), " ", AboutLink()) :
-                React.DOM.span({}, LoginLink(), " ", RegisterLink(), " ", AboutLink());
+                React.DOM.span({}, LogoutLink(), " ") :
+                React.DOM.span({}, LoginLink(), " ", RegisterLink(), " ");
 
             return React.DOM.header({'className': 'clearfix'},
                 React.DOM.div({id: 'header-nav'}, loginLink)
