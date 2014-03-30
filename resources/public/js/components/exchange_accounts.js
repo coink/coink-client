@@ -81,8 +81,9 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             }
             else if(errorArray.length == 2) {
                 return message.concat(errorArray[0] + " and " + errorArray[1]);
-            } else if(errorArray.length == 3) {
-                return message.concat(errorArray[0] + ", " + errorArray[1] + ", and " + errorArray[2]);
+            } else {
+                var end = errorArray.pop();
+                return message.concat(errorArray.join(', ') + ", and " + end);
             }
         },
         render: function() {
