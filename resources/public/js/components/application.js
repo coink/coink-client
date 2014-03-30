@@ -1,7 +1,7 @@
 define(['react', 'underscore', 'components/header', 'components/logo', 'components/footer',
         'components/sidebar', 'components/notification', 'models/profile'],
 function (React, _, Header, Logo, Footer, Sidebar, Notification, profile) {
-    
+
     var Application = React.createClass({
 
         displayName: 'Application',
@@ -15,11 +15,12 @@ function (React, _, Header, Logo, Footer, Sidebar, Notification, profile) {
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: loggedIn}),
                 React.DOM.div({className: "row left"},
-                    Sidebar({loggedIn: loggedIn, footer: Footer(), header: Logo()}),
+                    Sidebar({loggedIn: loggedIn, header: Logo()}),
                     React.DOM.div({className: 'large-9 medium-9 columns'},
                         Notification(),
                         React.DOM.div({id: 'main'})
-                    )
+                    ),
+                    Footer()
                 )
             );
         },

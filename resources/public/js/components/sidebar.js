@@ -102,8 +102,7 @@ define(['react', 'underscore', 'components/common/glyphicon', 'router'], functio
                         this.props.header,
                         React.DOM.button({id: 'expand-btn'}, '☰'),
                         React.DOM.ul({className: 'nav'}, items)
-                    ),
-                    React.DOM.div({className: 'footer'}, this.props.footer)
+                    )
                 );
             } else {
                 return React.DOM.div({});
