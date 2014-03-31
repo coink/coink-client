@@ -4,78 +4,72 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
 
     var SidebarListItem = React.createClass({
         displayName: 'SidebarListItem',
+
         handleClick: function(e) {
             e.preventDefault();
-            var item = this.props
-            this.props.setActive(item.route[0]);
-            router.navigate(item.route.join('/'), {trigger: true});
+            router.navigate(this.props.route.join('/'), {trigger: true});
         },
 
         render: function() {
-            var item = this.props
-            var icon = item.icon ? Glyphicon({name: item.icon}) : null;
-            var active = this.props.active == item.route[0] ? 'active' : 'inactive';
-            var submenu = "";
-            if (item.menu != undefined) {
-                submenu = React.DOM.ul({}, _.map(item.menu, function(subitem) {
-                    return SidebarListItem({
-                        route: subitem.route,
-                        text: subitem.text,
-                        active: item.active,
-                        icon: subitem.icon,
-                        setActive: item.setActive
-                    })
-                }))
-            }
-            return React.DOM.li({className: active},
+            var icon = this.props.icon ? Glyphicon({name: this.props.icon}) : null;
+            var content = React.DOM.li({
+                className: this.props.active ? "active" : "inactive"},
                 React.DOM.a({
-                    href: item.route.join('/'),
+                    href: this.props.route.join('/'),
                     onClick: this.handleClick
-                }, icon, item.text), submenu)
+                }, icon, this.props.key), this.props.children);
+            return content;
         }
     });
 
     var Sidebar = React.createClass({
         displayName: 'Sidebar',
+
         getInitialState: function() {
-            return {
-                active: 'wallets'
-            };
+            return {active: null};
         },
 
         getDefaultProps: function() {
-            return {menuItems: new MenuItems()};
+            return {menuItems: MenuItems};
         },
 
-        setActive: function(route) {
-            console.log(route);
-            this.setState({active: route});
+        componentDidMount: function() {
+            var routeMap = router.getRouteMap();
+            router.on("route", function(view) {
+                if (view == "handleDefaultRoute") return;
+                active = routeMap[view] ? routeMap[view].split('/') : [view];
+                this.setState({active: active});
+            }.bind(this))
         },
 
         render: function() {
-            if (this.props.loggedIn) {
-                var items = this.props.menuItems.map(function(item) {
-                    return SidebarListItem({
-                        key: item.get('text'),
-                        text: item.get("text"),
-                        icon: item.get("icon"),
-                        route: item.get("route"),
-                        menu: item.get("menu"),
-                        active: this.state.active,
-                        setActive: this.setActive
-                    })
-                }.bind(this));
+            if (!this.props.loggedIn) return React.DOM.div({});
+            var items = this.props.menuItems.map(function(item) {
+                return SidebarListItem({
+                    key: item.get("text"),
+                    icon: item.get("icon"),
+                    route: item.get("route"),
+                    active: this.state.active && item.get("route") == this.state.active[0]
+                }, React.DOM.ul({},
+                    _(item.get("menu")).map(function(subitem) {
+                        return SidebarListItem({
+                            key: subitem.text,
+                            icon: subitem.icon,
+                            route: subitem.route,
+                            active: this.state.active && subitem.route.join('/') == this.state.active.join('/')
+                        })
+                    }.bind(this))))
+            }.bind(this));
 
-                return React.DOM.div({id: 'sidebar', className: 'large-3 medium-3 columns'},
-                    React.DOM.div({className: 'wrap'},
-                        Logo({setActive: this.setActive}),
-                        React.DOM.button({id: 'expand-btn'}, '☰'),
-                        React.DOM.ul({className: 'nav'}, items)
-                    )
-                );
-            } else {
-                return React.DOM.div({});
-            }
+            return React.DOM.div({
+                id: 'sidebar',
+                className: 'large-3 medium-3 columns'
+            },
+            React.DOM.div({className: 'wrap'},
+                Logo(),
+                React.DOM.button({id: 'expand-btn'}, '☰'),
+                React.DOM.ul({className: 'nav'}, items))
+            );
         }
     });
 

@@ -4,13 +4,13 @@ define(['react', 'router'], function(React, router) {
         handleClick: function(e) {
             e.preventDefault();
             router.navigate(router.defaultRoute, {trigger : true});
-            this.props.setActive(router.defaultRoute);
         },
         render: function() {
-            return React.DOM.a(
-                {href: router.defaultRoute, id: 'logo', onClick: this.handleClick},
-                React.DOM.h1({}, "Coink")
-            );
+            return React.DOM.a({
+                href: router.defaultRoute,
+                id: 'logo',
+                onClick: this.handleClick
+            }, React.DOM.h1({}, "Coink"));
         }
     });
 

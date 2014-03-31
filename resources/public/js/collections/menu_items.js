@@ -19,11 +19,6 @@ define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
             icon: 'exchange'
         },
         {
-            text: 'Settings',
-            route: ['settings'],
-            icon: 'cog'
-        },
-        {
             text: 'Help',
             route: ['help'],
             icon: 'help'
@@ -36,11 +31,16 @@ define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
             {
                 text: 'Contact Us',
                 route: ['about', 'contact'],
-                icon: 'contact',
+                icon: 'contact'
+            },
+            {
+                text: 'FAQ',
+                route: ['about', 'faq'],
+                icon: 'question'
             }]
         }
     ];
 
-    return MenuItems;
+    return new MenuItems();
 
 });

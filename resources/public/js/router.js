@@ -1,18 +1,24 @@
-define(['backbone', 'react', 'models/profile'],
-function(Backbone, React, profile) {
+define(['backbone', 'underscore', 'react', 'models/profile'],
+function(Backbone, _, React, profile) {
 
 
     var Router = Backbone.Router.extend({
 
         routes: {
             '': 'handleDefaultRoute',
+            'landing': 'landing',
             'login': 'login',
             'register': 'register',
             'wallets': 'wallets',
             'exchanges': 'exchanges',
             'help': 'help',
             'about': 'about',
-            'about/contact': 'contact'
+            'about/contact': 'contact',
+            'about/faq': 'faq',
+        },
+
+        getRouteMap: function() {
+            return _.invert(this.routes);
         },
 
         url_root: urlRoot,
@@ -39,6 +45,12 @@ function(Backbone, React, profile) {
                 var modules = arguments;
                 React.renderComponent(getView.apply(this, modules), node);
             }.bind(this));
+        },
+
+        landing: function() {
+            this.setView(['components/landing'], function(Landing) {
+                return Landing();
+            }, false);
         },
 
         login: function() {
@@ -68,7 +80,7 @@ function(Backbone, React, profile) {
         help: function() {
             this.setView(['components/help'], function(Help) {
                 return Help();
-            }, true);
+            }, false);
         },
 
         about: function() {
@@ -80,6 +92,11 @@ function(Backbone, React, profile) {
         contact: function() {
             this.setView(['components/contact'], function(Contact) {
                 return Contact();
+            }, false);
+        },
+        faq: function() {
+            this.setView(['components/faq'], function(Faq) {
+                return Faq();
             }, false);
         }
     });
