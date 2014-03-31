@@ -11,7 +11,8 @@ function(Backbone, React, profile) {
             'wallets': 'wallets',
             'exchanges': 'exchanges',
             'help': 'help',
-            'about': 'about'
+            'about': 'about',
+            'about/contact': 'contact'
         },
 
         url_root: urlRoot,
@@ -73,7 +74,13 @@ function(Backbone, React, profile) {
         about: function() {
             this.setView(['components/about'], function(About) {
                 return About();
-            }, true);
+            }, false);
+        },
+
+        contact: function() {
+            this.setView(['components/contact'], function(Contact) {
+                return Contact();
+            }, false);
         }
     });
 

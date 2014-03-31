@@ -6,31 +6,32 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
         displayName: 'SidebarListItem',
         handleClick: function(e) {
             e.preventDefault();
-            this.props.setActive(this.props.id[0]);
-            router.navigate(this.props.id.join('/'), {trigger: true});
+            var item = this.props
+            this.props.setActive(item.route[0]);
+            router.navigate(item.route.join('/'), {trigger: true});
         },
 
         render: function() {
-            var icon = this.props.icon ? Glyphicon({name: this.props.icon}) : null;
-            return React.DOM.li({className: this.props.active == this.props.id[0] ? 'active' : 'inactive'},
+            var item = this.props
+            var icon = item.icon ? Glyphicon({name: item.icon}) : null;
+            var active = this.props.active == item.route[0] ? 'active' : 'inactive';
+            var submenu = "";
+            if (item.menu != undefined) {
+                submenu = React.DOM.ul({}, _.map(item.menu, function(subitem) {
+                    return SidebarListItem({
+                        route: subitem.route,
+                        text: subitem.text,
+                        active: item.active,
+                        icon: subitem.icon,
+                        setActive: item.setActive
+                    })
+                }))
+            }
+            return React.DOM.li({className: active},
                 React.DOM.a({
-                    href: this.props.id.join('/'),
+                    href: item.route.join('/'),
                     onClick: this.handleClick
-                }, icon, this.props.text), this.props.children
-            );
-        }
-    });
-
-    var SidebarSubmenu = React.createClass({
-        displayName: 'SidebarSubmenu',
-        render: function() {
-            return React.DOM.ul({}, _.map(this.props.items, function(menu_item) {
-                return SidebarListItem({
-                    text: menu_item.text,
-                    active: this.props.active,
-                    id: menu_item.route
-                });
-            }.bind(this)));
+                }, icon, item.text), submenu)
         }
     });
 
@@ -53,19 +54,17 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
 
         render: function() {
             if (this.props.loggedIn) {
-                var items = _.map(this.props.menuItems.models, function(item) {
-                        return SidebarListItem({
-                            setActive: this.setActive,
-                            icon: item.get("icon"),
-                            active: this.state.active,
-                            text: item.get("text"),
-                            id: item.get("route")
-                        },
-                        SidebarSubmenu({
-                            items: item.get("menu"),
-                            active: this.state.active
-                        }));
-                    }.bind(this));
+                var items = this.props.menuItems.map(function(item) {
+                    return SidebarListItem({
+                        key: item.get('text'),
+                        text: item.get("text"),
+                        icon: item.get("icon"),
+                        route: item.get("route"),
+                        menu: item.get("menu"),
+                        active: this.state.active,
+                        setActive: this.setActive
+                    })
+                }.bind(this));
 
                 return React.DOM.div({id: 'sidebar', className: 'large-3 medium-3 columns'},
                     React.DOM.div({className: 'wrap'},
