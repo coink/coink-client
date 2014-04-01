@@ -46,8 +46,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
     });
 
     profile.on("change:logged_in", function() {
-
-        (profile.getToken() != null) ? timer.start() : clearTimeout(idleTimer);
+        if (profile.getToken() == null) clearTimeout(idleTimer);
     });
 
     // reset the logout timer if we aren't already logged out.
@@ -78,6 +77,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
     timer.onAwayBack = awayBackCallback;
     timer.onVisible = visible;
     timer.onHidden = hidden;
+    timer.start();
 
     var idleTimer;
     function resetTimer(){
