@@ -1,5 +1,5 @@
 define(['react', 'underscore', 'router', 'collections/menu_items',
-        'components/logo', 'components/common/glyphicon'],
+        'components/common/logo', 'components/common/glyphicon'],
 function (React, _, router, MenuItems, Logo, Glyphicon) {
 
     var SidebarListItem = React.createClass({
@@ -74,5 +74,4 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
     });
 
     return Sidebar;
-
 });

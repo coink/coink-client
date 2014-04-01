@@ -2,7 +2,8 @@ define(['react', 'jquery', 'router', 'models/notification', 'models/profile'],
 function(React, $, router, notification, profile) {
 
     var Register = React.createClass({
-        DisplayName: 'Register',
+        displayName: 'Register',
+
         handleSubmit: function(e) {
             e.preventDefault();
             var username = this.refs.username.getDOMNode().value.trim();
@@ -106,5 +107,4 @@ function(React, $, router, notification, profile) {
     });
 
     return Register;
-
 });

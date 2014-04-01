@@ -1,23 +1,29 @@
-define(['react', 'router', 'models/notification', 'models/profile'], function(React, router, notification, profile) {
+define(['react', 'router', 'models/notification', 'models/profile'],
+    function(React, router, notification, profile) {
 
     var LoginLink = React.createClass({
         displayName: 'LoginLink',
+
         handleClick: function(e) {
             e.preventDefault();
             router.navigate('login', {trigger : true});
         },
+
         render: function() {
             return React.DOM.a({href: 'login', onClick: this.handleClick},
                 "Login");
         }
+
     });
 
     var RegisterLink = React.createClass({
         displayName: 'RegisterLink',
+
         handleClick: function(e) {
             e.preventDefault();
             router.navigate('register', {trigger : true});
         },
+
         render: function() {
             return React.DOM.a({href: 'register', onClick: this.handleClick},
                 "Register");
@@ -26,6 +32,7 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
 
     var LogoutLink = React.createClass({
         displayName: 'LogoutLink',
+
         handleClick: function(e) {
             e.preventDefault();
             var token = profile.getToken();
@@ -45,6 +52,7 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
                 }
             });
         },
+
         render: function() {
             return React.DOM.a({href: 'logout', onClick: this.handleClick},
                 "Logout " + profile.getUsername());
@@ -57,6 +65,7 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
             e.preventDefault();
             router.navigate('/', {trigger : true});
         },
+
         render: function() {
             var loginLink = profile.getToken() != null ?
                 React.DOM.span({}, LogoutLink(), " ") :
@@ -69,5 +78,4 @@ define(['react', 'router', 'models/notification', 'models/profile'], function(Re
     });
 
     return Header;
-
 });

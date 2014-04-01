@@ -3,7 +3,6 @@ define(['react', 'underscore', 'components/header', 'components/footer',
 function (React, _, Header, Footer, Sidebar, Notification, profile) {
 
     var Application = React.createClass({
-
         displayName: 'Application',
 
         getInitialState: function () {

@@ -1,7 +1,6 @@
 define(['react', 'models/notification'], function(React, notification) {
 
     var Notification = React.createClass({
-
         displayName: 'Notification',
 
         handleClose: function() {
@@ -42,5 +41,4 @@ define(['react', 'models/notification'], function(React, notification) {
     });
 
     return Notification;
-
 });

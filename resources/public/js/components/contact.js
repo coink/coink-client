@@ -1,7 +1,7 @@
 define(['react', 'router'],
 function(React, router){
-    var Contact = React.createClass({
 
+    var Contact = React.createClass({
         displayName: 'Contact',
 
         render: function() {

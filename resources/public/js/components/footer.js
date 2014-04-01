@@ -1,7 +1,6 @@
 define(['react'], function(React) {
 
     var Footer = React.createClass({
-
         displayName: 'Footer',
 
         render: function() {
@@ -11,5 +10,4 @@ define(['react'], function(React) {
     });
 
     return Footer;
-
 });

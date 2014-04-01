@@ -1,9 +1,7 @@
 define(['backbone', 'underscore', 'react', 'models/profile'],
 function(Backbone, _, React, profile) {
 
-
     var Router = Backbone.Router.extend({
-
         routes: {
             '': 'handleDefaultRoute',
             'landing': 'landing',
@@ -94,6 +92,7 @@ function(Backbone, _, React, profile) {
                 return Contact();
             }, false);
         },
+
         faq: function() {
             this.setView(['components/faq'], function(Faq) {
                 return Faq();
