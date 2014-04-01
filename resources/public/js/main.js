@@ -26,9 +26,10 @@ require.config({
 });
 
 require(['jquery', 'backbone', 'react', 'components/application', 'router',
-    'models/profile', 'fastclick', 'modernizr', 'foundation', 'idle'],
+    'models/profile', 'fastclick', 'modernizr', 'foundation', 'idle',
+    "models/notification"],
 function($, Backbone, React, Application, router, profile, fastclick,
-    modernizr, foundation, idle) {
+    modernizr, foundation, idle, notification) {
 
     // Auth setup, if not doesn't set request header token if not logged in
     $.ajaxSetup({
@@ -39,12 +40,14 @@ function($, Backbone, React, Application, router, profile, fastclick,
         }
     });
 
-    router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'login');
+    // setup default routes
+    router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'landing');
 
     profile.on("change:logged_in", function() {
-        router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'login');
+        router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'landing');
     });
 
+    // auth idling and timing functions
     profile.on("change:logged_in", function() {
         if (profile.getToken() == null) clearTimeout(idleTimer);
     });
@@ -79,6 +82,13 @@ function($, Backbone, React, Application, router, profile, fastclick,
     timer.onHidden = hidden;
     timer.start();
 
+    router.on("route", onPageRoute);
+
+    function onPageRoute() {
+        awayBackCallback();
+        notification.clearNotification();
+    }
+
     var idleTimer;
     function resetTimer(){
         var timeout = 5000;
@@ -88,10 +98,9 @@ function($, Backbone, React, Application, router, profile, fastclick,
     }
 
     function whenUserIdle(){
-        console.log("Logging Out" + profile.getUsername());
+        console.log("Logging out " + profile.getUsername());
         profile.destroySession();
-        console.log(router.defaultRoute);
-        router.navigate(router.defaultRoute, {trigger: true});
+        router.navigate('/', {trigger: true});
     }
 
     // Begin rendering the webapp with the main react component 'Application'
