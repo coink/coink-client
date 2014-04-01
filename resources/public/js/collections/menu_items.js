@@ -19,11 +19,6 @@ define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
             icon: 'exchange'
         },
         {
-            text: 'Settings',
-            route: ['settings'],
-            icon: 'cog'
-        },
-        {
             text: 'Help',
             route: ['help'],
             icon: 'help'
