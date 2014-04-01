@@ -1,11 +1,11 @@
 define(['react', 'router'],
 function(React, router){
-    var About = React.createClass({
 
+    var About = React.createClass({
         displayName: 'About',
 
         render: function() {
-            return React.DOM.div({},
+            return React.DOM.div({id: "about"},
                 React.DOM.h1({}, "About Us"),
                 React.DOM.p({},
                     "The team at Coink is a group of developers who understand the struggle of maintaining cryptocurrency"

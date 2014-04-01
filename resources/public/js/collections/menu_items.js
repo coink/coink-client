@@ -1,7 +1,9 @@
 define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
 
     var MenuItems = Backbone.Collection.extend({
+
         model: MenuItem,
+
         initialize: function() {
             this.set(menuItems);
         }
@@ -42,5 +44,4 @@ define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
     ];
 
     return new MenuItems();
-
 });

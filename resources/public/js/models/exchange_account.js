@@ -5,5 +5,4 @@ define(['backbone'], function(Backbone) {
     });
 
     return ExchangeAccount;
-
 });
