@@ -45,10 +45,11 @@ define(['react', 'router', 'models/notification', 'models/profile'],
                 url: router.url_root + "/v1/logout",
                 data: {"token" : token},
                 success: function(msg) {
-                    notification.success("Successfully logged out " + profile.getUsername());
+                    var name = profile.getUsername();
                     profile.destroySession();
                     router.setDefaultRoute("login");
                     router.navigate('/', {trigger : true});
+                    notification.success("Successfully logged out " + name);
                 }
             });
         },
