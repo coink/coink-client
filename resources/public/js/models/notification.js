@@ -22,12 +22,8 @@ define(['backbone'], function(Backbone) {
         info: function(message) {
             this.set({message: message, type: "info"});
         },
-        updateNotification: function(message, type) {
-            if(type) {
-                this.set({message: message, type: type});
-            } else {
-                this.set({message: message, type: 'info'});
-            }
+        toggleSticky: function() {
+            this.set({sticky: !this.get("sticky")});
         },
         clearNotification: function() {
             this.set({message: null});

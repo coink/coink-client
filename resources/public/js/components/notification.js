@@ -1,28 +1,42 @@
 define(['react', 'models/notification'], function(React, notification) {
 
     var Notification = React.createClass({
+
         displayName: 'Notification',
-        getInitialState: function() {
-            return {model: notification};
-        },
 
         handleClose: function() {
-            this.state.model.clearNotification();
+            this.replaceState({});
         },
 
-        render: function() {
-            if(this.state.model.get('message')) {
-                return React.DOM.div({"data-alert": '', id: 'notification', className: 'alert-box ' + this.state.model.get('type')},
-                    this.state.model.get('message'),
-                    React.DOM.a({href: '#', onClick: this.handleClose, className: 'close'}, 'x'));
-            } else {
-                return React.DOM.div({id: 'notification'});
+        getInitialState: function() {
+            return {
+                message : notification.get('message'),
+                type : notification.get('type'),
+                sticky : notification.get('sticky'),
             }
         },
 
+        render: function() {
+            if(!this.state.message)
+                return React.DOM.div({id: 'notification'});
+            return React.DOM.div({
+                "data-alert": '',
+                id: 'notification',
+                className: 'alert-box ' + this.state.type
+            }, this.state.message, React.DOM.a({
+                href: '#',
+                onClick: this.handleClose,
+                className: 'close'
+            }, 'x'));
+        },
+
         componentDidMount: function() {
-            this.state.model.on('change', function() {
-                this.forceUpdate();
+            notification.on('change', function() {
+                this.setState({
+                    message : notification.get('message'),
+                    type : notification.get('type'),
+                    sticky : notification.get('sticky'),
+                });
             }.bind(this));
         },
     });

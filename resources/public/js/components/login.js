@@ -23,10 +23,12 @@ function(React, $, router, notification, profile) {
                 .done(function(data) {
                     profile.createSession(data.data.token, data.data.expires, username);
                     notification.success("Successfully logged in " + profile.getUsername());
+                    router.setDefaultRoute('wallets');
                     router.navigate('wallets', {trigger: true});
                 })
                 .fail(function() {
                     notification.error("error: login-error");
+                    router.setDefaultRoute('login');
                     router.navigate('login', {trigger: true});
                 });
             }
