@@ -76,7 +76,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
     };
 
     var timer = new Idle();
-    timer.setAwayTimeout(5000); // change this for longer idle time
+    timer.setAwayTimeout(60000); // change this for longer idle time
     timer.onAway = awayCallback;
     timer.onAwayBack = awayBackCallback;
     timer.onVisible = visible;
