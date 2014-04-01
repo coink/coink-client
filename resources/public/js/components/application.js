@@ -6,15 +6,14 @@ function (React, _, Header, Footer, Sidebar, Notification, profile) {
 
         displayName: 'Application',
 
-        getInitialState: function () {
-            return {profile: profile};
+        getInitialState: function() {
+            return {logged_in : profile.getToken() != null};
         },
 
         render: function() {
-            var loggedIn = profile.getToken() != null;
             return React.DOM.div({id : 'wrapper'},
-                Header({loggedIn: loggedIn}),
-                Sidebar({loggedIn: loggedIn}),
+                Header({loggedIn: this.state.logged_in}),
+                Sidebar({loggedIn: this.state.logged_in}),
                 React.DOM.div({id: 'content-wrapper', className: 'large-9 medium-9 columns'},
                     React.DOM.div({className: 'floatfix'},
                         React.DOM.div({className: 'wrap'},
@@ -28,8 +27,8 @@ function (React, _, Header, Footer, Sidebar, Notification, profile) {
         },
 
         componentDidMount: function () {
-            this.state.profile.on('change', function() {
-              this.forceUpdate();
+            profile.on('change:logged_in', function() {
+                this.setState({logged_in : profile.getToken() != null});
             }.bind(this));
         }
     });
