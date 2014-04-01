@@ -26,7 +26,9 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router', 'models/profile', 'fastclick', 'modernizr', 'foundation', 'jquery.cookie'], function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation, jqcookie) {
+require(['jquery', 'backbone', 'react', 'components/application', 'router',
+        'models/profile', 'fastclick', 'modernizr', 'foundation'],
+function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation) {
 
     // Auth setup, if not doesn't set request header token if not logged in
     $.ajaxSetup({
@@ -37,11 +39,37 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router', 'mod
         }
     });
 
+    profile.on("change:logged_in", function() {
+        if (profile.getToken() != null) {
+            router.setDefaultRoute('wallets');
+        } else {
+            router.setDefaultRoute("login");
+        }
+    });
+
+    $(function (){
+        var idleTimer;
+        function resetTimer(){
+            console.log("timer reset");
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(whenUserIdle, 5000);
+        }
+        router.on("route",resetTimer);
+        resetTimer(); // Start the timer when the page loads
+    })
+
+    function whenUserIdle(){
+        console.log("logging out" + profile.getUsername());
+        profile.destroySession();
+        console.log(router.defaultRoute);
+        router.navigate(router.defaultRoute, {trigger: true});
+    }
+
     // Begin rendering the webapp with the main react component 'Application'
     $(document).ready(function() {
         var app = Application();
         React.renderComponent(app, document.getElementById('coink'));
-        
+
         // Single page webapp routing made nice for browser navigation
         Backbone.history.start({
             pushState: false, // False until compojure routing is figured out
@@ -53,11 +81,4 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router', 'mod
             $("#sidebar").toggleClass("expanded")
         });
     });
-
-    // Default route if logged in
-    if (profile.getToken() != null)
-        router.setDefaultRoute('wallets');
-    else
-        router.setDefaultRoute("login");
-
 });
