@@ -8,8 +8,7 @@ require.config({
         'fastclick': ['//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.0/fastclick.min', '/js/scripts/fastclick-min'],
         'modernizr': ['//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min', '/js/scripts/modernizr-min'],
         'foundation': ['//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/foundation.min', '/js/scripts/foundation-min'],
-
-        'jquery.cookie': '/js/scripts/jquery.cookie-min'
+        'idle': ['/js/scripts/idle-min']
     },
     shim: {
         backbone: {
@@ -27,8 +26,9 @@ require.config({
 });
 
 require(['jquery', 'backbone', 'react', 'components/application', 'router',
-        'models/profile', 'fastclick', 'modernizr', 'foundation'],
-function($, Backbone, React, Application, router, profile, fastclick, modernizr, foundation) {
+    'models/profile', 'fastclick', 'modernizr', 'foundation', 'idle'],
+function($, Backbone, React, Application, router, profile, fastclick,
+    modernizr, foundation, idle) {
 
     // Auth setup, if not doesn't set request header token if not logged in
     $.ajaxSetup({
@@ -39,27 +39,56 @@ function($, Backbone, React, Application, router, profile, fastclick, modernizr,
         }
     });
 
+    router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'login');
+
     profile.on("change:logged_in", function() {
-        if (profile.getToken() != null) {
-            router.setDefaultRoute('wallets');
-        } else {
-            router.setDefaultRoute("login");
-        }
+        router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'login');
     });
 
-    $(function (){
-        var idleTimer;
-        function resetTimer(){
-            console.log("timer reset");
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(whenUserIdle, 5000);
-        }
-        router.on("route",resetTimer);
-        resetTimer(); // Start the timer when the page loads
-    })
+    profile.on("change:logged_in", function() {
+
+        (profile.getToken() != null) ? timer.start() : clearTimeout(idleTimer);
+    });
+
+    // reset the logout timer if we aren't already logged out.
+    var awayCallback = function(){
+        console.log(new Date().toTimeString() + ": away");
+        if (profile.getToken() != null) resetTimer();
+    };
+
+    // stop logout timer when we return from idle.
+    var awayBackCallback = function(){
+        console.log(new Date().toTimeString() + ": back");
+        clearTimeout(idleTimer);
+    };
+
+    // no good use for this yet
+    var visible = function(){
+        console.log(new Date().toTimeString() + ": now looking at page");
+    };
+
+    // no good use for this yet
+    var hidden = function(){
+        console.log(new Date().toTimeString() + ": not looking at page");
+    };
+
+    var timer = new Idle();
+    timer.setAwayTimeout(5000); // change this for longer idle time
+    timer.onAway = awayCallback;
+    timer.onAwayBack = awayBackCallback;
+    timer.onVisible = visible;
+    timer.onHidden = hidden;
+
+    var idleTimer;
+    function resetTimer(){
+        var timeout = 5000;
+        console.log("Logging out in " + timeout + "ms");
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(whenUserIdle, timeout);
+    }
 
     function whenUserIdle(){
-        console.log("logging out" + profile.getUsername());
+        console.log("Logging Out" + profile.getUsername());
         profile.destroySession();
         console.log(router.defaultRoute);
         router.navigate(router.defaultRoute, {trigger: true});
