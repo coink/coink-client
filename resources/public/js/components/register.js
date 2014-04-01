@@ -29,7 +29,7 @@ function(React, $, router, notification, profile) {
                 .fail(
                     function() {
                         notification.error("error: ajax-registration-error");
-                        router.navigate('/', {trigger: true});
+                        router.navigate('register', {trigger: true});
                     }
                 );
             }
@@ -58,7 +58,6 @@ function(React, $, router, notification, profile) {
             $.post(router.url_root + "/v1/login", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
                     profile.createSession(data.data.token, data.data.expires, payload['username']);
-                    router.navigate('wallets', {trigger: true});
                     notification.success("Successfully registered username " + profile.getUsername());
                 }).fail(
                 function() {

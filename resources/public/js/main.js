@@ -41,10 +41,11 @@ function($, Backbone, React, Application, router, profile, fastclick,
     });
 
     // setup default routes
-    router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'landing');
+    router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
 
     profile.on("change:logged_in", function() {
-        router.setDefaultRoute((profile.getToken() != null) ? 'wallet':'landing');
+        router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
+        router.navigate(router.defaultRoute, {trigger: true});
     });
 
     // auth idling and timing functions
@@ -100,7 +101,6 @@ function($, Backbone, React, Application, router, profile, fastclick,
     function whenUserIdle(){
         console.log("Logging out " + profile.getUsername());
         profile.destroySession();
-        router.navigate('/', {trigger: true});
     }
 
     // Begin rendering the webapp with the main react component 'Application'

@@ -25,8 +25,10 @@ define(['react', 'router', 'models/notification', 'models/profile'],
         },
 
         render: function() {
-            return React.DOM.a({href: 'register', onClick: this.handleClick},
-                "Register");
+            return React.DOM.a({
+                href: 'register',
+                onClick: this.handleClick
+            }, "Register");
         }
     });
 
@@ -47,9 +49,7 @@ define(['react', 'router', 'models/notification', 'models/profile'],
                 success: function(msg) {
                     var name = profile.getUsername();
                     profile.destroySession();
-                    router.setDefaultRoute("login");
-                    router.navigate('/', {trigger : true});
-                    notification.success("Successfully logged out " + name);
+                    notification.success("See you later " + name + "! Oink oink.");
                 }
             });
         },
@@ -62,10 +62,6 @@ define(['react', 'router', 'models/notification', 'models/profile'],
 
     var Header = React.createClass({
         displayName: 'Header',
-        handleClick: function(e) {
-            e.preventDefault();
-            router.navigate('/', {trigger : true});
-        },
 
         render: function() {
             var loginLink = profile.getToken() != null ?
