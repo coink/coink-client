@@ -229,6 +229,10 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             exchange_accounts.fetch({
                 success: function(collection) {
                     this.setState({"exchange_accounts": collection, "loaded": true});
+                }.bind(this),
+                error: function(collection) {
+                    this.setState({"loaded": true});
+                    notification.error("AJAX error can't load exchanges");
                 }.bind(this)
             });
         },
