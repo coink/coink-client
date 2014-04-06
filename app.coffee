@@ -12,7 +12,7 @@ app.set "view engine", "jade"
 
 app.use express.logger()
 app.use assets helperContext: app.locals, src: path.join __dirname, "resources", "public"
-jsPaths assets
+jsPaths assets, console.log, ((err, filePath) -> console.log "File Changed: #{filePath}"), ((err, watcher) -> console.log "Watcher initialized")
 app.use "/img/", express.static path.join __dirname, "resources", "public", "img"
 
 app.all "/", (req, res) -> res.render "coink"
