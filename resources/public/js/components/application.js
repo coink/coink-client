@@ -29,21 +29,21 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
             );
         },
 
-        componentDidMount: function () {
+        componentWillMount: function () {
             profile.on('change:logged_in', function() {
                 this.setState({logged_in : profile.getToken() != null});
-
-                if(profile.getToken()) {
-                    this.props.meta_exchanges.fetch({}, {
-                        success: function(collection) {
-                            this.props.meta_exchanges = collection;
-                        }.bind(this),
-                        error: function() {
-                            notification.error("AJAX meta_exchanges error");
-                        }.bind(this)
-                    });
-                }
             }.bind(this));
+
+            if(this.state.logged_in) {
+                this.props.meta_exchanges.fetch({
+                    success: function(collection) {
+                        this.forceUpdate();
+                    }.bind(this),
+                    error: function() {
+                        notification.error("AJAX meta_exchanges error");
+                    }.bind(this)
+                });
+            }
         }
     });
 
