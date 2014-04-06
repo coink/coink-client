@@ -1,0 +1,39 @@
+@keyframes ripple
+    0%
+        opacity 0
+    20%
+        opacity 0.4
+    100%
+        opacity 0
+
+#background
+    z-index -1
+    position fixed
+    top 0
+    left 0
+    right 0
+    bottom 0
+    
+    div
+        position absolute
+        opacity 0
+        
+        top 40px
+        left 40px
+        
+        padding 0
+        font-size 3em
+        width 1.5em
+        height @width
+        line-height @height
+        
+        color COIN1
+        background COIN
+        
+        border-radius 100%
+        text-align center
+
+    for i in 0..10
+        .time{i}.show
+            animation ripple (6s + i * 4.63s) ease-out
+            transition all (6s + i * 4.63s) ease-out

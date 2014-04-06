@@ -1,0 +1,49 @@
+#main
+
+	h1
+		font-size 3em
+		color PRI1
+
+	.list-of-things
+		padding-bottom 1.5em
+
+		.header, .item
+			clearfix()
+
+		.header .acct-name
+			color SEC2
+			display inline
+			margin-left 0.6em
+			font-size 0.85em
+			font-style italic
+
+		.thing, .value
+			padding 0.5em
+			display inline-block
+		.thing
+			color PRI2
+		.value
+			float right
+			text-align right
+			color MONY2
+		.header
+			background lighten(BG, 75%)
+			font-size 1.5em
+			border-radius 5px
+			border-bottom 1px darken(BG, 25%) solid
+		.item
+			.thing
+				@media only screen and (min-width: 40.063em)
+					padding-left 1em
+			.value
+				color MONY
+
+			padding 0.4em 0
+			border-bottom 1px darken(BG, 25%) solid
+
+			&:nth-child(2n+1)
+				background mix(BG, SEC3, 95%)
+
+		.item tt
+			font-size 1.25em
+			line-height 0.8em

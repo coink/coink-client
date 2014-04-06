@@ -1,0 +1,192 @@
+#sidebar
+	background url('/img/darkbg.png')
+	overflow-x hidden
+	overflow-y scroll
+
+
+	@media only screen and (min-width: 40.063em)
+		sticky-footer 2em
+		box-shadow inset -7px 0 5px -3px rgba(SIDEBARFG2, 0.4)
+		position fixed
+		top 0
+		left 0
+		bottom 0
+		max-width 22.5em
+		#expand-btn
+			display none
+
+	h1
+		text-outline 2px rgba(white, 0.4)
+		text-align center
+		text-transform uppercase
+		font-family Helvetica
+		font-weight bold
+
+		color PRI
+		font-size 2em
+		bg-size 4em
+
+		margin 0
+
+		background url('/img/CoinkLogo.svg') center 0.8em no-repeat
+		background-size @bg-size @bg-size
+		padding-top @bg-size + 1.4em
+
+		@media only screen and (max-width: 40em)
+			&
+				text-outline 1px white
+				bg-size 1em
+
+				background url('/img/CoinkLogoSmall.svg') left center no-repeat
+				background-size @bg-size @bg-size
+
+				padding-top 0.06em
+				padding-left @bg-size + 0.1em
+
+				margin-left -0.3em
+				float left
+
+	.nav
+		list-style-type none
+		padding 0
+		margin 0
+
+		@media only screen and (min-width: 40.063em)
+
+			&>li
+				border-top 1px solid darken(SIDEBARBG, 15%)
+				&:last-child
+					border-bottom 1px solid darken(SIDEBARBG, 15%)
+
+				font-size 1.5em
+
+				margin 1.25em -.625em -1.25em
+
+				ul
+					display none
+					margin 0
+					list-style-type none
+					padding 0
+					li
+						border-top 1px solid darken(SIDEBARBG, 25%)
+						a
+							padding 0.5em
+							font-size 1.2em
+							display block
+							color SIDEBARFG1
+
+				@media only screen and (max-width: 62.5em)
+					font-size 1em
+					margin 1.95em -.9375em -1.95em
+
+					ul li a
+						font-size 0.85em
+
+				&.active
+					
+					border-top 1px solid darken(SIDEBARBG, 25%)
+					border-bottom 1px solid darken(SIDEBARBG, 25%)
+					&+li
+						border-top none
+
+					&>ul
+						background-color rgba(SIDEBARFG2, 0.2)
+						display block
+					&>a
+						background-color rgba(SIDEBARFG2, 0.4)
+						position relative
+						&:after
+							content ""
+							display block
+							position absolute
+
+							width 1.4em
+							height @width
+							right (-1.1 * (@width / 2))
+							margin-top (-1 * (@width / 2))
+							
+							top 50%
+							transform rotateZ(45deg)
+							background BG url('/img/bg.png')
+							box-shadow 0 0 5px 4px rgba(SIDEBARFG2, 0.4)
+
+				&>a
+					display block
+
+					text-transform uppercase
+					font-weight bold
+
+					bg-size 2em
+
+					padding .6em
+					background url('/img/CoinkLogo.svg') center @padding no-repeat
+					background-size @bg-size @bg-size
+					padding-top @bg-size + @padding
+
+				a
+					text-align center
+					font-family Helvetica
+
+					color darken(SIDEBARFG1, 10%)
+					&:hover, &.active
+						color lighten(SIDEBARFG1, 50%)
+
+		@media only screen and (max-width: 40em)
+
+			padding-top .5em
+			text-align right
+			display none
+			
+			a
+				display block
+				color SIDEBARFG1
+				padding 1em
+				text-outline 1px rgba(SIDEBARFG2, 0.4)
+				border-top 1px solid SIDEBARFG2
+				text-align left
+
+			li:last-child a
+				border-bottom 1px solid SIDEBARFG2
+				margin-bottom 1em
+
+	&.expanded ul.nav
+		display block
+
+header
+	z-index 314
+	position absolute
+	top 1em
+	right 1em
+	padding .75em
+	border-radius 5px
+	background darken(BG, 5%)
+	box-shadow inset 0 0 10px darken(BG, 20%)
+
+	a
+		color PRI2
+		text-decoration underline
+
+		margin-left .6em
+		border-left 1px solid PRI3
+		padding-left .6em
+
+		&:first-child
+			margin-left 0
+			border-left none
+			padding-left 0
+
+		&:hover
+			text-decoration none
+
+	@media only screen and (max-width: 40em)
+		display none
+
+#sidebar
+	@media only screen and (max-width: 40em)
+		
+		text-align right
+		#expand-btn
+			display inline-block
+			padding .125em .25em
+			font-size 2em
+			margin-right -.46875em
