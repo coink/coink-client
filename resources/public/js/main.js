@@ -1,13 +1,14 @@
+var cdnRoot = '//cdnjs.cloudflare.com/ajax/libs/';
 require.config({
     baseUrl: 'js',
     paths: {
-        'jquery': ['//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery', jsPaths['scripts/jquery']],
-        'backbone': ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min', jsPaths['scripts/backbone']],
-        'underscore': ['//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min', jsPaths['scripts/underscore']],
-        'react': ['//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react', jsPaths['scripts/react']],
-        'fastclick': ['//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.0/fastclick.min', jsPaths['scripts/fastclick']],
-        'modernizr': ['//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min', jsPaths['scripts/modernizr']],
-        'foundation': ['//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/foundation.min', jsPaths['scripts/foundation']],
+        'jquery': [cdnRoot + 'jquery/2.1.0/jquery', jsPaths['scripts/jquery']],
+        'backbone': [cdnRoot + 'backbone.js/1.1.0/backbone-min', jsPaths['scripts/backbone']],
+        'underscore': [cdnRoot + 'underscore.js/1.4.3/underscore-min', jsPaths['scripts/underscore']],
+        'react': [cdnRoot + 'react/0.10.0/react', jsPaths['scripts/react']],
+        'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', jsPaths['scripts/fastclick']],
+        'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', jsPaths['scripts/modernizr']],
+        'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', jsPaths['scripts/foundation']],
         'idle': [jsPaths['scripts/idle']]
     },
     shim: {
@@ -31,52 +32,54 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router',
 function($, Backbone, React, Application, router, profile, fastclick,
     modernizr, foundation, idle, notification) {
 
-    // Auth setup, if not doesn't set request header token if not logged in
-    $.ajaxSetup({
-        beforeSend: function (request) {
-            if(profile.getToken() != null) {
-                request.setRequestHeader("Authorization", profile.getToken());
-            }
-        }
-    });
-
     // setup default routes
     router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
 
+    // setup request header token if t logged in
+    if(profile.getToken() != null) {
+        $.ajaxSetup({
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", profile.getToken());
+            }
+        });
+    }
+
+    // auth change handlers for idle timing and page redirects
     profile.on("change:logged_in", function() {
-        router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
+        if (profile.getToken() == null) {
+            clearTimeout(idleTimer);
+            router.setDefaultRoute('landing');
+        }
+        else if (profile.getToken() != null) {
+            router.setDefaultRoute('wallets');
+        }
         router.navigate(router.defaultRoute, {trigger: true});
     });
 
-    // auth idling and timing functions
-    profile.on("change:logged_in", function() {
-        if (profile.getToken() == null) clearTimeout(idleTimer);
-    });
-
     // reset the logout timer if we aren't already logged out.
-    var awayCallback = function(){
+    function awayCallback() {
         console.log(new Date().toTimeString() + ": away");
         if (profile.getToken() != null) resetTimer();
     };
 
     // stop logout timer when we return from idle.
-    var awayBackCallback = function(){
+    function awayBackCallback() {
         console.log(new Date().toTimeString() + ": back");
         clearTimeout(idleTimer);
     };
 
     // no good use for this yet
-    var visible = function(){
+    function visible() {
         console.log(new Date().toTimeString() + ": now looking at page");
     };
 
     // no good use for this yet
-    var hidden = function(){
+    function hidden() {
         console.log(new Date().toTimeString() + ": not looking at page");
     };
 
     var timer = new Idle();
-    timer.setAwayTimeout(60000); // change this for longer idle time
+    timer.setAwayTimeout(10 * 60 * 1000); // change this for longer idle time
     timer.onAway = awayCallback;
     timer.onAwayBack = awayBackCallback;
     timer.onVisible = visible;
@@ -91,14 +94,14 @@ function($, Backbone, React, Application, router, profile, fastclick,
     }
 
     var idleTimer;
-    function resetTimer(){
+    function resetTimer() {
         var timeout = 5000;
         console.log("Logging out in " + timeout + "ms");
         clearTimeout(idleTimer);
         idleTimer = setTimeout(whenUserIdle, timeout);
     }
 
-    function whenUserIdle(){
+    function whenUserIdle() {
         console.log("Logging out " + profile.getUsername());
         profile.destroySession();
     }
@@ -115,7 +118,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
         });
 
         // Handle responsive navigation
-        $("#expand-btn").on("click", function(){
+        $("#expand-btn").on("click", function() {
             $("#sidebar").toggleClass("expanded")
         });
     });
