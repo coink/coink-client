@@ -32,22 +32,17 @@ require(['jquery', 'backbone', 'react', 'components/application', 'router',
 function($, Backbone, React, Application, router, profile, fastclick,
     modernizr, foundation, idle, notification) {
 
-    // Auth setup, if not doesn't set request header token if not logged in
-    $.ajaxSetup({
-        beforeSend: function (request) {
-            if(profile.getToken() != null) {
-                request.setRequestHeader("Authorization", profile.getToken());
-            }
-        }
-    });
-
     // setup default routes
     router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
 
-    profile.on("change:logged_in", function() {
-        router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
-        router.navigate(router.defaultRoute, {trigger: true});
-    });
+    // setup request header token if t logged in
+    if(profile.getToken() != null) {
+        $.ajaxSetup({
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", profile.getToken());
+            }
+        });
+    }
 
     // auth idling and timing functions
     profile.on("change:logged_in", function() {
