@@ -1,13 +1,14 @@
+var cdnRoot = '//cdnjs.cloudflare.com/ajax/libs/';
 require.config({
     baseUrl: 'js',
     paths: {
-        'jquery': ['//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery', '/js/scripts/jquery-min'],
-        'backbone': ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min', '/js/scripts/backbone-min'],
-        'underscore': ['//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min', '/js/scripts/underscore-min'],
-        'react': ['//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react', '/js/scripts/react-min'],
-        'fastclick': ['//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.0/fastclick.min', '/js/scripts/fastclick-min'],
-        'modernizr': ['//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min', '/js/scripts/modernizr-min'],
-        'foundation': ['//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/foundation.min', '/js/scripts/foundation-min'],
+        'jquery': [cdnRoot + '/jquery/2.1.0/jquery', '/js/scripts/jquery-min'],
+        'backbone': [cdnRoot + '/backbone.js/1.1.0/backbone-min', '/js/scripts/backbone-min'],
+        'underscore': [cdnRoot + '/underscore.js/1.4.3/underscore-min', '/js/scripts/underscore-min'],
+        'react': [cdnRoot + '/react/0.10.0/react', '/js/scripts/react-min'],
+        'fastclick': [cdnRoot + '/fastclick/1.0.0/fastclick.min', '/js/scripts/fastclick-min'],
+        'modernizr': [cdnRoot + '/modernizr/2.7.1/modernizr.min', '/js/scripts/modernizr-min'],
+        'foundation': [cdnRoot + '/foundation/5.2.1/js/foundation.min', '/js/scripts/foundation-min'],
         'idle': ['/js/scripts/idle-min']
     },
     shim: {
@@ -54,29 +55,29 @@ function($, Backbone, React, Application, router, profile, fastclick,
     });
 
     // reset the logout timer if we aren't already logged out.
-    var awayCallback = function(){
+    function awayCallback() {
         console.log(new Date().toTimeString() + ": away");
         if (profile.getToken() != null) resetTimer();
     };
 
     // stop logout timer when we return from idle.
-    var awayBackCallback = function(){
+    function awayBackCallback() {
         console.log(new Date().toTimeString() + ": back");
         clearTimeout(idleTimer);
     };
 
     // no good use for this yet
-    var visible = function(){
+    function visible() {
         console.log(new Date().toTimeString() + ": now looking at page");
     };
 
     // no good use for this yet
-    var hidden = function(){
+    function hidden() {
         console.log(new Date().toTimeString() + ": not looking at page");
     };
 
     var timer = new Idle();
-    timer.setAwayTimeout(60000); // change this for longer idle time
+    timer.setAwayTimeout(10 * 60 * 1000); // change this for longer idle time
     timer.onAway = awayCallback;
     timer.onAwayBack = awayBackCallback;
     timer.onVisible = visible;
@@ -91,14 +92,14 @@ function($, Backbone, React, Application, router, profile, fastclick,
     }
 
     var idleTimer;
-    function resetTimer(){
+    function resetTimer() {
         var timeout = 5000;
         console.log("Logging out in " + timeout + "ms");
         clearTimeout(idleTimer);
         idleTimer = setTimeout(whenUserIdle, timeout);
     }
 
-    function whenUserIdle(){
+    function whenUserIdle() {
         console.log("Logging out " + profile.getUsername());
         profile.destroySession();
     }
@@ -115,7 +116,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
         });
 
         // Handle responsive navigation
-        $("#expand-btn").on("click", function(){
+        $("#expand-btn").on("click", function() {
             $("#sidebar").toggleClass("expanded")
         });
     });
