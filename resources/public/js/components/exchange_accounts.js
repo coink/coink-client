@@ -90,7 +90,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             var currentExchange = this.props.currentExchange;
             var exchangeName = currentExchange.get('exchangeName');
             var fields = currentExchange.get('requiredFields').map(function(field) {
-                return React.DOM.div({},
+                return React.DOM.div({key: field.machineName},
                         React.DOM.label({htmlFor: field.machineName}, field.displayName),
                         React.DOM.input({
                             type: 'text',
@@ -138,13 +138,13 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             var content = null, fields = null;
             if(!this.state.meta_exchanges.isEmpty()) {
                 exchanges = this.state.meta_exchanges.map(function(model) {
-                    return React.DOM.option({value: model.get('exchangeName')}, model.get('exchangeName'));
+                    return React.DOM.option({key: model.get('exchangeName'), value: model.get('exchangeName')}, model.get('exchangeName'));
                 }.bind(this));
                 fields = AddExchangeAccountFormFields({
                     currentExchange: this.state.currentExchange,
                     exchange_accounts: this.props.exchange_accounts,
                     addModel: this.props.addModel,
-                    removeModel: this.props.removeModeel
+                    removeModel: this.props.removeModel
                 });
                 content = React.DOM.div({},
                             React.DOM.span({}, "New Exchange Account: "),
@@ -204,7 +204,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             var exchange_accounts = this.props.exchange_accounts;
 
             var exchange_account_rows = exchange_accounts.map(function(model) {
-                return ExchangeAccountRow({exchange_account: model, addModel: this.props.addModel, removeModel: this.props.removeModel});
+                return ExchangeAccountRow({key: model.get('exchangeName'), exchange_account: model, addModel: this.props.addModel, removeModel: this.props.removeModel});
             }.bind(this));
 
             return React.DOM.table({id: 'exchange_account-table'},
@@ -255,12 +255,12 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
                 content = React.DOM.p({}, "Loading");
             }
             else if (exchange_accounts.isEmpty()) {
-                content = [AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
-                    React.DOM.div({}, "No exchange accounts")];
+                content = React.DOM.div({}, AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
+                    React.DOM.div({}, "No exchange accounts"));
             }
             else {
-                content = [AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
-                    ExchangeAccountTable({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel})];
+                content = React.DOM.div({}, AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
+                    ExchangeAccountTable({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}));
             }
 
             return React.DOM.div({}, React.DOM.h1({}, "My Exchange Accounts"),
