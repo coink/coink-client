@@ -1,0 +1,60 @@
+{
+    "name": "coink-client",
+    "version": "0.3.1",
+    "private": true,
+    "author": "Coink <support@coink.io>",
+    "description": "Breathe insight into the value of your crypto currencies",
+    "scripts": {
+        "start": "coffee app.coffee"
+    },
+    "engines": {
+        "node": ">=0.10"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/coink/coink-client.git"
+    },
+    "dependencies": {
+        "coffee-script": "1.7.x",
+        "react-tools": "0.10.x",
+        "connect-assets": "3.x",
+        "express": "3.5.1",
+        "stylus": "0.x",
+        "page": "1.3.x",
+        "jade": "1.x"
+    },
+    "contributors": [
+        {
+            "name": "Roey Chasman",
+            "email": "rchasman@coink.io"
+        },
+        {
+            "name": "Chris La Rose",
+            "email": "chris@coink.io"
+        },
+        {
+            "name": "Zachary Montoya",
+            "email": "zach@coink.io"
+        },
+        {
+            "name": "Matt Gautreau",
+            "email": "matt@coink.io"
+        },
+        {
+            "name": "Shane Gianelli",
+            "email": "shane@coink.io"
+        },
+        {
+            "name": "Kate Maroney",
+            "email": "kate@coink.io"
+        },
+        {
+            "name": "Ashley",
+            "email": "ashley@coink.io"
+        },
+        {
+            "name": "Soumya",
+            "email": "soumya92@coink.io"
+        }
+    ]
+}
