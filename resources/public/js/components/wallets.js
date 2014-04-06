@@ -45,9 +45,11 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
                 this.props.wallet.get('address') + "?"))
                 return;
 
-            this.props.wallet.destroy({success: function() {
-                this.props.onDelete();
-            }.bind(this)});
+            this.props.wallet.destroy({
+                success: function() {
+                    this.props.onDelete();
+                }.bind(this)
+            });
         },
 
         render: function() {
