@@ -1,6 +1,6 @@
-define(['react', 'underscore', 'router', 'collections/menu_items',
+define(['react', 'underscore', 'router', 'models/menu_item', 'collections/menu_items',
         'components/common/logo', 'components/common/glyphicon'],
-function (React, _, router, MenuItems, Logo, Glyphicon) {
+function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
 
     var SidebarListItem = React.createClass({
         displayName: 'SidebarListItem',
@@ -44,7 +44,18 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
 
         render: function() {
             if (!this.props.loggedIn) return React.DOM.div({});
-            var items = this.props.menuItems.map(function(item) {
+            var menuItems = this.props.menuItems;
+            var meta_exchanges_menuItems = this.props.meta_exchanges.map(function(item) {
+                var menuItem = {text: item.get('exchangeName'), route: ['exchanges', item.get('exchangeName')], icon: item.get('exchangeName')};
+                console.log(JSON.stringify(menuItem));
+                return menuItem;
+            });
+            if(meta_exchanges_menuItems.length > 0) {
+                menuItems.findWhere({text: 'Exchanges'}).set({menu: meta_exchanges_menuItems});
+            }
+
+            var items = menuItems.map(function(item) {
+                console.log("Item: " + JSON.stringify(item));
                 return SidebarListItem({
                     key: item.get("text"),
                     icon: item.get("icon"),
@@ -52,6 +63,9 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
                     active: this.state.active && item.get("route") == this.state.active[0]
                 }, React.DOM.ul({},
                     _(item.get("menu")).map(function(subitem) {
+                        console.log("Subitem: " + JSON.stringify(subitem));
+                        console.log(subitem.route);
+                        console.log(this.state.active);
                         return SidebarListItem({
                             key: subitem.text,
                             icon: subitem.icon,
