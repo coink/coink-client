@@ -44,9 +44,16 @@ function($, Backbone, React, Application, router, profile, fastclick,
         });
     }
 
-    // auth idling and timing functions
+    // auth change handlers for idle timing and page redirects
     profile.on("change:logged_in", function() {
-        if (profile.getToken() == null) clearTimeout(idleTimer);
+        if (profile.getToken() == null) {
+            clearTimeout(idleTimer);
+            router.setDefaultRoute('landing');
+        }
+        else if (profile.getToken() != null) {
+            router.setDefaultRoute('wallets');
+        }
+        router.navigate(router.defaultRoute, {trigger: true});
     });
 
     // reset the logout timer if we aren't already logged out.
