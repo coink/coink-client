@@ -36,9 +36,9 @@ function (React, _, router, MenuItems, Logo, Glyphicon) {
         componentDidMount: function() {
             var routeMap = router.getRouteMap();
             router.on("route", function(view) {
-                if (view == "handleDefaultRoute"
-                    || view == "login"
-                    || view == "register") return;
+                if (view == "handleDefaultRoute" ||
+                    view == "login" || view == "register")
+                        return;
                 active = routeMap[view] ? routeMap[view].split('/') : [view];
                 this.setState({active: active});
             }.bind(this))
