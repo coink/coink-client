@@ -1,0 +1,33 @@
+text-outline(sz, color)
+	text-shadow 0 (-1 * sz) 0 color,
+				0 sz 0 color,
+				sz 0 0 color,
+				(-1 * sz) 0 0 color,
+				(-1 * sz) (-1 * sz) 0 color,
+				sz sz 0 color,
+				sz (-1 * sz) 0 color,
+				(-1 * sz) sz 0 color
+
+clearfix()
+	&:before, &:after
+		content ""
+		display table
+	
+	&:after
+		clear both
+
+
+sticky-footer(ht)
+	.wrap, .footer
+		margin 0
+	
+	.wrap
+		min-height 100%
+		margin-bottom (-1 * ht)
+
+	.wrap:after
+		content ""
+		display block
+
+	.footer, .wrap:after
+		height ht
