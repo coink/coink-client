@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Coink: Your Cryptocoin Portfolio
+    meta(name="description", content="Breathe insight into your crypto-holdings")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(charset="UTF-8")
+    !=css("/css/styles")
+  body
+    !=exportPaths("jsPaths")
+    script var urlRoot = (window.location.hostname == 'coink.io' ? 'https://api.coink.io' : 'http://private-d789-coink.apiary.io')
+    script(data-main="#{jsUrl('/js/main.js')}", src="#{jsUrl('/js/scripts/require.js')}")
+    #coink

@@ -15,9 +15,10 @@
         "url" : "https://github.com/coink/coink-client.git"
     },
     "dependencies": {
+        "connect-assets-jspaths": "0.0.x",
         "coffee-script": "1.7.x",
         "react-tools": "0.10.x",
-        "connect-assets": "3.x",
+        "connect-assets": "2.x",
         "express": "3.5.1",
         "stylus": "0.x",
         "page": "1.3.x",
