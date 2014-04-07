@@ -52,7 +52,7 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
                     console.log(item);
                     var menuItem = {
                         text: item.get('exchangeName'),
-                        route: ['exchanges',
+                        route: ['exchanges', 'new',
                         item.get('exchangeName')],
                         icon: item.get('exchangeName')
                     };

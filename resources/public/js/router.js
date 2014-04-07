@@ -9,6 +9,7 @@ function(Backbone, _, React, profile) {
             'register': 'register',
             'wallets': 'wallets',
             'exchanges': 'exchanges',
+            'exchanges/new/:exchangeName': 'new_exchange',
             'help': 'help',
             'about': 'about',
             'about/contact': 'contact',
@@ -78,6 +79,12 @@ function(Backbone, _, React, profile) {
                 return Exchanges();
             }, true);
         },
+
+        new_exchange: function(exchangeName) {
+            this.setView(['components/new_exchange'], function(NewExchange) {
+                return NewExchange();
+            }, true);
+        },        
 
         help: function() {
             this.setView(['components/help'], function(Help) {
