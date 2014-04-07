@@ -1,7 +1,7 @@
-define(['react', 'models/notification', 'models/exchange_account', 'collections/exchange_accounts', 'collections/meta_exchanges'],
-function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) {
+define(['react', 'models/notification', 'models/exchange', 'collections/exchanges', 'collections/meta_exchanges'],
+function(React, notification, Exchange, Exchanges, MetaExchanges) {
 
-    var AddExchangeAccountFormFields = React.createClass({
+    var AddExchangeFormFields = React.createClass({
         displayName: "ExchangeFields",
         getInitialState: function() {
             return {nickname: ''}
@@ -36,7 +36,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
 
             //Only create and save the model if the input is valid
             if(this.validateAccount(map.credentials, map.nickname)) {
-                var model = new ExchangeAccount(map);
+                var model = new Exchange(map);
 
                 //This is where we save the entry on the server
                 model.save({}, {
@@ -113,10 +113,10 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
         }
     });
 
-    var AddExchangeAccountForm = React.createClass({
+    var AddExchangeForm = React.createClass({
         displayName: "ExchangeForm",
         getInitialState: function() {
-            return {meta_exchanges: new MetaExchanges(), currentExchange: new ExchangeAccount()};
+            return {meta_exchanges: new MetaExchanges(), currentExchange: new Exchange()};
         },
         componentWillMount: function() {
             this.state.meta_exchanges.fetch({
@@ -140,7 +140,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
                 exchanges = this.state.meta_exchanges.map(function(model) {
                     return React.DOM.option({key: model.get('exchangeName'), value: model.get('exchangeName')}, model.get('exchangeName'));
                 }.bind(this));
-                fields = AddExchangeAccountFormFields({
+                fields = AddExchangeFormFields({
                     currentExchange: this.state.currentExchange,
                     exchange_accounts: this.props.exchange_accounts,
                     addModel: this.props.addModel,
@@ -159,8 +159,8 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
        }
     });
 
-    var ExchangeAccountRow = React.createClass({
-        displayName: "ExchangeAccountRow",
+    var ExchangeRow = React.createClass({
+        displayName: "ExchangeRow",
         handleDelete: function(e) {
             e.preventDefault();
 
@@ -195,8 +195,8 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
         }
     });
 
-    var ExchangeAccountTable = React.createClass({
-        displayName: "ExchangeAccountTable",
+    var ExchangeTable = React.createClass({
+        displayName: "ExchangeTable",
         handleDelete: function() {
             this.props.exchange_accounts.fetch();
         },
@@ -204,7 +204,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             var exchange_accounts = this.props.exchange_accounts;
 
             var exchange_account_rows = exchange_accounts.map(function(model) {
-                return ExchangeAccountRow({key: model.get('exchangeName'), exchange_account: model, addModel: this.props.addModel, removeModel: this.props.removeModel});
+                return ExchangeRow({key: model.get('exchangeName'), exchange_account: model, addModel: this.props.addModel, removeModel: this.props.removeModel});
             }.bind(this));
 
             return React.DOM.table({id: 'exchange_account-table'},
@@ -218,14 +218,14 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
         }
     });        
 
-    var ExchangeAccountsView = React.createClass({
-        displayName: "ExchangeAccounts",
+    var ExchangesView = React.createClass({
+        displayName: "Exchanges",
         getInitialState: function() {
-            var exchange_accounts = new ExchangeAccounts();
+            var exchange_accounts = new Exchanges();
             return {"exchange_accounts" : exchange_accounts, "loaded": false};
         },
         componentWillMount: function() {
-            var exchange_accounts = new ExchangeAccounts();
+            var exchange_accounts = new Exchanges();
             exchange_accounts.fetch({
                 success: function(collection) {
                     this.setState({"exchange_accounts": collection, "loaded": true});
@@ -255,12 +255,12 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
                 content = React.DOM.p({}, "Loading");
             }
             else if (exchange_accounts.isEmpty()) {
-                content = React.DOM.div({}, AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
+                content = React.DOM.div({}, AddExchangeForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
                     React.DOM.div({}, "No exchange accounts"));
             }
             else {
-                content = React.DOM.div({}, AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
-                    ExchangeAccountTable({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}));
+                content = React.DOM.div({}, AddExchangeForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),
+                    ExchangeTable({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}));
             }
 
             return React.DOM.div({}, React.DOM.h1({}, "My Exchange Accounts"),
@@ -268,5 +268,5 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
         }
     });
 
-    return ExchangeAccountsView;
+    return ExchangesView;
 });

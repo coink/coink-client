@@ -74,8 +74,8 @@ function(Backbone, _, React, profile) {
         },
 
         exchanges: function() {
-            this.setView(['components/exchange_accounts'], function(ExchangeAccounts) {
-                return ExchangeAccounts();
+            this.setView(['components/exchanges'], function(Exchanges) {
+                return Exchanges();
             }, true);
         },
 
