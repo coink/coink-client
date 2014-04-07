@@ -2,6 +2,7 @@
 /lib
 /classes
 /checkouts
+/public
 /node_modules
 *pom.xml
 *npm-debug.log
