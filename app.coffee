@@ -1,7 +1,7 @@
 express = require "express"
 path = require "path"
 http = require "http"
-nib = require "nib"
+stylus = require "stylus"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 
