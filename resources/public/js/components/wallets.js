@@ -105,7 +105,9 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         },
 
         updateWallets: function(wallets) {
-            this.setState({"wallets" : wallets});
+            if(this.isMounted()) {
+                this.setState({"wallets" : wallets});
+            }
         },
 
         render: function() {

@@ -121,8 +121,10 @@ function(React, notification, Exchange, Exchanges, MetaExchanges) {
         componentWillMount: function() {
             this.state.meta_exchanges.fetch({
                 success: function(collection) {
-                    var currentExchange = collection.at(0);
-                    this.setState({"meta_exchanges": collection, "currentExchange": currentExchange});
+                    if(this.isMounted()) {
+                        var currentExchange = collection.at(0);
+                        this.setState({"meta_exchanges": collection, "currentExchange": currentExchange});
+                    }
                 }.bind(this),
                 error: function() {
                     notification.error("AJAX meta_exchanges error");
@@ -228,23 +230,31 @@ function(React, notification, Exchange, Exchanges, MetaExchanges) {
             var exchange_accounts = new Exchanges();
             exchange_accounts.fetch({
                 success: function(collection) {
-                    this.setState({"exchange_accounts": collection, "loaded": true});
+                    if(this.isMounted()) {
+                        this.setState({"exchange_accounts": collection, "loaded": true});
+                    }
                 }.bind(this),
                 error: function(collection) {
-                    this.setState({"loaded": true});
-                    notification.error("AJAX error can't load exchanges");
+                    if(this.isMounted()) {
+                        this.setState({"loaded": true});
+                        notification.error("AJAX error can't load exchanges");
+                    }
                 }.bind(this)
             });
         },
         addModel: function(model) {
             var exchange_accounts = this.state.exchange_accounts;
             exchange_accounts.add(model);
-            this.setState({"exchange_accounts": exchange_accounts});
+            if(this.isMounted()) {
+                this.setState({"exchange_accounts": exchange_accounts});
+            }
         },
         removeModel: function(model) {
             var exchange_accounts = this.state.exchange_accounts;
             exchange_accounts.remove(model);
-            this.setState({"exchange_accounts": exchange_accounts});
+            if(this.isMounted()) {
+                this.setState({"exchange_accounts": exchange_accounts});
+            }
         },
         render: function() {
             var content;
