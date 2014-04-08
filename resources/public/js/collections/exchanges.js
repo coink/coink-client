@@ -1,8 +1,8 @@
-define(['backbone', 'models/exchange_account'], function(Backbone, ExchangeAccount) {
+define(['backbone', 'models/exchange'], function(Backbone, Exchange) {
 
-    var ExchangeAccounts = Backbone.Collection.extend({
+    var Exchanges = Backbone.Collection.extend({
 
-        model: ExchangeAccount,
+        model: Exchange,
 
         urlRoot: urlRoot + "/v1/exchanges",
 
@@ -15,5 +15,5 @@ define(['backbone', 'models/exchange_account'], function(Backbone, ExchangeAccou
         }
     });
 
-    return ExchangeAccounts;
+    return Exchanges;
 });

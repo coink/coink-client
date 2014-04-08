@@ -113,7 +113,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
 
         // Single page webapp routing made nice for browser navigation
         Backbone.history.start({
-            pushState: true,
+            pushState: false,
             root: "/"
         });
 
