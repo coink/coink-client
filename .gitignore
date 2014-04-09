@@ -2,6 +2,7 @@
 /lib
 /classes
 /checkouts
+/public
 /node_modules
 /public
 *pom.xml
