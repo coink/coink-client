@@ -4,9 +4,6 @@
     "private": true,
     "author": "Coink <support@coink.io>",
     "description": "Breathe insight into the value of your crypto currencies",
-    "scripts": {
-        "start": "coffee app.coffee"
-    },
     "engines": {
         "node": ">=0.10"
     },
@@ -15,14 +12,51 @@
         "url" : "https://github.com/coink/coink-client.git"
     },
     "dependencies": {
-        "connect-assets-jspaths": "0.0.x",
+        "passport": "^0.2.0",
         "coffee-script": "1.7.x",
         "react-tools": "0.10.x",
-        "connect-assets": "2.x",
+        "connect-assets": "^2.x",
+        "connect-assets-jspaths": "^0.0.9",
         "express": "3.5.1",
-        "stylus": "0.x",
+        "winston": "^0.7.3",
+        "jade": "1.3.x",
+        "stylus": "0.43.x",
         "page": "1.3.x",
-        "jade": "1.x"
+        "config-chain": "^1.1.8",
+        "optimist": "^0.6.0",
+        "pluralize": "^0.0.7",
+        "require-dir": "^0.1.0",
+        "async": "^0.2.10"
+    },
+    "devDependencies": {
+        "mocha": "^1.17.0",
+        "should": "^3.1.0",
+        "rimraf": "^2.2.5",
+        "supertest": "^0.9.0",
+        "gulp": "^3.5.0",
+        "gulp-jade": "^0.4.2",
+        "gulp-util": "^2.2.13",
+        "gulp-coffee": "^1.4.1",
+        "gulp-concat": "^2.1.7",
+        "gulp-uglify": "^0.2.0",
+        "gulp-csso": "^0.2.3",
+        "gulp-stylus": "^0.0.11",
+        "gulp-if": "^0.0.5",
+        "gulp-minify-html": "^0.1.0",
+        "gulp-livereload": "^1.1.1",
+        "nodemon": "^1.0.14",
+        "gulp-cached": "^0.0.2",
+        "jshint-stylish": "^0.1.5",
+        "gulp-jshint": "^1.4.0",
+        "gulp-react": "^0.2.0",
+        "gulp-jsonlint": "0.0.3",
+        "gulp-autowatch": "0.0.1",
+        "nib": "^1.0.2"
+    },
+    "scripts": {
+        "build": "gulp --require coffee-script/register",
+        "start": "node ./server/start.js",
+        "test": "NODE_ENV=testing mocha --recursive --reporter spec --compilers coffee:coffee-script/register ./server/test"
     },
     "contributors": [
         {

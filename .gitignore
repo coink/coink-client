@@ -4,6 +4,7 @@
 /checkouts
 /public
 /node_modules
+/public
 *pom.xml
 *npm-debug.log
 *pom.xml.asc

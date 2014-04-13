@@ -2,14 +2,14 @@ var cdnRoot = '//cdnjs.cloudflare.com/ajax/libs/';
 require.config({
     baseUrl: 'js',
     paths: {
-        'jquery': [cdnRoot + 'jquery/2.1.0/jquery', jsPaths['scripts/jquery']],
-        'backbone': [cdnRoot + 'backbone.js/1.1.0/backbone-min', jsPaths['scripts/backbone']],
-        'underscore': [cdnRoot + 'underscore.js/1.4.3/underscore-min', jsPaths['scripts/underscore']],
-        'react': [cdnRoot + 'react/0.10.0/react', jsPaths['scripts/react']],
-        'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', jsPaths['scripts/fastclick']],
-        'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', jsPaths['scripts/modernizr']],
-        'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', jsPaths['scripts/foundation']],
-        'idle': [jsPaths['scripts/idle']]
+        'jquery': [cdnRoot + 'jquery/2.1.0/jquery', jsPaths['vendor/jquery']],
+        'backbone': [cdnRoot + 'backbone.js/1.1.0/backbone-min', jsPaths['vendor/backbone']],
+        'underscore': [cdnRoot + 'underscore.js/1.4.3/underscore-min', jsPaths['vendor/underscore']],
+        'react': [cdnRoot + 'react/0.10.0/react', jsPaths['vendor/react']],
+        'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', jsPaths['vendor/fastclick']],
+        'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', jsPaths['vendor/modernizr']],
+        'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', jsPaths['vendor/foundation']],
+        'idle': [jsPaths['vendor/idle']]
     },
     shim: {
         backbone: {
