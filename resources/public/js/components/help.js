@@ -1,4 +1,4 @@
-define(['react', 'router'], function(React, router) {
+define(['react'], function(React) {
 
         var Help = React.createClass({
             displayName: 'Help',

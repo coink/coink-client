@@ -1,5 +1,5 @@
-define(['react', 'router'],
-function(React, router){
+define(['react'],
+function(React){
 
     var Contact = React.createClass({
         displayName: 'Contact',
