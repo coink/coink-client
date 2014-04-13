@@ -9,7 +9,6 @@ function(Backbone, _, React, profile) {
             'register': 'register',
             'wallets': 'wallets',
             'exchanges': 'exchanges',
-            'exchanges/new/:exchangeName': 'new_exchange',
             'help': 'help',
             'about': 'about',
             'about/contact': 'contact',
@@ -54,12 +53,6 @@ function(Backbone, _, React, profile) {
             this.current = "exchanges";
             this.requiresLogin = true;
         },
-
-        new_exchange: function(exchangeName) {
-            this.current = "new_exchange";
-            this.exchangeName = exchangeName;
-            this.requiresLogin = true;
-        },        
 
         help: function() {
             this.current = "help";
