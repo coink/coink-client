@@ -3,7 +3,6 @@
 	overflow-x hidden
 	overflow-y scroll
 
-
 	@media only screen and (min-width: 40.063em)
 		sticky-footer 2em
 		box-shadow inset -7px 0 5px -3px rgba(SIDEBARFG2, 0.4)
@@ -49,7 +48,7 @@
 	.nav
 		list-style-type none
 		padding 0
-		margin 0
+		margin 0 -0.9735em
 
 		@media only screen and (min-width: 40.063em)
 
@@ -119,8 +118,9 @@
 					bg-size 2em
 
 					padding .6em
-					background url('/img/CoinkLogo.svg') center @padding no-repeat
-					background-size @bg-size @bg-size
+					background-position center @padding
+					background-repeat no-repeat
+					background-size @bg-size
 					padding-top @bg-size + @padding
 
 				a
@@ -131,23 +131,43 @@
 					&:hover, &.active
 						color lighten(SIDEBARFG1, 50%)
 
+		&>li>a
+			background-image url('/img/CoinkLogo.svg')
+
 		@media only screen and (max-width: 40em)
 
-			padding-top .5em
 			text-align right
 			display none
 			
 			a
+				padding 0.8em
+				padding-left 3.7em
 				display block
 				color SIDEBARFG1
-				padding 1em
 				text-outline 1px rgba(SIDEBARFG2, 0.4)
+				background-position 0.75em center
+				background-repeat no-repeat
+				background-size 2.25em 
+
+			&>li
+				&>a
+					background-color rgba(black, 0.3)
 				border-top 1px solid SIDEBARFG2
 				text-align left
 
-			li:last-child a
+			&>li:last-child
 				border-bottom 1px solid SIDEBARFG2
-				margin-bottom 1em
+
+			li ul
+				list-style-type none
+				padding 0
+				margin 0
+				li
+					a
+						background-color rgba(black, 0.1)
+					border-bottom 1px solid darken(SIDEBARBG, 25%)
+					&:last-child
+						border-bottom none
 
 	&.expanded ul.nav
 		display block

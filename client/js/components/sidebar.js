@@ -45,7 +45,6 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
         },
 
         render: function() {
-            if (!this.props.loggedIn) return React.DOM.div({});
             var menuItems = this.props.menuItems;
             var meta_exchanges_menuItems = this.props.meta_exchanges.map(
                 function(item) {
