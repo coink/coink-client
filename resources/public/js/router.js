@@ -30,84 +30,55 @@ function(Backbone, _, React, profile) {
             this.navigate(this.defaultRoute, {trigger: true, replace: true});
         },
 
-        setView: function(requirements, getView, requiresLogin) {
-            if(requiresLogin != null) {
-                // Don't render views that require user login
-                if(requiresLogin && !profile.get("logged_in")) {
-                    this.navigate('login', {trigger: true});
-                    return;
-                // Don't render views that require user is not logged in
-                } else if (!requiresLogin && profile.get("logged_in")) {
-                    return;
-                }
-            }
-            var node = document.getElementById('main');
-            var loading = React.DOM.div({className: 'loading'});
-            React.renderComponent(loading, node);
-            require(requirements, function() {
-                var modules = arguments;
-                React.renderComponent(getView.apply(this, modules), node);
-            }.bind(this));
-        },
-
         landing: function() {
-            this.setView(['components/landing'], function(Landing) {
-                return Landing();
-            }, false);
+            this.current = "landing";
+            this.requiresLogin = false;
         },
 
         login: function() {
-            this.setView(['components/login'], function(Login) {
-                return Login();
-            }, false);
+            this.current = "login";
+            this.requiresLogin = false;
         },
 
         register: function() {
-            this.setView(['components/register'], function(Register) {
-                return Register();
-            }, false);
+            this.current = "register";
+            this.requiresLogin = false;
         },
 
         wallets: function() {
-            this.setView(['components/wallets'], function(Wallets) {
-                return Wallets();
-            }, true);
+            this.current = "wallets";
+            this.requiresLogin = true;
         },
 
         exchanges: function() {
-            this.setView(['components/exchanges'], function(Exchanges) {
-                return Exchanges();
-            }, true);
+            this.current = "exchanges";
+            this.requiresLogin = true;
         },
 
         new_exchange: function(exchangeName) {
-            this.setView(['components/new_exchange'], function(NewExchange) {
-                return NewExchange();
-            }, true);
+            this.current = "new_exchange";
+            this.exchangeName = exchangeName;
+            this.requiresLogin = true;
         },        
 
         help: function() {
-            this.setView(['components/help'], function(Help) {
-                return Help();
-            }, null);
+            this.current = "help";
+            this.requiresLogin = null;
         },
 
         about: function() {
-            this.setView(['components/about'], function(About) {
-                return About();
-            }, null);
+            this.current = "about";
+            this.requiresLogin = null;
         },
 
         contact: function() {
-            this.setView(['components/contact'], function(Contact) {
-                return Contact();
-            }, null);
+            this.current = "contact";
+            this.requiresLogin = null;
         },
 
         faq: function() {
-            this.setView(['components/faq'], function(Faq) {
-                return Faq();
-            }, null);
+            this.current = "faq";
+            this.requiresLogin = null;
         }
     });
 
