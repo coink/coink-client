@@ -15,12 +15,11 @@ sudo docker run -d -p 3000 coink/web-client
 
 ### Boring Method
 
-[Leiningen][1] 2.3.4  - Clojure without exploding
-
-[1]: https://github.com/technomancy/leiningen
+Install npm, then in the coink root directory run:
 
 ```bash
-run `lein ring server-headless`
-Point to localhost:3000 in your browser of choice.
+`npm install`
+`npm run-script build`
 ```
+Point to localhost:3000 in your browser of choice.
 

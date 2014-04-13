@@ -5,14 +5,8 @@ assets = require 'connect-assets'
 jsPaths = require "connect-assets-jspaths"
 
 app = express()
-app.use express.compress()
-app.use express.methodOverride()
-app.use express.urlencoded()
-app.use express.json()
-app.use express.cookieParser config.cookieSecret
-if config.cache
-  app.use express.staticCache()
 app.use express.static config.pubdir
+app.listen 3000
 
 app.use (err, req, res, next) ->
   console.error err.stack

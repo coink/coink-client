@@ -1,87 +1,96 @@
 {
-    "name": "coink-client",
-    "version": "0.3.1",
-    "private": true,
-    "author": "Coink <support@coink.io>",
-    "description": "Breathe insight into the value of your crypto currencies",
-    "engines": {
-        "node": ">=0.10"
+  "name": "coink-client",
+  "version": "0.3.2",
+  "private": true,
+  "author": "Coink <support@coink.io>",
+  "description": "Coink breathes insight into the value of your crypto currencies holdings.",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coink/coink-client.git"
+  },
+  "contributors": [
+    {
+      "name": "Roey Chasman",
+      "email": "rchasman@coink.io"
     },
-    "repository": {
-        "type" : "git",
-        "url" : "https://github.com/coink/coink-client.git"
+    {
+      "name": "Chris La Rose",
+      "email": "chris@coink.io"
     },
-    "contributors": [
-        {
-            "name": "Roey Chasman",
-            "email": "rchasman@coink.io"
-        },
-        {
-            "name": "Chris La Rose",
-            "email": "chris@coink.io"
-        },
-        {
-            "name": "Zachary Montoya",
-            "email": "zach@coink.io"
-        },
-        {
-            "name": "Matt Gautreau",
-            "email": "matt@coink.io"
-        },
-        {
-            "name": "Shane Gianelli",
-            "email": "shane@coink.io"
-        },
-        {
-            "name": "Kate Maroney",
-            "email": "kate@coink.io"
-        },
-        {
-            "name": "Ashley",
-            "email": "ashley@coink.io"
-        },
-        {
-            "name": "Soumya",
-            "email": "soumya92@coink.io"
-        }
-    ],
-    "dependencies": {
-        "coffee-script": "1.7.x",
-        "react-tools": "0.10.x",
-        "connect-assets": "^2.x",
-        "connect-assets-jspaths": "^0.0.9",
-        "express": "3.5.1",
-        "winston": "^0.7.3",
-        "jade": "1.3.x",
-        "stylus": "0.43.x",
-        "page": "1.3.x",
-        "config-chain": "^1.1.8",
-        "optimist": "^0.6.0",
-        "require-dir": "^0.1.0",
-        "async": "^0.2.10"
+    {
+      "name": "Zachary Montoya",
+      "email": "zach@coink.io"
     },
-    "devDependencies": {
-        "gulp": "^3.5.0",
-        "gulp-jade": "^0.4.2",
-        "gulp-util": "^2.2.13",
-        "gulp-coffee": "^1.4.1",
-        "gulp-concat": "^2.1.7",
-        "gulp-uglify": "^0.2.0",
-        "gulp-csso": "^0.2.3",
-        "gulp-stylus": "^0.0.11",
-        "gulp-if": "^0.0.5",
-        "gulp-minify-html": "^0.1.0",
-        "gulp-livereload": "^1.1.1",
-        "gulp-cached": "^0.0.2",
-        "gulp-jshint": "^1.4.0",
-        "gulp-react": "^0.2.0",
-        "gulp-jsonlint": "0.0.3",
-        "gulp-autowatch": "0.0.1",
-        "nib": "^1.0.2",
-        "nodemon": "^1.0.14",
-        "jshint-stylish": "^0.1.5"
+    {
+      "name": "Matt Gautreau",
+      "email": "matt@coink.io"
     },
-    "scripts": {
-        "build": "gulp --require coffee-script/register"
+    {
+      "name": "Shane Gianelli",
+      "email": "shane@coink.io"
+    },
+    {
+      "name": "Kate Maroney",
+      "email": "kate@coink.io"
+    },
+    {
+      "name": "Ashley",
+      "email": "ashley@coink.io"
+    },
+    {
+      "name": "Soumya",
+      "email": "soumya92@coink.io"
     }
+  ],
+  "dependencies": {
+    "coffee-script": "1.7.x",
+    "react-tools": "0.10.x",
+    "connect-assets": "^2.x",
+    "connect-assets-jspaths": "^0.0.9",
+    "express": "3.5.1",
+    "winston": "^0.7.3",
+    "jade": "1.3.x",
+    "stylus": "0.43.x",
+    "page": "1.3.x",
+    "config-chain": "^1.1.8",
+    "optimist": "^0.6.0",
+    "require-dir": "^0.1.0",
+    "async": "^0.2.10"
+  },
+  "devDependencies": {
+    "connect-livereload": "^0.4.0",
+    "gulp": "^3.5.0",
+    "gulp-autowatch": "0.0.1",
+    "gulp-cached": "^0.0.2",
+    "gulp-changed": "^0.3.0",
+    "gulp-clean": "^0.2.4",
+    "gulp-coffee": "^1.4.1",
+    "gulp-concat": "^2.1.7",
+    "gulp-csso": "^0.2.3",
+    "gulp-filesize": "^0.0.6",
+    "gulp-if": "^0.0.5",
+    "gulp-imagemin": "^0.2.0",
+    "gulp-jade": "^0.4.2",
+    "gulp-jshint": "^1.4.0",
+    "gulp-jsonlint": "0.0.3",
+    "gulp-livereload": "^1.3.1",
+    "gulp-minify-css": "0.3.1",
+    "gulp-minify-html": "^0.1.0",
+    "gulp-notify": "^1.2.5",
+    "gulp-react": "^0.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-stylus": "^0.0.11",
+    "gulp-uglify": "^0.2.0",
+    "gulp-util": "^2.2.13",
+    "jshint-stylish": "^0.1.5",
+    "nib": "^1.0.2",
+    "nodemon": "^1.0.14",
+    "tiny-lr": "0.0.5"
+  },
+  "scripts": {
+    "build": "gulp --require coffee-script/register"
+  }
 }
