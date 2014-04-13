@@ -21,8 +21,7 @@ require.config({
         },
         foundation: {
             deps: ['jquery']
-        },
-
+        }
     }
 });
 
