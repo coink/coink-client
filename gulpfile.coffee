@@ -16,7 +16,6 @@ path = require 'path'
 # plugins
 htmlmin = require 'gulp-minify-html'
 react = require 'gulp-react'
-jade = require 'gulp-jade'
 coffee = require 'gulp-coffee'
 stylus = require 'gulp-stylus'
 concat = require 'gulp-concat'
@@ -32,15 +31,15 @@ imagemin = require 'gulp-imagemin'
 filesize = require 'gulp-filesize'
 changed = require 'gulp-changed'
 clean = require 'gulp-clean'
+autowatch = require 'gulp-autowatch'
+svgmin = require 'gulp-svgmin'
+seq = require 'run-sequence'
 
 # misc
-nodemon = require 'nodemon'
 stylish = require 'jshint-stylish'
-autowatch = require 'gulp-autowatch'
 
 # paths
 paths =
-  vendor: './client/js/vendor/**/*'
   coffee: './client/js/**/*.coffee'
   jsx: './client/js/**/*.jsx'
   js: './client/js/**/*.js'
@@ -48,8 +47,8 @@ paths =
   html: './client/*.html'
   css: './client/css/**/*.css'
   jade: './client/*.jade'
-  img: './client/img/**/*'
-  config: './server/config/*.json'
+  png: './client/img/**/*.png'
+  svg: './client/img/**/*.svg'
 
 gulp.task 'server', () ->
   lr = require('tiny-lr')()
@@ -96,7 +95,7 @@ gulp.task 'jsx', ->
 # styles
 gulp.task 'stylus', ->
   gulp.src(paths.stylus)
-    .pipe(stylus(use: ['nib']))
+    .pipe(stylus())
     .pipe(gif(gutil.env.production, csso()))
     .pipe(gulp.dest('./public/css'))
 
@@ -117,27 +116,19 @@ gulp.task 'html', ->
     .pipe(gif(gutil.env.production, htmlmin()))
     .pipe(gulp.dest('./public'))
 
-gulp.task 'vendor', ->
-  gulp.src(paths.vendor)
-    .pipe(uglify())
-    .pipe(cache('vendor'))
-    .pipe(gulp.dest('./public/js/vendor'))
-
-gulp.task 'images', ->
-  return gulp.src(paths.img)
+gulp.task 'png', ->
+  return gulp.src(paths.png)
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest('./public/img'))
 
+gulp.task 'svg', ->
+  return gulp.src(paths.svg)
+    .pipe(cache(svgmin()))
+    .pipe(gulp.dest('./public/img'))
 
 # utils
-gulp.task 'config', ->
-  gulp.src(paths.config)
-    .pipe(cache('config'))
-    .pipe(jsonlint())
-    .pipe(jsonlint.reporter('default'))
-
 gulp.task 'clean', ->
-  gulp.src('./public/*', read: false)
+  gulp.src('./public', read: false)
     .pipe(clean({force: true}))
     .pipe(notify({message: 'Cleaned /public...'}))
 
@@ -146,5 +137,6 @@ gulp.task 'watch', ->
 
 gulp.task 'styles', ['css', 'stylus']
 gulp.task 'scripts', ['js', 'coffee', 'jsx']
-gulp.task 'static', ['jade', 'images', 'html', 'vendor']
-gulp.task 'default', ['scripts', 'styles', 'static', 'server', 'config', 'watch']
+gulp.task 'images', ['png', 'svg']
+gulp.task 'static', ['jade', 'images', 'html']
+gulp.task 'default', seq('clean', ['scripts', 'styles', 'static', 'server', 'watch'])

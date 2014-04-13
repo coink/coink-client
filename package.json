@@ -61,7 +61,6 @@
     "async": "^0.2.10"
   },
   "devDependencies": {
-    "connect-livereload": "^0.4.0",
     "gulp": "^3.5.0",
     "gulp-autowatch": "0.0.1",
     "gulp-cached": "^0.0.2",
@@ -73,7 +72,6 @@
     "gulp-filesize": "^0.0.6",
     "gulp-if": "^0.0.5",
     "gulp-imagemin": "^0.2.0",
-    "gulp-jade": "^0.4.2",
     "gulp-jshint": "^1.4.0",
     "gulp-jsonlint": "0.0.3",
     "gulp-livereload": "^1.3.1",
@@ -83,11 +81,12 @@
     "gulp-react": "^0.2.0",
     "gulp-rename": "^1.2.0",
     "gulp-stylus": "^0.0.11",
+    "gulp-svgmin": "^*",
     "gulp-uglify": "^0.2.0",
     "gulp-util": "^2.2.13",
+    "connect-livereload": "^0.4.0",
     "jshint-stylish": "^0.1.5",
-    "nib": "^1.0.2",
-    "nodemon": "^1.0.14",
+    "run-sequence": "^0.3.6",
     "tiny-lr": "0.0.5"
   },
   "scripts": {
