@@ -63,12 +63,7 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
             }
 
             var items = menuItems.map(function(item) {
-                return SidebarListItem({
-                    key: item.get("text"),
-                    icon: item.get("icon"),
-                    route: item.get("route"),
-                    active: this.state.active && item.get("route") == this.state.active[0]
-                }, React.DOM.ul({},
+                var submenu = item.get("menu") && item.get("menu").length > 0 ? React.DOM.ul({},
                     _(item.get("menu")).map(function(subitem) {
                         return SidebarListItem({
                             key: subitem.text,
@@ -76,7 +71,14 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
                             route: subitem.route,
                             active: this.state.active && subitem.route.join('/') == this.state.active.join('/')
                         })
-                    }.bind(this))))
+                    }.bind(this))) : null;
+
+                return SidebarListItem({
+                    key: item.get("text"),
+                    icon: item.get("icon"),
+                    route: item.get("route"),
+                    active: this.state.active && item.get("route") == this.state.active[0]
+                }, submenu);
             }.bind(this));
 
             return React.DOM.div({
