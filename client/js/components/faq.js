@@ -1,5 +1,5 @@
-define(['react', 'router'],
-function(React, router){
+define(['react'],
+function(React){
 
     var Faq = React.createClass({
         displayName: 'Faq',

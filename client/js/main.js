@@ -108,7 +108,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
 
     // Begin rendering the webapp with the main react component 'Application'
     $(document).ready(function() {
-        var app = Application();
+        var app = Application({router: router});
         React.renderComponent(app, document.getElementById('coink'));
 
         // Single page webapp routing made nice for browser navigation
