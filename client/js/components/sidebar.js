@@ -46,20 +46,6 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
 
         render: function() {
             var menuItems = this.props.menuItems;
-            var meta_exchanges_menuItems = this.props.meta_exchanges.map(
-                function(item) {
-                    console.log(item);
-                    var menuItem = {
-                        text: item.get('exchangeName'),
-                        route: ['exchanges', 'new',
-                        item.get('exchangeName')],
-                        icon: item.get('exchangeName')
-                    };
-                    return menuItem;
-                });
-            if(meta_exchanges_menuItems.length > 0) {
-                menuItems.findWhere({text: 'Exchanges'}).set({menu: meta_exchanges_menuItems});
-            }
 
             var items = menuItems.map(function(item) {
                 var submenu = item.get("menu") && item.get("menu").length > 0 ? React.DOM.ul({},
