@@ -122,5 +122,9 @@ function($, Backbone, React, Application, router, profile, fastclick,
         $("#expand-btn").on("click", function() {
             $("#sidebar").toggleClass("expanded")
         });
+
+        $("#coink").on("click", "#sidebar.expanded a", function() {
+            $("#sidebar").removeClass("expanded")
+        });
     });
 });
