@@ -5,10 +5,10 @@ html
     meta(name="description", content="Breathe insight into your crypto-holdings")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(charset="UTF-8")
-    !=js("/js/vendor/prefix-free")
-    !=css("/css/styles")
+    link(rel="stylesheet", type="text/css", href="css/styles.css")
+    link(rel="stylesheet", type="text/css", href="css/normalize.css")
+    link(rel="stylesheet", type="text/css", href="css/foundation/foundation.css")
   body
-    !=exportPaths("jsPaths")
-    script var urlRoot = (window.location.hostname == 'coink.io' ? 'https://api.coink.io' : 'http://private-d789-coink.apiary.io')
-    script(data-main="#{jsUrl('/js/main.js')}", src="#{jsUrl('/js/vendor/require.js')}")
+    script var urlRoot = (window.location.hostname == "coink.io" ? "https://api.coink.io" : "http://private-d789-coink.apiary.io")
+    script(data-main='/js/main.js', src='/js/vendor/require.js')
     #coink

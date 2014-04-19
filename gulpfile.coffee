@@ -1,3 +1,10 @@
+# settings
+path = require 'path'
+express = require 'express'
+EXPRESS_PORT = 3000
+EXPRESS_ROOT = path.join(__dirname, "public")
+LIVERELOAD_PORT = 35729
+
 # core
 gulp = require 'gulp'
 gutil = require 'gulp-util'
@@ -9,7 +16,6 @@ path = require 'path'
 # plugins
 htmlmin = require 'gulp-minify-html'
 react = require 'gulp-react'
-jade = require 'gulp-jade'
 coffee = require 'gulp-coffee'
 stylus = require 'gulp-stylus'
 concat = require 'gulp-concat'
@@ -19,64 +25,63 @@ reload = require 'gulp-livereload'
 cache = require 'gulp-cached'
 jshint = require 'gulp-jshint'
 jsonlint = require 'gulp-jsonlint'
+rename = require 'gulp-rename'
+notify = require 'gulp-notify'
+imagemin = require 'gulp-imagemin'
+filesize = require 'gulp-filesize'
+changed = require 'gulp-changed'
+clean = require 'gulp-clean'
+autowatch = require 'gulp-autowatch'
+svgmin = require 'gulp-svgmin'
+seq = require 'run-sequence'
 
 # misc
-nodemon = require 'nodemon'
 stylish = require 'jshint-stylish'
-autowatch = require 'gulp-autowatch'
 
 # paths
 paths =
-  vendor: './client/vendor/**/*'
-  coffee: './client/**/*.coffee'
-  jsx: './client/**/*.jsx'
-  stylus: './client/*.styl'
-  html: './client/**/*.html'
-  jade: '/client/*.jade'
-  config: './server/config/*.json'
+  coffee: './client/js/**/*.coffee'
+  jsx: './client/js/**/*.jsx'
+  js: './client/js/**/*.js'
+  stylus: './client/css/*.styl'
+  html: './client/*.html'
+  css: './client/css/**/*.css'
+  jade: './client/*.jade'
+  png: './client/img/**/*.png'
+  svg: './client/img/**/*.svg'
 
-# im going to break this out into a module
-# so this will become about two lines
-gulp.task 'server', (cb) ->
-  # total hack to make nodemon + livereload
-  # work sanely
-  idxPath = './public/index.html'
-  reloader = reload()
-  nodemon
-    script: './server/start.js'
-    watch: ['./server']
-    ext: 'js json coffee'
-    ignore: ['./server/test', '.un~']
+gulp.task 'server', () ->
+  lr = require('tiny-lr')()
+  lr.listen(LIVERELOAD_PORT)
 
-  nodemon.once 'start', cb
-  nodemon.on 'start', ->
-    console.log 'Server has started'
-    setTimeout ->
-      reloader.write path: idxPath
-    , 750
-  nodemon.on 'quit', ->
-    console.log 'Server has quit'
-  nodemon.on 'restart', (files) ->
-    console.log 'Server restarted due to:', files
-
-  return
-
+  app = express()
+  app.use require('connect-livereload')()
+  app.use express.static(EXPRESS_ROOT)
+  app.listen EXPRESS_PORT
+  app.set "views", EXPRESS_ROOT
+  app.set "view engine", "jade"
+  app.all '/', (req, res) ->
+    res.render "coink"
+  app.all '*', (req, res) ->
+    res.redirect "/"
 
 # javascript
+gulp.task 'js', ->
+  gulp.src(paths.js)
+  .pipe(cache('js'))
+  .pipe(jshint())
+  .pipe(jshint.reporter(stylish))
+  .pipe(gif(gutil.env.production, uglify()))
+  .pipe(gulp.dest('./public/js'))
+
 gulp.task 'coffee', ->
   gulp.src(paths.coffee)
     .pipe(cache('coffee'))
     .pipe(coffee())
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
     .pipe(gif(gutil.env.production, uglify()))
-    .pipe(gulp.dest('./public'))
-    .pipe reload()
-
-gulp.task 'jade', ->
-  gulp.src(paths.jade)
-    .pipe(cache('jade'))
-    .pipe(jade())
-    .pipe(gulp.dest('./public'))
-    .pipe reload()
+    .pipe(gulp.dest('./public/js'))
 
 gulp.task 'jsx', ->
   gulp.src(paths.jsx)
@@ -85,42 +90,53 @@ gulp.task 'jsx', ->
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(gif(gutil.env.production, uglify()))
-    .pipe(gulp.dest('./public'))
-    .pipe reload()
-
-gulp.task 'config', ->
-  gulp.src(paths.config)
-    .pipe(cache('config'))
-    .pipe(jsonlint())
-    .pipe(jsonlint.reporter())
+    .pipe(gulp.dest('./public/js'))
 
 # styles
 gulp.task 'stylus', ->
   gulp.src(paths.stylus)
-    .pipe(stylus(use: ['nib']))
-    .pipe(concat('app.css'))
+    .pipe(stylus())
     .pipe(gif(gutil.env.production, csso()))
+    .pipe(gulp.dest('./public/css'))
+
+gulp.task 'css', ->
+  gulp.src(paths.css)
+    .pipe(gif(gutil.env.production, csso()))
+    .pipe(gulp.dest('./public/css'))
+
+# static
+gulp.task 'jade', ->
+  gulp.src(paths.jade)
+    .pipe(cache('jade'))
     .pipe(gulp.dest('./public'))
-    .pipe reload()
 
 gulp.task 'html', ->
   gulp.src(paths.html)
     .pipe(cache('html'))
     .pipe(gif(gutil.env.production, htmlmin()))
     .pipe(gulp.dest('./public'))
-    .pipe reload()
 
-gulp.task 'vendor', ->
-  gulp.src(paths.vendor)
-    .pipe(cache('vendor'))
-    .pipe(gulp.dest('./public/vendor'))
-    .pipe reload()
+gulp.task 'png', ->
+  return gulp.src(paths.png)
+    .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+    .pipe(gulp.dest('./public/img'))
+
+gulp.task 'svg', ->
+  return gulp.src(paths.svg)
+    .pipe(cache(svgmin()))
+    .pipe(gulp.dest('./public/img'))
+
+# utils
+gulp.task 'clean', ->
+  gulp.src('./public', read: false)
+    .pipe(clean({force: true}))
+    .pipe(notify({message: 'Cleaned /public...'}))
 
 gulp.task 'watch', ->
   autowatch gulp, paths
 
-
-gulp.task 'css', ['stylus']
-gulp.task 'js', ['coffee', 'jsx']
-gulp.task 'static', ['html', 'vendor']
-gulp.task 'default', ['js', 'css', 'static', 'server', 'config', 'watch']
+gulp.task 'styles', ['css', 'stylus']
+gulp.task 'scripts', ['js', 'coffee', 'jsx']
+gulp.task 'images', ['png', 'svg']
+gulp.task 'static', ['jade', 'images', 'html']
+gulp.task 'default', seq('clean', ['scripts', 'styles', 'static', 'server', 'watch'])

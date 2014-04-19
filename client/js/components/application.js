@@ -14,10 +14,17 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
         },
 
         render: function() {
+            var mainContentWidth = 12;
+            var sidebar = undefined;
+            if(this.state.logged_in) {
+                mainContentWidth = 9;
+                sidebar = Sidebar({meta_exchanges: this.props.meta_exchanges});
+            }
+
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: this.state.logged_in}),
-                Sidebar({loggedIn: this.state.logged_in, meta_exchanges: this.props.meta_exchanges}),
-                React.DOM.div({id: 'content-wrapper', className: 'large-9 medium-9 columns'},
+                sidebar,
+                React.DOM.div({id: 'content-wrapper', className: 'large-' + mainContentWidth + ' medium-' + mainContentWidth + ' columns'},
                     React.DOM.div({className: 'floatfix'},
                         React.DOM.div({className: 'wrap'},
                             Notification(),
