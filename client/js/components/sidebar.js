@@ -45,6 +45,7 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
         },
 
         render: function() {
+            if (!this.props.loggedIn) return React.DOM.div({});
             var menuItems = this.props.menuItems;
 
             var items = menuItems.map(function(item) {

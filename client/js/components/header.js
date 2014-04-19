@@ -64,13 +64,13 @@ define(['react', 'router', 'models/notification', 'models/profile'],
         displayName: 'Header',
 
         render: function() {
-            var loginLink = profile.getToken() != null ?
-                React.DOM.span({}, LogoutLink(), " ") :
-                React.DOM.span({}, LoginLink(), " ", RegisterLink(), " ");
+            var loginLink = profile.getToken() != null
+      ?  React.DOM.header({'className': 'clearfix'},
+          React.DOM.div({id: 'header-nav'},
+              React.DOM.span({}, LogoutLink(), " ")))
+      : React.DOM.div({});
 
-            return React.DOM.header({'className': 'clearfix'},
-                React.DOM.div({id: 'header-nav'}, loginLink)
-            );
+            return loginLink;
         }
     });
 

@@ -118,7 +118,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
             root: "/"
         });
 
-        // Handle responsive navigation
+        // Handle responsive navigation for mobile
         $("#expand-btn").on("click", function() {
             $("#sidebar").toggleClass("expanded")
         });
