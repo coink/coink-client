@@ -45,23 +45,36 @@ function(React, $, router, notification, profile) {
         },
 
         render: function() {
-            return React.DOM.form({onSubmit: this.handleSubmit},
-                React.DOM.h1({}, "Login"),
-                React.DOM.label({htmlFor: 'username'}),
-                React.DOM.input({
-                    placeholder: "Username",
-                    type: 'text',
-                    ref: 'username',
-                }),
-                React.DOM.br(),
-                React.DOM.label({htmlFor: 'password'}),
-                React.DOM.input({
-                    placeholder: "Password",
-                    type: 'password',
-                    ref: 'password',
-                }),
-                React.DOM.br(),
-                React.DOM.input({type: 'submit', value: "Login"}));
+            return React.DOM.div({id: "landing", className: "small"},
+
+                React.DOM.div({className: "row"},
+                    React.DOM.div({className: "large-12 columns"},
+                        React.DOM.h1({id: "logo"}, "COINK"),
+                        React.DOM.h2({}, "Log in to Coink")
+                    )
+                ),
+
+                React.DOM.div({className: "row"},
+                    React.DOM.div({className: "small-centered large-6 medium-8 small-12 columns"},
+                        React.DOM.form({onSubmit: this.handleSubmit, onEnter: this.handleSubmit},
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "large-12 columns"},
+                                    React.DOM.label({}, "Username", React.DOM.input({placeholder: "Username", type: 'text', ref: 'username'}))
+                                )
+                            ),
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "large-7 medium-7 columns"},
+                                    React.DOM.label({}, "Password", React.DOM.input({placeholder: "Password", type: 'password', ref: 'password'}))
+                                ),
+                                React.DOM.div({className: "medium-5 large-5 columns"},
+                                    React.DOM.button({className: "radius primary large expand"}, "Login")
+                                )
+                            )
+                        )
+                    )
+                )
+            
+            );
         }
     });
 
