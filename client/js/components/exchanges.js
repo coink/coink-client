@@ -1,7 +1,7 @@
-define(['react', 'models/notification', 'collections/exchanges'],
-function(React, notification, Exchanges) {
+define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges'],
+function(React, notification, Exchanges, MetaExchanges) {
 
-    var ExchangeRow = React.createClass({
+/*    var ExchangeRow = React.createClass({
         displayName: "ExchangeRow",
         handleDelete: function(e) {
             e.preventDefault();
@@ -26,58 +26,80 @@ function(React, notification, Exchanges) {
         },
         render: function() {
             var exchange_account = this.props.exchange_account;
-            return React.DOM.tr({},
-                React.DOM.td({}, exchange_account.get('exchangeName')),
-                React.DOM.td({}, exchange_account.get('nickname')),
-                React.DOM.td({}, exchange_account.get('accountID')),
-                React.DOM.td({}, React.DOM.a({
+            return React.DOM.div({className: "clearfix hide"},
+                React.DOM.a({
                     href: '#',
-                    onClick: this.handleDelete
-                }, "Delete")));
+                    onClick: this.handleDelete,
+                    className: "right"
+                }, "Delete"),
+                React.DOM.span({className: "left"}, exchange_account.get('nickname')),
+                React.DOM.span({className: "right"}, exchange_account.get('accountID'))
+            );
         }
     });
+*/
+    var ExchangeGroup = React.createClass({
+        displayName: "ExchangeGroup",
+        getInitialState: function() {
+            return {collapsed: true};
+        },
 
-    var ExchangeTable = React.createClass({
-        displayName: "ExchangeTable",
-        handleDelete: function() {
-            this.props.exchange_accounts.fetch();
+        toggleCollapse: function() {
+            this.setState({collapsed: !this.state.collapsed});
         },
         render: function() {
-            var exchange_accounts = this.props.exchange_accounts;
+            var exchange = this.props.exchange;
+            /*var exchange_rows = _.map(this.props.exchange, function(exchange_account) {
+                return ExchangeRow({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
+            }.bind(this));*/
 
-            var exchange_account_rows = exchange_accounts.map(function(model) {
-                return ExchangeRow({key: model.get('exchangeName'), exchange_account: model, addModel: this.props.addModel, removeModel: this.props.removeModel});
-            }.bind(this));
-
-            return React.DOM.table({id: 'exchange_account-table'},
-                React.DOM.tbody({},
-                    React.DOM.tr({},
-                        React.DOM.th({}, "Exchange"),
-                        React.DOM.th({}, "Nickname"),
-                        React.DOM.th({}, "Account ID"),
-                        React.DOM.th({}, "Action")),
-                    exchange_account_rows));
+            if(this.state.collapsed) {
+                return React.DOM.div({className: "collapse-parent"}, React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"}, this.props.exchangeName));
+            } else {
+                return React.DOM.div({className: "collapse-parent"},
+                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"}, this.props.exchangeName),
+                    React.DOM.div({className: "collapse-body"}, "Hello"));
+            }
         }
-    });        
+    });
 
     var ExchangesView = React.createClass({
         displayName: "Exchanges",
         getInitialState: function() {
             var exchange_accounts = new Exchanges();
-            return {"exchange_accounts" : exchange_accounts, "loaded": false};
+            var meta_exchanges = new MetaExchanges();
+            return {"exchange_accounts" : exchange_accounts, "meta_exchanges": meta_exchanges, "loaded": false};
         },
         componentWillMount: function() {
             var exchange_accounts = new Exchanges();
+            exchange_accounts.comparator = 'exchangeName';
             exchange_accounts.fetch({
                 success: function(collection) {
                     if(this.isMounted()) {
                         this.setState({"exchange_accounts": collection, "loaded": true});
+                        console.log("Exchange accounts is " + JSON.stringify(collection));
                     }
                 }.bind(this),
                 error: function(collection) {
                     if(this.isMounted()) {
                         this.setState({"loaded": true});
-                        notification.error("AJAX error can't load exchanges");
+                        notification.error("AJAX error can't load exchange accounts");
+                    }
+                }.bind(this)
+            });
+
+            var meta_exchanges = new MetaExchanges();
+            meta_exchanges.comparator = 'exchangeName';
+            meta_exchanges.fetch({
+                success: function(collection) {
+                    if(this.isMounted()) {
+                        this.setState({"meta_exchanges": collection});
+                        console.log("Meta exchanges is " + JSON.stringify(collection));
+                    }
+                }.bind(this),
+                error: function(collection) {
+                    if(this.isMounted()) {
+                        notification.error("AJAX error can't load exchange information");
                     }
                 }.bind(this)
             });
@@ -94,12 +116,14 @@ function(React, notification, Exchanges) {
             exchange_accounts.remove(model);
             if(this.isMounted()) {
                 this.setState({"exchange_accounts": exchange_accounts});
+                console.log("Render!");
             }
         },
         render: function() {
             var content;
             var loaded = this.state.loaded;
             var exchange_accounts = this.state.exchange_accounts;
+            var meta_exchanges = this.state.meta_exchanges;
 
             if (!loaded) {
                 content = React.DOM.p({}, "Loading");
@@ -108,8 +132,18 @@ function(React, notification, Exchanges) {
                 content = React.DOM.div({}, "No exchange accounts");
             }
             else {
-                content = React.DOM.div({},
-                    ExchangeTable({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}));
+                var exchange_groups = exchange_accounts.groupBy('exchangeName');
+                console.log("exchange_groups is: " + JSON.stringify(exchange_groups));
+
+                content = _.map(exchange_groups, function(exchange, exchangeName) {
+                    console.log("Group for " + exchangeName + " is " + JSON.stringify(exchange));
+                    return ExchangeGroup({
+                        exchangeName: exchangeName,
+                        exchange: exchange,
+                        addModel: this.addModel,
+                        removeModel: this.removeModel
+                    });
+                }.bind(this));
             }
 
             return React.DOM.div({}, React.DOM.h1({}, "My Exchange Accounts"),
