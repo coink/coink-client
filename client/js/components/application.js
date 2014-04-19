@@ -14,7 +14,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
             var sidebar = undefined;
             if(this.state.logged_in) {
                 mainContentWidth = 9;
-                sidebar = Sidebar({meta_exchanges: this.props.meta_exchanges});
+                sidebar = Sidebar({loggedIn: this.state.logged_in});
             }
 
             return React.DOM.div({id : 'wrapper'},
