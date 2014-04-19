@@ -69,6 +69,7 @@
     "gulp-coffee": "^1.4.1",
     "gulp-concat": "^2.1.7",
     "gulp-csso": "^0.2.3",
+    "gulp-filter": "^0.4.1",
     "gulp-filesize": "^0.0.6",
     "gulp-if": "^0.0.5",
     "gulp-imagemin": "^0.2.0",
@@ -87,7 +88,8 @@
     "connect-livereload": "^0.4.0",
     "jshint-stylish": "^0.1.5",
     "run-sequence": "^0.3.6",
-    "tiny-lr": "0.0.5"
+    "tiny-lr": "0.0.5",
+    "nib": "1.0.x"
   },
   "scripts": {
     "build": "gulp --require coffee-script/register"

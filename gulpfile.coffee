@@ -3,7 +3,6 @@ path = require 'path'
 express = require 'express'
 EXPRESS_PORT = 3000
 EXPRESS_ROOT = path.join(__dirname, "public")
-LIVERELOAD_PORT = 35729
 
 # core
 gulp = require 'gulp'
@@ -30,6 +29,7 @@ notify = require 'gulp-notify'
 imagemin = require 'gulp-imagemin'
 filesize = require 'gulp-filesize'
 changed = require 'gulp-changed'
+gfilter = require 'gulp-filter'
 clean = require 'gulp-clean'
 autowatch = require 'gulp-autowatch'
 svgmin = require 'gulp-svgmin'
@@ -50,36 +50,40 @@ paths =
   png: './client/img/**/*.png'
   svg: './client/img/**/*.svg'
 
-gulp.task 'server', () ->
-  lr = require('tiny-lr')()
-  lr.listen(LIVERELOAD_PORT)
-
+gulp.task 'server', ->
   app = express()
-  app.use require('connect-livereload')()
   app.use express.static(EXPRESS_ROOT)
-  app.listen EXPRESS_PORT
   app.set "views", EXPRESS_ROOT
   app.set "view engine", "jade"
   app.all '/', (req, res) ->
     res.render "coink"
   app.all '*', (req, res) ->
     res.redirect "/"
+  app.listen EXPRESS_PORT
+  console.log "Server stared on #{EXPRESS_PORT}"
 
 # javascript
 gulp.task 'js', ->
+  nonVendors = gfilter (i) -> not i.path.match /\/vendor\/[^\/]+$/
   gulp.src(paths.js)
-  .pipe(cache('js'))
-  .pipe(jshint())
-  .pipe(jshint.reporter(stylish))
-  .pipe(gif(gutil.env.production, uglify()))
-  .pipe(gulp.dest('./public/js'))
+    .pipe(cache('js'))
+    .pipe(nonVendors)
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
+    .pipe(nonVendors.restore())
+    .pipe(gif(gutil.env.production, uglify()))
+    .pipe(gulp.dest('./public/js'))
 
 gulp.task 'coffee', ->
+  nonVendors = gfilter (i) -> not i.path.match /\/vendor\/[^\/]+$/
   gulp.src(paths.coffee)
     .pipe(cache('coffee'))
     .pipe(coffee())
+    .pipe(nonVendors)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
+    .pipe(nonVendors.restore())
+    .pipe(gif('./client/js/scripts/*', jshint.reporter(stylish)))
     .pipe(gif(gutil.env.production, uglify()))
     .pipe(gulp.dest('./public/js'))
 
@@ -95,7 +99,7 @@ gulp.task 'jsx', ->
 # styles
 gulp.task 'stylus', ->
   gulp.src(paths.stylus)
-    .pipe(stylus())
+    .pipe(stylus(use: ["nib"], "include css": true))
     .pipe(gif(gutil.env.production, csso()))
     .pipe(gulp.dest('./public/css'))
 
@@ -130,7 +134,6 @@ gulp.task 'svg', ->
 gulp.task 'clean', ->
   gulp.src('./public', read: false)
     .pipe(clean({force: true}))
-    .pipe(notify({message: 'Cleaned /public...'}))
 
 gulp.task 'watch', ->
   autowatch gulp, paths
@@ -139,4 +142,4 @@ gulp.task 'styles', ['css', 'stylus']
 gulp.task 'scripts', ['js', 'coffee', 'jsx']
 gulp.task 'images', ['png', 'svg']
 gulp.task 'static', ['jade', 'images', 'html']
-gulp.task 'default', seq('clean', ['scripts', 'styles', 'static', 'server', 'watch'])
+gulp.task 'default', seq('clean', ['scripts', 'styles', 'static', 'watch'], 'server')
