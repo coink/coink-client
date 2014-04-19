@@ -43,7 +43,7 @@ paths =
   coffee: './client/js/**/*.coffee'
   jsx: './client/js/**/*.jsx'
   js: './client/js/**/*.js'
-  stylus: './client/css/*.styl'
+  stylus: './client/css/**/*.styl'
   html: './client/*.html'
   css: './client/css/**/*.css'
   jade: './client/*.jade'
@@ -99,6 +99,7 @@ gulp.task 'jsx', ->
 # styles
 gulp.task 'stylus', ->
   gulp.src(paths.stylus)
+    .pipe(gfilter((i) -> i.path.match(/styles.styl$/)))
     .pipe(stylus(use: ["nib"], "include css": true))
     .pipe(gif(gutil.env.production, csso()))
     .pipe(gulp.dest('./public/css'))
