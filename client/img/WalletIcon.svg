@@ -19,24 +19,6 @@
      id="defs3005">
     <filter
        inkscape:collect="always"
-       id="filter3876"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="3.1274797"
-         id="feGaussianBlur3878" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3880"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="3.1274797"
-         id="feGaussianBlur3882" />
-    </filter>
-    <filter
-       inkscape:collect="always"
        id="filter4407"
        x="-0.037500873"
        width="1.0750017"
@@ -65,9 +47,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="200.78963"
-     inkscape:cy="-146.69126"
+     inkscape:zoom="0.7"
+     inkscape:cx="-7.2868562"
+     inkscape:cy="223.16643"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -88,7 +70,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -99,17 +81,19 @@
      style="display:inline"
      transform="translate(10.231213,10.258738)">
     <path
-       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4407)"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4407);opacity:0.82"
        d="m 32.631691,7.1041656 0,108.7187544 42.09375,0 0,-57.330364 413.656249,61.767864 -25.71875,-4.4375 32.96875,10 0,-32.687501 z"
        id="rect3023-1"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccc" />
+       sodipodi:nodetypes="ccccccccc"
+       transform="matrix(1.0172212,0,0,1.0172212,-8.2629466,1.5341703)" />
     <path
-       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4411)"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4411);opacity:0.82"
        d="m 7.1316914,94.729169 0,382.875001 488.5937486,0 0,-382.875001 z m 40.2812496,47.156251 410.874999,0 0,297.15625 -410.874999,0 z"
        id="rect3019-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccc" />
+       sodipodi:nodetypes="cccccccccc"
+       transform="matrix(1.0136836,0,0,1.0136836,0.1399999,-0.7729354)" />
   </g>
   <g
      inkscape:label="Layer 1"
