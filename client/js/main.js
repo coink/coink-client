@@ -9,7 +9,9 @@ require.config({
         'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', 'vendor/fastclick'],
         'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', 'vendor/modernizr'],
         'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', 'vendor/foundation'],
-        'idle': ['scripts/idle']
+        'idle': ['vendor/idle'],
+        'perlin-noise': ['scripts/perlin-noise'],
+        'coins': ['scripts/coins']
     },
     shim: {
         backbone: {

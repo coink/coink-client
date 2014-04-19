@@ -1,4 +1,4 @@
-define(['react', 'jquery'], function(React, $) {
+define(['react', 'coins'], function(React, Coins) {
 
     var Landing = React.createClass({
         displayName: 'Landing',
