@@ -19,8 +19,8 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
 
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: this.state.logged_in}),
-                Sidebar({loggedIn: this.state.logged_in}),
-                React.DOM.div({id: 'content-wrapper', className: 'large-9 medium-9 columns'},
+                sidebar,
+                React.DOM.div({id: 'content-wrapper', className: 'large-' + mainContentWidth + ' medium-' + mainContentWidth + ' columns'},
                     React.DOM.div({className: 'floatfix'},
                         React.DOM.div({className: 'wrap'},
                             Notification(),
