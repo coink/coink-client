@@ -68,41 +68,51 @@ function(React, $, router, notification, profile) {
 
 
         render: function() {
-            return React.DOM.form({
-                    onEnter: this.handleSubmit,
-                    onSubmit: this.handleSubmit
-                },
-                React.DOM.h1({}, "Register"),
-                React.DOM.label({htmlFor: 'username'}),
-                React.DOM.input({
-                    placeholder: "Username",
-                    type: 'text',
-                    ref: 'username',
-                }),
-                React.DOM.br(),
-                React.DOM.label({htmlFor: 'email'}),
-                React.DOM.input({
-                    placeholder: "Email",
-                    type: 'email',
-                    ref: 'email',
-                }),
-                React.DOM.br(),
-                React.DOM.label({htmlFor: 'password'}),
-                React.DOM.input({
-                    placeholder: "Password",
-                    type: 'password',
-                    ref: 'password',
-                }),
-                React.DOM.br(),
-                React.DOM.label({htmlFor: 'confirm'}),
-                React.DOM.input({
-                    placeholder: "Confirm",
-                    type: 'password',
-                    ref: 'confirm',
-                }),
-                React.DOM.br(),
-                React.DOM.input({type: 'submit', value: "Login"}));
+
+            return React.DOM.div({id: "landing", className: "small"},
+
+                React.DOM.div({className: "row"},
+                    React.DOM.div({className: "large-12 columns"},
+                        React.DOM.h1({id: "logo"}, "COINK"),
+                        React.DOM.h2({}, "Sign up for Coink")
+                    )
+                ),
+
+                React.DOM.div({className: "row"},
+                    React.DOM.div({className: "small-centered large-6 medium-8 small-12 columns"},
+                        React.DOM.form({onSubmit: this.handleSubmit, onEnter: this.handleSubmit},
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "large-12 columns"},
+                                    React.DOM.label({}, "Username", React.DOM.input({placeholder: "Username", type: 'text', ref: 'username'}))
+                                )
+                            ),
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "large-12 columns"},
+                                    React.DOM.label({}, "Email", React.DOM.input({placeholder: "Email", type: 'email', ref: 'email'}))
+                                )
+                            ),
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "large-12 columns"},
+                                    React.DOM.label({}, "Password", React.DOM.input({placeholder: "Password", type: 'password', ref: 'password'}))
+                                )
+                            ),
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "large-12 columns"},
+                                    React.DOM.label({}, "Confirm Password", React.DOM.input({placeholder: "Confirm Password", type: 'password', ref: 'confirm'}))
+                                )
+                            ),
+                            React.DOM.div({className: "row"},
+                                React.DOM.div({className: "medium-6 large-6 small-centered columns"},
+                                    React.DOM.button({className: "radius primary large expand"}, "Register")
+                                )
+                            )
+                        )
+                    )
+                )
+            
+            );
         }
+
     });
 
     return Register;
