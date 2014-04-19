@@ -1,5 +1,3 @@
-#= require "perlin-noise.coffee"
-
 currencies = ["Ł", "Ᵽ", "Ɖ", "ℕ", "Ψ", "B⃦"]
 
 viewport = ->
