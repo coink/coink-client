@@ -9,7 +9,7 @@ define ['react', 'coins'], (React, Coins) ->
                 React.DOM.div({className: "row"},
                     React.DOM.div({className: "large-12 columns"},
                         React.DOM.h1({id: "logo"}, "COINK"),
-                        React.DOM.h2("Coink breathes insight into your cryptocurrency portfolio")
+                        React.DOM.h2({}, "Coink breathes insight into your cryptocurrency portfolio")
                     )
                 ),
                 React.DOM.div({className: "row small-centered"},
