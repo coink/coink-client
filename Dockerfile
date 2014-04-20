@@ -3,24 +3,25 @@
 
 FROM        base
 
-# Install Java
-RUN         apt-get install software-properties-common -y
-RUN         apt-add-repository ppa:webupd8team/java -y
+# Install Nodejs deps
 RUN         apt-get update
-RUN         echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-RUN         apt-get install oracle-java7-installer -y
+RUN         apt-get install -y software-properties-common \
+            python-software-properties python g++ make
 
-# Install Leiningen
-RUN         apt-get install curl -y
-RUN         curl https://raw.github.com/technomancy/leiningen/stable/bin/lein > /usr/local/bin/lein
-RUN         chmod a+x /usr/local/bin/lein
-RUN         LEIN_ROOT=1 /usr/local/bin/lein
+# Install Nodejs and friends
+RUN         add-apt-repository -y ppa:chris-lea/node.js
+RUN         apt-get update
+RUN         apt-get install -y nodejs
+
+# Install npm deps
+ADD         ./package.json /data/coink-client/package.json
+RUN         cd /data/coink-client && npm install
 
 # Add source
 ADD         . /data/coink-client
-RUN         cd /data/coink-client && lein deps
+#RUN         cd /data/coink-client && npm run-script build
 
 # Run server
-WORKDIR	    /data/coink-client
 EXPOSE      3000
-CMD         LEIN_ROOT=1 lein ring server-headless
+WORKDIR	    /data/coink-client
+CMD         npm run-script build
