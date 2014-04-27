@@ -1,11 +1,9 @@
-define ['react', 'coins'], (React, Coins) ->
+define ['react'], (React) ->
 
     React.createClass
         displayName: 'Landing'
         render: ->
-            Coins()
             React.DOM.div({id: "landing"},
-                React.DOM.div({id: "background"}),
                 React.DOM.div({className: "row"},
                     React.DOM.div({className: "large-12 columns"},
                         React.DOM.h1({id: "logo"}, "COINK"),

@@ -5,13 +5,11 @@ require.config({
         'jquery': [cdnRoot + 'jquery/2.1.0/jquery.min', 'vendor/jquery'],
         'backbone': [cdnRoot + 'backbone.js/1.1.0/backbone-min', 'vendor/backbone'],
         'underscore': [cdnRoot + 'underscore.js/1.4.3/underscore-min', 'vendor/underscore'],
-        'react': [cdnRoot + 'react/0.10.0/react.min', 'vendor/react'],
+        'react': [cdnRoot + 'react/0.10.0/react', 'vendor/react'],
         'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', 'vendor/fastclick'],
         'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', 'vendor/modernizr'],
         'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', 'vendor/foundation'],
-        'idle': ['vendor/idle'],
-        'perlin-noise': ['scripts/perlin-noise'],
-        'coins': ['scripts/coins']
+        'idle': ['vendor/idle']
     },
     shim: {
         backbone: {
@@ -36,22 +34,18 @@ function($, Backbone, React, Application, router, profile, fastclick,
     // setup default routes
     router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
 
-    // setup request header token if t logged in
-    if(profile.getToken() != null) {
-        $.ajaxSetup({
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", profile.getToken());
-            }
-        });
-    }
-
     // auth change handlers for idle timing and page redirects
     profile.on("change:logged_in", function() {
         if (profile.getToken() == null) {
             clearTimeout(idleTimer);
             router.setDefaultRoute('landing');
-        }
-        else if (profile.getToken() != null) {
+        } else {
+            // setup request header token if not logged in
+            $.ajaxSetup({
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", profile.getToken());
+                }
+            });
             router.setDefaultRoute('wallets');
         }
         router.navigate(router.defaultRoute, {trigger: true});
@@ -109,7 +103,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
 
     // Begin rendering the webapp with the main react component 'Application'
     $(document).ready(function() {
-        var app = Application({router: router});
+        var app = Application({router : router});
         React.renderComponent(app, document.getElementById('coink'));
 
         // Single page webapp routing made nice for browser navigation

@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'react', 'models/profile'],
+define(['backbone', 'underscore', 'react'],
 function(Backbone, _, React, profile) {
 
     var Router = Backbone.Router.extend({
@@ -15,6 +15,7 @@ function(Backbone, _, React, profile) {
             'about/faq': 'faq',
         },
 
+        // Helper function for loading sidebar submenus
         getRouteMap: function() {
             return _.invert(this.routes);
         },

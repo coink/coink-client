@@ -10,16 +10,10 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
         },
 
         render: function() {
-            var mainContentWidth = 12;
-            var sidebar = undefined;
-            if(this.state.logged_in) {
-                mainContentWidth = 9;
-                sidebar = Sidebar({loggedIn: this.state.logged_in});
-            }
-
+            var mainContentWidth = this.state.logged_in ? 9 : 12;
             return React.DOM.div({id : 'wrapper'},
                 Header({loggedIn: this.state.logged_in}),
-                sidebar,
+                Sidebar({loggedIn: this.state.logged_in}),
                 React.DOM.div({id: 'content-wrapper', className: 'large-' + mainContentWidth + ' medium-' + mainContentWidth + ' columns'},
                     React.DOM.div({className: 'floatfix'},
                         React.DOM.div({className: 'wrap'},
@@ -31,17 +25,21 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
                 )
             );
         },
+
         componentWillMount: function() {
             this.props.router.on("route", this.onRoute);
         },
+
         componentWillUnmount: function() {
             this.props.router.off("route", this.onRoute);
         },
+
         componentDidMount: function () {
             profile.on('change:logged_in', function() {
                 this.setState({logged_in : profile.getToken() != null});
             }.bind(this));
         },
+
         setView: function(requirements, getView, requiresLogin) {
             if(requiresLogin != null) {
                 // Don't render views that require user login
@@ -61,6 +59,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
                 React.renderComponent(getView.apply(this, modules), node);
             }.bind(this));
         },
+
         onRoute: function() {
             console.log("Route current changed to: " + this.props.router.current);
             this.setView(['components/' + this.props.router.current], function(NewView) {
