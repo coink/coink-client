@@ -1,4 +1,4 @@
-define ['react', 'jquery', 'router', 'models/notification', 'models/profile', 'coins'],
+define ['react', 'jquery', 'router', 'models/notification', 'models/profile'],
 (React, $, router, notification, profile) ->
 
     React.createClass
