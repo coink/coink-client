@@ -1,10 +1,15 @@
 define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges'],
 function(React, notification, Exchanges, MetaExchanges) {
 
-/*    var ExchangeRow = React.createClass({
+    var ExchangeRow = React.createClass({
         displayName: "ExchangeRow",
+        toggleCoins: function(e) {
+            e.preventDefault();
+            alert("Toggle Coins");
+        },
         handleDelete: function(e) {
             e.preventDefault();
+            e.stopPropagation();
 
             if (!confirm("Are you sure you want to delete account " +
                 this.props.exchange_account.get('accountID') + "?"))
@@ -26,22 +31,25 @@ function(React, notification, Exchanges, MetaExchanges) {
         },
         render: function() {
             var exchange_account = this.props.exchange_account;
-            return React.DOM.div({className: "clearfix hide"},
-                React.DOM.a({
-                    href: '#',
-                    onClick: this.handleDelete,
-                    className: "right"
-                }, "Delete"),
-                React.DOM.span({className: "left"}, exchange_account.get('nickname')),
-                React.DOM.span({className: "right"}, exchange_account.get('accountID'))
+            return React.DOM.tr({onClick: this.toggleCoins, className: "exchange-row"},
+                React.DOM.td({}, exchange_account.get('nickname')),
+                React.DOM.td({}, exchange_account.get('accountID')),
+                React.DOM.td({}),
+                React.DOM.td({}),
+                React.DOM.td({},
+                    React.DOM.a({
+                        href: '#',
+                        onClick: this.handleDelete,
+                    }, "Delete")
+                )
             );
         }
     });
-*/
+
     var ExchangeGroup = React.createClass({
         displayName: "ExchangeGroup",
         getInitialState: function() {
-            return {collapsed: true};
+            return {collapsed: false};
         },
 
         toggleCollapse: function() {
@@ -49,16 +57,33 @@ function(React, notification, Exchanges, MetaExchanges) {
         },
         render: function() {
             var exchange = this.props.exchange;
-            /*var exchange_rows = _.map(this.props.exchange, function(exchange_account) {
+            var exchange_rows = _.map(this.props.exchange, function(exchange_account) {
                 return ExchangeRow({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
-            }.bind(this));*/
+            }.bind(this));
 
             if(this.state.collapsed) {
-                return React.DOM.div({className: "collapse-parent"}, React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"}, this.props.exchangeName));
+                return React.DOM.div({className: "collapse-parent"},
+                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
+                        this.props.exchangeName,
+                        React.DOM.span({style: {position: "absolute", right: 15}}, "Add")));
             } else {
                 return React.DOM.div({className: "collapse-parent"},
-                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"}, this.props.exchangeName),
-                    React.DOM.div({className: "collapse-body"}, "Hello"));
+                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
+                        this.props.exchangeName,
+                        React.DOM.span({style: {position: "absolute", right: 15}}, "Add")),
+                    React.DOM.table({style: {width: "100%"}},
+                        React.DOM.thead({},
+                            React.DOM.tr({},
+                                React.DOM.th({}, "Account Nickname"),
+                                React.DOM.th({}, "Account ID"),
+                                React.DOM.th({}, "Currency"),
+                                React.DOM.th({}, "Balance"),
+                                React.DOM.th({}, "Action")
+                            )
+                        ),
+                        React.DOM.tbody({}, exchange_rows)
+                    )
+                );
             }
         }
     });
