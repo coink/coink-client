@@ -49,7 +49,7 @@ define [], ->
 				coin.style.transform = "translate(#{dispX}px, #{dispY}px)"
 			, 10
 		
-		k = Math.max 45, Math.floor(viewport().x * viewport().y / 70000)
+		k = Math.min 45, Math.floor(viewport().x * viewport().y / 70000)
 
 		for i in [1..k]
 			window.setTimeout genCoin, i * 83
