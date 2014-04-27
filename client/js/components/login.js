@@ -49,7 +49,7 @@ function(React, $, router, notification, profile) {
 
                 React.DOM.div({className: "row"},
                     React.DOM.div({className: "large-12 columns"},
-                        React.DOM.h1({id: "logo"}, "COINK"),
+                        React.DOM.a({href: "#"}, React.DOM.h1({id: "logo"}, "COINK")),
                         React.DOM.h2({}, "Log in to Coink")
                     )
                 ),
