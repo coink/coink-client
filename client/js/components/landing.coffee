@@ -43,7 +43,7 @@ define ['react', 'jquery', 'router', 'models/notification', 'models/profile', 'c
                 React.DOM.div({id: "background"}),
                 React.DOM.div({className: "row"},
                     React.DOM.div({className: "large-6 medium-8 small-12 small-centered columns"},
-                        React.DOM.h1({id: "logo"}, "COINK"),
+                        React.DOM.a({href: "#"}, React.DOM.h1({id: "logo"}, "COINK")),
                         React.DOM.h2({}, "Coink breathes insight into your cryptocurrency portfolio")
                     )
                 ),
