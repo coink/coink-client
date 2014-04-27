@@ -1,11 +1,28 @@
-define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges'],
-function(React, notification, Exchanges, MetaExchanges) {
+define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances'],
+function(React, notification, Exchanges, MetaExchanges, Balances) {
 
-    var ExchangeRow = React.createClass({
-        displayName: "ExchangeRow",
+    var CurrencyRow = React.createClass({
+        displayName: "CurrencyRow",
+        render: function() {
+            return React.DOM.tr({},
+                React.DOM.td({}),
+                React.DOM.td({}),
+                React.DOM.td({}, this.props.currency),
+                React.DOM.td({}, this.props.balance),
+                React.DOM.td({})
+            );
+        }
+    });
+
+    var ExchangeTable = React.createClass({
+        displayName: "ExchangeTable",
+        getInitialState: function() {
+            var balances = new Balances([], {accountID: "fakeURL"});
+            return {balances: balances, collapsed: false};
+        },
         toggleCoins: function(e) {
             e.preventDefault();
-            alert("Toggle Coins");
+            this.setState({collapsed: !this.state.collapsed});
         },
         handleDelete: function(e) {
             e.preventDefault();
@@ -30,18 +47,25 @@ function(React, notification, Exchanges, MetaExchanges) {
             this.props.removeModel(this.props.exchange_account);
         },
         render: function() {
+            var exchange_balances = {bitcoin:"1.23000000", litecoin: "30.12344500", feathercoin: "0.00200000"};
             var exchange_account = this.props.exchange_account;
-            return React.DOM.tr({onClick: this.toggleCoins, className: "exchange-row"},
-                React.DOM.td({}, exchange_account.get('nickname')),
-                React.DOM.td({}, exchange_account.get('accountID')),
-                React.DOM.td({}),
-                React.DOM.td({}),
-                React.DOM.td({},
-                    React.DOM.a({
-                        href: '#',
-                        onClick: this.handleDelete,
-                    }, "Delete")
-                )
+            var currency_rows  = _.map(exchange_balances, function(balance, currency) {
+                return CurrencyRow({key: currency, currency: currency, balance: balance});
+            }.bind(this));
+            currency_rows = this.state.collapsed ? null : currency_rows;
+            return React.DOM.tbody({},
+                React.DOM.tr({onClick: this.toggleCoins, className: "exchange-row"},
+                    React.DOM.td({}, exchange_account.get('nickname')),
+                    React.DOM.td({}, exchange_account.get('accountID')),
+                    React.DOM.td({}),
+                    React.DOM.td({}),
+                    React.DOM.td({},
+                        React.DOM.a({
+                            href: '#',
+                            onClick: this.handleDelete,
+                        }, "Delete")
+                    )
+                ), currency_rows
             );
         }
     });
@@ -57,8 +81,8 @@ function(React, notification, Exchanges, MetaExchanges) {
         },
         render: function() {
             var exchange = this.props.exchange;
-            var exchange_rows = _.map(this.props.exchange, function(exchange_account) {
-                return ExchangeRow({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
+            var exchange_tables = _.map(this.props.exchange, function(exchange_account) {
+                return ExchangeTable({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
             }.bind(this));
 
             if(this.state.collapsed) {
@@ -81,7 +105,7 @@ function(React, notification, Exchanges, MetaExchanges) {
                                 React.DOM.th({}, "Action")
                             )
                         ),
-                        React.DOM.tbody({}, exchange_rows)
+                        React.DOM.tbody({}, exchange_tables)
                     )
                 );
             }
