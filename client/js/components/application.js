@@ -17,7 +17,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
                 sidebar = Sidebar({loggedIn: this.state.logged_in});
             }
 
-            return React.DOM.div({id : 'wrapper'},
+            return React.DOM.div({id : 'wrapper', className: 'row left'},
                 Header({loggedIn: this.state.logged_in}),
                 sidebar,
                 React.DOM.div({id: 'content-wrapper', className: 'large-' + mainContentWidth + ' medium-' + mainContentWidth + ' columns'},
