@@ -11,7 +11,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
 
         render: function() {
             var mainContentWidth = this.state.logged_in ? 9 : 12;
-            return React.DOM.div({id : 'wrapper'},
+            return React.DOM.div({id : 'wrapper', className: 'row left'},
                 Header({loggedIn: this.state.logged_in}),
                 Sidebar({loggedIn: this.state.logged_in}),
                 React.DOM.div({id: 'content-wrapper', className: 'large-' + mainContentWidth + ' medium-' + mainContentWidth + ' columns'},
