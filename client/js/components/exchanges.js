@@ -4,7 +4,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
     var CurrencyRow = React.createClass({
         displayName: "CurrencyRow",
         render: function() {
-            return React.DOM.tr({},
+            return React.DOM.tr({className: "currency-row"},
                 React.DOM.td({}),
                 React.DOM.td({}),
                 React.DOM.td({}, this.props.currency),
@@ -53,7 +53,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                 return CurrencyRow({key: currency, currency: currency, balance: balance});
             }.bind(this));
             currency_rows = this.state.collapsed ? null : currency_rows;
-            return React.DOM.tbody({},
+            return React.DOM.tbody({className: "exchange-table"},
                 React.DOM.tr({onClick: this.toggleCoins, className: "exchange-row"},
                     React.DOM.td({}, exchange_account.get('nickname')),
                     React.DOM.td({}, exchange_account.get('accountID')),
