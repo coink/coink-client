@@ -6,7 +6,7 @@ define(['react', 'coin'], function(React, coin) {
         render: function() {
             var year = new Date().getFullYear();
             return React.DOM.footer({},
-              "\u00a9 " + year + " Coink");
+              "\u00a9 " + year + " Coink  ");
         },
 
         componentDidMount: function() {
@@ -15,11 +15,12 @@ define(['react', 'coin'], function(React, coin) {
                 wallet_address: '1cnkWJwRmzUGwDTBCaDoK8xbNqRLGTxfw',
                 currency: 'bitcoin',
                 counter: 'count',
-                alignment: 'ac',
+                alignment: 'al',
+                decimals: 8,
                 qrcode: true,
                 auto_show: false,
-                lbl_button: 'Donate BTC',
-                lbl_address: 'Feed us!' ,
+                lbl_button: 'Donate Bitcoin',
+                lbl_address: 'Feed Us!' ,
                 lbl_count: 'donations' ,
                 lbl_amount: 'BTC'
             };
