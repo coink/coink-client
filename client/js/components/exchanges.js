@@ -1,5 +1,107 @@
-define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances'],
-function(React, notification, Exchanges, MetaExchanges, Balances) {
+define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account'],
+function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccount) {
+
+    var AddAccountForm = React.createClass({
+        displayName: "AddAccountForm",
+        getInitialState: function() {
+            return {nickname: ''}
+        },
+        setField: function(e) {
+            var map = {};
+            map[e.target.id] = e.target.value;
+            this.setState(map);
+        },
+        handleSubmit: function(e) {
+            e.preventDefault();
+
+            //Fill map with the attributes to set in the model
+            var map = {};
+            map.exchangeName = this.props.meta_exchange.get('exchangeName');
+            map.nickname = this.state.nickname;
+            map.credentials = {};
+            $.each(this.props.meta_exchange.get('requiredFields'), function(index, field) {
+                map.credentials[field.machineName] = this.state[field.machineName];
+            }.bind(this));
+
+            //Only create and save the model if the input is valid
+            if(this.validateAccount(map.credentials, map.nickname)) {
+                var model = new ExchangeAccount(map);
+
+                //This is where we save the entry on the server
+                model.save({}, {
+                    success: function(model, response, options) {
+                        notification.success("Successfully added an exchange account " + model.get('nickname'));
+                    },
+                    error: function(model, response, options) {
+                        notification.error("Unable to add exchange account " + model.get('nickname'));
+                        this.props.removeModel(model);
+                    }.bind(this)
+                });
+
+                //Optimistically add the entry to the view
+                this.props.addModel(model);
+            }
+        },
+        validateAccount: function(credentials, nickname) {
+            var errorArray = [];
+
+            $.each(credentials, function(key, value) {
+                if(value == null || value.length == 0) {
+                    errorArray.push(key);
+                }
+            });
+
+            if(nickname == null || nickname.length == 0) {
+                errorArray.push("nickname");
+            }
+
+            if(errorArray.length == 0) {
+                return true;
+            }
+            else {
+                notification.warning(this.validationError(errorArray));
+                return false;
+            }
+        },
+        validationError: function(errorArray) {
+            var message = "Please enter your ";
+            if(errorArray.length == 1) {
+                return message.concat(errorArray[0]);
+            }
+            else if(errorArray.length == 2) {
+                return message.concat(errorArray[0] + " and " + errorArray[1]);
+            } else {
+                var end = errorArray.pop();
+                return message.concat(errorArray.join(', ') + ", and " + end);
+            }
+        },
+        render: function() {
+            var meta_exchange = this.props.meta_exchange;
+            var fields = meta_exchange.get('requiredFields').map(function(field) {
+                return React.DOM.div({key: field.machineName},
+                    React.DOM.label({htmlFor: field.machineName}, field.displayName),
+                    React.DOM.input({
+                        type: 'text',
+                        id: field.machineName,
+                        className: 'exchange-field',
+                        onChange: this.setField
+                    })
+                );
+            }.bind(this));
+
+            return React.DOM.form({onSubmit: this.handleSubmit},
+                fields,
+                React.DOM.label({htmlFor: 'nickname'}, 'Nickname'),
+                React.DOM.input({
+                    type: 'text',
+                    id: 'nickname',
+                    className: 'exchange-field',
+                    onChange: this.setField
+                }),
+                React.DOM.input({type: 'submit', value: "Add"})
+            );
+        }
+    });
 
     var AccountRow = React.createClass({
         displayName: "AccountRow",
@@ -82,15 +184,16 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
     var ExchangeGroup = React.createClass({
         displayName: "ExchangeGroup",
         getInitialState: function() {
-            return {collapsed: false};
+            return {collapsed: false, hideAddAccountForm: true};
         },
-        addAccount: function(e) {
+        toggleAddAccount: function(e) {
             e.preventDefault();
             e.stopPropagation();
-            alert("Added account");
+            this.setState({hideAddAccountForm: !this.state.hideAddAccountForm});
         },
         toggleCollapse: function() {
-            this.setState({collapsed: !this.state.collapsed});
+            var collapsed = !_.isEmpty(this.props.exchange) && !this.state.collapsed;
+            this.setState({collapsed: collapsed});
         },
         render: function() {
             var exchange = this.props.exchange;
@@ -98,13 +201,11 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                 return ExchangeTableBody({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
             }.bind(this));
 
-            if(this.state.collapsed) {
-                return React.DOM.div({className: "collapse-parent"},
-                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
-                        this.props.exchangeName,
-                        React.DOM.a({href: "#", onClick: this.addAccount, style: {position: "absolute", right: 15}}, "Add Account")));
-            } else {
-                var table = _.size(exchange) == 0 ? null :
+            var addAccountForm = this.state.hideAddAccountForm ? null : AddAccountForm({meta_exchange: this.props.meta_exchange, addModel: this.props.addModel});
+
+            var table = null;
+            if(!this.state.collapsed) {
+                table = _.size(exchange) == 0 ? null :
                     React.DOM.table({style: {width: "100%"}},
                         React.DOM.thead({},
                             React.DOM.tr({},
@@ -117,13 +218,14 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                         ),
                         exchangeTableBodies
                     );
-                return React.DOM.div({className: "collapse-parent"},
-                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
-                        this.props.exchangeName,
-                        React.DOM.a({href: "#", onClick: this.addAccount, style: {position: "absolute", right: 15}}, "Add Account")),
-                        table
-                );
             }
+            return React.DOM.div({className: "collapse-parent"},
+                React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
+                    this.props.exchangeName,
+                    React.DOM.a({href: "#", onClick: this.toggleAddAccount, style: {position: "absolute", right: 15}}, "Add Account")),
+                    addAccountForm,
+                    table
+            );
         }
     });
 
@@ -194,6 +296,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                     return ExchangeGroup({
                         exchangeName: meta_exchange.get('exchangeName'),
                         exchange: [],
+                        meta_exchange: meta_exchange,
                         addModel: this.addModel,
                         removeModel: this.removeModel
                     });
@@ -213,6 +316,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                     return ExchangeGroup({
                         exchangeName: exchangeName,
                         exchange: exchange,
+                        meta_exchange: meta_exchanges.findWhere({exchangeName: exchangeName}),
                         addModel: this.addModel,
                         removeModel: this.removeModel
                     });
