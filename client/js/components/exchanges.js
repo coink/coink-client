@@ -75,12 +75,17 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
         getInitialState: function() {
             return {collapsed: false};
         },
-
+        addAccount: function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("Added account");
+        },
         toggleCollapse: function() {
             this.setState({collapsed: !this.state.collapsed});
         },
         render: function() {
             var exchange = this.props.exchange;
+            console.log("this.props.exchange: " + JSON.stringify(exchange));
             var exchange_tables = _.map(this.props.exchange, function(exchange_account) {
                 return ExchangeTable({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
             }.bind(this));
@@ -89,12 +94,9 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                 return React.DOM.div({className: "collapse-parent"},
                     React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
                         this.props.exchangeName,
-                        React.DOM.span({style: {position: "absolute", right: 15}}, "Add")));
+                        React.DOM.a({href: "#", onClick: this.addAccount, style: {position: "absolute", right: 15}}, "Add Account")));
             } else {
-                return React.DOM.div({className: "collapse-parent"},
-                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
-                        this.props.exchangeName,
-                        React.DOM.span({style: {position: "absolute", right: 15}}, "Add")),
+                var table = _.size(exchange) == 0 ? null :
                     React.DOM.table({style: {width: "100%"}},
                         React.DOM.thead({},
                             React.DOM.tr({},
@@ -106,7 +108,12 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
                             )
                         ),
                         React.DOM.tbody({}, exchange_tables)
-                    )
+                    );
+                return React.DOM.div({className: "collapse-parent"},
+                    React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
+                        this.props.exchangeName,
+                        React.DOM.a({href: "#", onClick: this.addAccount, style: {position: "absolute", right: 15}}, "Add Account")),
+                        table
                 );
             }
         }
@@ -182,10 +189,15 @@ function(React, notification, Exchanges, MetaExchanges, Balances) {
             }
             else {
                 var exchange_groups = exchange_accounts.groupBy('exchangeName');
-                console.log("exchange_groups is: " + JSON.stringify(exchange_groups));
+
+                meta_exchanges.each(function(meta_exchange) {
+                    var exchangesSignedUpFor = _.keys(exchange_groups);
+                    if( ! _.contains(exchangesSignedUpFor, meta_exchange.get('exchangeName')) ) {
+                        exchange_groups[meta_exchange.get('exchangeName')] = [];
+                    }
+                });
 
                 content = _.map(exchange_groups, function(exchange, exchangeName) {
-                    console.log("Group for " + exchangeName + " is " + JSON.stringify(exchange));
                     return ExchangeGroup({
                         exchangeName: exchangeName,
                         exchange: exchange,
