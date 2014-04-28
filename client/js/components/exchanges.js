@@ -1,5 +1,5 @@
-define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account'],
-function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccount) {
+define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account', 'foundation'],
+function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccount, Foundation) {
 
     var AddAccountForm = React.createClass({
         displayName: "AddAccountForm",
@@ -25,6 +25,8 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
 
             //Only create and save the model if the input is valid
             if(this.validateAccount(map.credentials, map.nickname)) {
+                e.target.reset();
+                this.props.toggleAddAccount();
                 var model = new ExchangeAccount(map);
 
                 //This is where we save the entry on the server
@@ -78,8 +80,8 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
         render: function() {
             var meta_exchange = this.props.meta_exchange;
             var fields = meta_exchange.get('requiredFields').map(function(field) {
-                return React.DOM.div({key: field.machineName},
-                    React.DOM.label({htmlFor: field.machineName}, field.displayName),
+                return React.DOM.label({key: field.machineName, htmlFor: field.machineName, className: "large-3 medium-3 small-6 columns"},
+                    React.DOM.span({}, field.displayName),
                     React.DOM.input({
                         type: 'text',
                         id: field.machineName,
@@ -91,14 +93,23 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
 
             return React.DOM.form({onSubmit: this.handleSubmit},
                 fields,
-                React.DOM.label({htmlFor: 'nickname'}, 'Nickname'),
-                React.DOM.input({
-                    type: 'text',
-                    id: 'nickname',
-                    className: 'exchange-field',
-                    onChange: this.setField
-                }),
-                React.DOM.input({type: 'submit', value: "Add"})
+                React.DOM.div({},
+                    React.DOM.label({htmlFor: 'nickname'},
+                        React.DOM.span({}, 'Nickname'),
+                        React.DOM.input({
+                            type: 'text',
+                            id: 'nickname',
+                            className: 'exchange-field',
+                            onChange: this.setField
+                        })
+                    )
+                ),
+                React.DOM.div({},
+                    React.DOM.label({htmlFor: 'submit'},
+                        React.DOM.span(),
+                        React.DOM.input({type: 'submit', value: "Add"})
+                    )
+                )
             );
         }
     });
@@ -186,9 +197,12 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
         getInitialState: function() {
             return {collapsed: false, hideAddAccountForm: true};
         },
-        toggleAddAccount: function(e) {
+        handleAddAccount: function(e) {
             e.preventDefault();
             e.stopPropagation();
+            this.setState({hideAddAccountForm: !this.state.hideAddAccountForm});
+        },
+        toggleAddAccount: function() {
             this.setState({hideAddAccountForm: !this.state.hideAddAccountForm});
         },
         toggleCollapse: function() {
@@ -201,7 +215,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
                 return ExchangeTableBody({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
             }.bind(this));
 
-            var addAccountForm = this.state.hideAddAccountForm ? null : AddAccountForm({meta_exchange: this.props.meta_exchange, addModel: this.props.addModel});
+            var addAccountForm = this.state.hideAddAccountForm ? null : AddAccountForm({meta_exchange: this.props.meta_exchange, addModel: this.props.addModel, exchangeName: this.props.exchangeName, toggleAddAccount: this.toggleAddAccount});
 
             var table = null;
             if(!this.state.collapsed) {
@@ -222,9 +236,10 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
             return React.DOM.div({className: "collapse-parent"},
                 React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
                     this.props.exchangeName,
-                    React.DOM.a({href: "#", onClick: this.toggleAddAccount, style: {position: "absolute", right: 15}}, "Add Account")),
-                    addAccountForm,
-                    table
+                    React.DOM.a({href: "#", onClick: this.handleAddAccount, style: {position: "absolute", right: 15}}, "Add Account")
+                ),
+                table,
+                addAccountForm
             );
         }
     });
