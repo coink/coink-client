@@ -5,17 +5,19 @@ define(['backbone', 'models/balance'], function(Backbone, Balance) {
         model: Balance,
 
         initialize: function(models, options) {
-            this.accountID = options.accountID;
+            if(options) {
+                this.accountID = options.accountID;
+            }
         },
 
-        urlRoot: urlRoot + "/v1/exchanges/" + this.accountID + "/balances",
+        urlRoot: urlRoot + "/v1/exchanges/",
 
         parse: function(response) {
             return response.data;
         },
 
         url: function() {
-            return this.urlRoot;
+            return this.urlRoot + this.accountID + "/balances";
         }
     });
 

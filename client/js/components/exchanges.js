@@ -171,19 +171,41 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
     var ExchangeTableBody = React.createClass({
         displayName: "ExchangeTableBody",
         getInitialState: function() {
-            var balances = new Balances([], {accountID: "fakeURL"});
+            var balances = new Balances();
             return {balances: balances, collapsed: false};
+        },
+        componentWillMount: function() {
+            var balances = new Balances([], {accountID: this.props.exchange_account.get('accountID')});
+            balances.fetch({
+                success: function(collection) {
+                    if(this.isMounted()) {
+                        this.setState({balances: collection, "loaded": true});
+                    }
+                }.bind(this),
+                error: function(collection) {
+                    if(this.isMounted()) {
+                        this.setState({"loaded": true});
+                        notification.error("AJAX error can't load exchange accounts");
+                    }
+                }.bind(this)
+            });
         },
         toggleCoins: function(e) {
             e.preventDefault();
             this.setState({collapsed: !this.state.collapsed});
         },
         render: function() {
-            var exchange_balances = {bitcoin:"1.23000000", litecoin: "30.12344500", feathercoin: "0.00200000"};
+            var exchange_balances = this.state.balances;
             var exchange_account = this.props.exchange_account;
-            var currency_rows  = _.map(exchange_balances, function(balance, currency) {
-                return CurrencyRow({key: currency, currency: currency, balance: balance});
-            }.bind(this));
+            if( exchange_balances.length > 0) {
+                var keyValues = exchange_balances.at(0).pairs();
+                var currency_rows  = _.map(keyValues, function(keyValue) {
+                    return CurrencyRow({key: keyValue[0], currency: keyValue[0], balance: keyValue[1]});
+                    return null;
+                }.bind(this));
+            } else {
+                var currency_rows = null;
+            }
             currency_rows = this.state.collapsed ? null : currency_rows;
             return React.DOM.tbody({className: "exchange-table-body"},
                 AccountRow({exchange_account: exchange_account, toggleCoins: this.toggleCoins, addModel: this.props.addModel, removeModel: this.props.removeModel}),
