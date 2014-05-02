@@ -240,21 +240,20 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
             var addAccountForm = this.state.hideAddAccountForm ? null : AddAccountForm({meta_exchange: this.props.meta_exchange, addModel: this.props.addModel, exchangeName: this.props.exchangeName, toggleAddAccount: this.toggleAddAccount});
 
             var table = null;
-            if(!this.state.collapsed) {
-                table = _.size(exchange) == 0 ? null :
-                    React.DOM.table({style: {width: "100%"}},
-                        React.DOM.thead({},
-                            React.DOM.tr({},
-                                React.DOM.th({}, "Account Nickname"),
-                                React.DOM.th({}, "Account ID"),
-                                React.DOM.th({}, "Currency"),
-                                React.DOM.th({}, "Balance"),
-                                React.DOM.th({}, "Action")
-                            )
-                        ),
-                        exchangeTableBodies
-                    );
-            }
+            var className = this.state.collapsed ? "hide" : "";
+            table = _.size(exchange) == 0 ? null :
+                React.DOM.table({className: className, style: {width: "100%"}},
+                    React.DOM.thead({},
+                        React.DOM.tr({},
+                            React.DOM.th({}, "Account Nickname"),
+                            React.DOM.th({}, "Account ID"),
+                            React.DOM.th({}, "Currency"),
+                            React.DOM.th({}, "Balance"),
+                            React.DOM.th({}, "Action")
+                        )
+                    ),
+                    exchangeTableBodies
+                );
             return React.DOM.div({className: "collapse-parent"},
                 React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
                     this.props.exchangeName,
