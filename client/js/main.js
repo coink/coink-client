@@ -114,7 +114,7 @@ function($, Backbone, React, Application, router, profile, fastclick,
         });
 
         // Handle responsive navigation for mobile
-        $("#expand-btn").on("click", function() {
+        $("#coink").on("click", "#expand-btn", function() {
             $("#sidebar").toggleClass("expanded")
         });
 
