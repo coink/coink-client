@@ -1,5 +1,5 @@
-define(['react', 'models/notification', 'models/exchange_account', 'collections/exchange_accounts', 'collections/meta_exchanges'],
-function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) {
+define(['react', 'models/notification', 'models/exchange_account', 'collections/exchange_accounts', 'collections/meta_exchanges', 'components/loader'],
+function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges, Loader) {
 
     var AddExchangeAccountFormFields = React.createClass({
         displayName: "ExchangeFields",
@@ -152,7 +152,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
                             fields);
 
             } else {
-                content = React.DOM.p({}, "Loading");
+                content = new Loader();
             }
 
             return content;
@@ -252,7 +252,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             var exchange_accounts = this.state.exchange_accounts;
 
             if (!loaded) {
-                content = React.DOM.p({}, "Loading");
+                content = new Loader();
             }
             else if (exchange_accounts.isEmpty()) {
                 content = React.DOM.div({}, AddExchangeAccountForm({exchange_accounts: exchange_accounts, addModel: this.addModel, removeModel: this.removeModel}),

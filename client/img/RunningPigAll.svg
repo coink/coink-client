@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="256px" height="1536px" viewBox="0 0 256 1536" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Coink Logo: Running Version Sprites</title>
+
+    <defs>
+        <path id="coin" d="M38,83 C58.9868215,83 76,65.9868215 76,45 C76,24.0131785 58.9868215,7 38,7 C17.0131785,7 0,24.0131785 0,45 C0,65.9868215 17.0131785,83 38,83 Z"></path>
+        <path id="pig1" d="M200.219004,40 C195.228989,35 185.248959,29 177.264936,26 C175.26893,26 174.270927,26.0000014 172.274921,29.0000007 L176.701749,8.72257407 C178.115152,2.24837518 174.10422,-1.53363198 167.766363,0.380494224 C167.766363,0.380494224 157.304876,2.99999998 153.312864,5.99999997 C149.320852,8.99999994 139.340823,26.9999995 139.340823,26.9999995 C139.340823,26.9999995 140.338826,11.9999997 137.344817,10 C73.4726263,4.00000021 35.5485133,44.9999988 36.5465163,84.9999988 C28.5624925,85.9999988 27.5644895,85.9999988 23.5724776,83.9999988 C36.5465163,68.9999988 30.7151322,53.9999995 24.5704806,53.9999988 C17.584456,53.9999988 12.5944411,61.9999988 13.5924479,79.9999988 C3.61241817,78.9999988 5.60842412,60.9999988 5.60842412,56.9999988 C-7.36561453,78.9999988 6.60642709,87.9999988 16.5864568,86.9999988 C22.5744747,98.9999988 30.5584985,93.9999988 37.5445193,94.9999988 C41.5365312,120.999999 67.4846085,141.000006 67.4846085,141.000006 L63.4925966,162.000006 C63.4925966,164.209145 67.4846085,166.000006 67.4846085,166.000006 L87.4446679,166.000006 C94.4306887,165.000006 100.418707,150.000006 100.418707,150.000006 L137.344817,150.000006 C137.344817,150.000006 140.338826,161.000006 148.322849,166.000006 L170.278915,166.000006 C172.483642,166.000006 174.270927,162.000006 174.270927,162.000006 L171.276918,140.000006 C171.276918,140.000006 185.248959,132.000006 203.213013,116.999999 L214.191046,115.999999 C216.395773,115.999999 217.185054,110.999999 217.185054,110.999999 C217.185055,108.157554 215.189049,104.842443 215.189049,101.999999 C232.155099,106.999999 229.16109,67 229.16109,67 L214.191046,67 C209.201031,67 205.209018,45.0000003 200.219004,40 Z M19.5804656,78.9999992 C16.5864564,72.9999999 20.5784688,58.9999999 24.5704806,60 C28.5624924,61 26.5664866,73.9999999 19.5804656,78.9999992 Z">
+        </path>
+        <path id="pig2" d="m 200.219,40 c -4.99001,-5 -14.97004,-11 -22.95406,-14 -1.99601,0 -2.99401,1e-6 -4.99002,3.000001 l 4.42683,-20.2774269 c 1.4134,-6.4741989 -2.59753,-10.2562061 -8.93539,-8.34207988 0,0 -10.46148,2.61950578 -14.4535,5.61950578 -3.99201,2.9999999 -13.97204,21 -13.97204,21 0,0 0.99801,-15 -1.996,-17 C 73.472626,4.0000002 35.548513,44.999999 36.546516,84.999999 c -7.984023,1 -8.982027,1 -12.974038,-1 12.974038,-15 7.142654,-29.999999 0.998003,-30 -6.986025,0 -11.97604,8 -10.978033,26 -9.9800298,-1 -7.9840239,-19 -7.9840239,-23 -12.9740386,22 0.998003,31 10.9780329,30 5.988018,12 13.972041,7 20.958062,8 C 41.536531,121 55.595627,135.24727 55.595627,135.24727 l -3.992012,21 c 0,2.20914 3.992012,4 3.992012,4 l 19.960059,0 c 6.986021,-1 12.974039,-16 12.974039,-16 L 144.2481,140.0286 c 0,0 2.99401,11 10.97803,16 l 21.95606,0 c 2.20473,0 3.99202,-4 3.99202,-4 l -2.99401,-22 c 0,0 7.06876,1.97141 25.03281,-13.0286 l 10.97804,-1 c 2.20472,0 2.994,-5 2.994,-5 0,-2.84245 -1.996,-6.15756 -1.996,-9 16.96605,5 13.97204,-35 13.97204,-35 l -14.97004,0 C 209.20103,67 205.20902,45 200.219,40 z M 19.580466,78.999999 C 16.586456,73 20.578469,59 24.570481,60 c 3.992011,1 1.996006,14 -4.990015,18.999999 z">
+        </path>
+        <path id="pig3" d="m 200.219,40 c -4.99001,-5 -14.97004,-11 -22.95406,-14 -1.99601,0 -2.99401,1e-6 -4.99002,3.000001 l 4.42683,-20.2774269 c 1.4134,-6.4741989 -2.59753,-10.2562061 -8.93539,-8.34207988 0,0 -10.46148,2.61950578 -14.4535,5.61950578 -3.99201,2.9999999 -13.97204,21 -13.97204,21 0,0 0.99801,-15 -1.996,-17 C 73.472626,4.0000002 35.548513,44.999999 36.546516,84.999999 c -7.984023,1 -8.982027,1 -12.974038,-1 12.974038,-15 7.142654,-29.999999 0.998003,-30 -6.986025,0 -11.97604,8 -10.978033,26 -9.9800298,-1 -7.9840239,-19 -7.9840239,-23 -12.9740386,22 0.998003,31 10.9780329,30 5.988018,12 13.972041,7 20.958062,8 C 41.536531,121 67.484608,141.00001 67.484608,141.00001 l -3.992011,21 c 0,2.20913 3.992011,4 3.992011,4 l 19.96006,0 c 6.986021,-1 12.974042,-16 12.974042,-16 l 58.01946,-10.73844 c 0,0 2.99401,11 10.97803,16 l 21.95607,0 c 2.20473,0 3.99201,-4 3.99201,-4 l -4.91159,-22.76703 c 0,0 -5.20373,3.50547 12.76032,-11.49454 l 10.97804,-1 c 2.20472,0 2.994,-5 2.994,-5 0,-2.84245 -1.996,-6.15756 -1.996,-9 16.96605,5 13.97204,-35 13.97204,-35 l -14.97004,0 C 209.20103,67 205.20902,45 200.219,40 z M 19.580466,78.999999 C 16.586456,73 20.578469,59 24.570481,60 c 3.992011,1 1.996006,14 -4.990015,18.999999 z">
+        </path>
+        <path id="pig4" d="m 200.219,40 c -4.99001,-5 -14.97004,-11 -22.95406,-14 -1.99601,0 -2.99401,1e-6 -4.99002,3.000001 l 4.42683,-20.2774269 c 1.4134,-6.4741989 -2.59753,-10.2562061 -8.93539,-8.34207988 0,0 -10.46148,2.61950578 -14.4535,5.61950578 -3.99201,2.9999999 -13.97204,21 -13.97204,21 0,0 0.99801,-15 -1.996,-17 C 73.472626,4.0000002 35.548513,44.999999 36.546516,84.999999 c -7.984023,1 -8.982027,1 -12.974038,-1 12.974038,-15 7.142654,-29.999999 0.998003,-30 -6.986025,0 -11.97604,8 -10.978033,26 -9.9800298,-1 -7.9840239,-19 -7.9840239,-23 -12.9740386,22 0.998003,31 10.9780329,30 5.988018,12 13.972041,7 20.958062,8 C 41.536531,121 50.226409,130.64509 50.226409,130.64509 l -3.992011,21 c 0,2.20913 3.992011,4 3.992011,4 l 19.96006,0 c 6.986021,-1 12.974042,-16 12.974042,-16 l 75.277659,-0.38352 c 0,0 2.99401,11 10.97803,16 l 21.95607,0 c 2.20473,0 3.99201,-4 3.99201,-4 l -4.14456,-24.30109 c 0,0 -5.97076,5.03953 11.99329,-9.96048 l 10.97804,-1 c 2.20472,0 2.994,-5 2.994,-5 0,-2.84245 -1.996,-6.15756 -1.996,-9 16.96605,5 13.97204,-35 13.97204,-35 l -14.97004,0 C 209.20103,67 205.20902,45 200.219,40 z M 19.580466,78.999999 C 16.586456,73 20.578469,59 24.570481,60 c 3.992011,1 1.996006,14 -4.990015,18.999999 z">
+        </path>
+        <path id="pig5" d="m 200.219,40 c -4.99001,-5 -14.97004,-11 -22.95406,-14 -1.99601,0 -2.99401,1e-6 -4.99002,3.000001 l 4.42683,-20.2774269 c 1.4134,-6.4741989 -2.59753,-10.2562061 -8.93539,-8.34207988 0,0 -10.46148,2.61950578 -14.4535,5.61950578 -3.99201,2.9999999 -13.97204,21 -13.97204,21 0,0 0.99801,-15 -1.996,-17 C 73.472626,4.0000002 35.548513,44.999999 36.546516,84.999999 c -7.984023,1 -8.982027,1 -12.974038,-1 12.974038,-15 7.142654,-29.999999 0.998003,-30 -6.986025,0 -11.97604,8 -10.978033,26 -9.9800298,-1 -7.9840239,-19 -7.9840239,-23 -12.9740386,22 0.998003,31 10.9780329,30 5.988018,12 13.972041,7 20.958062,8 3.992012,26.000001 2.32697,22.605561 2.32697,22.605561 l -3.992011,21 c 0,2.20914 3.992011,4 3.992011,4 l 19.96006,0 c 6.986021,-1 12.974039,-16 12.974039,-16 l 64.539232,23.39445 c 0,0 2.99401,11 10.97803,16 l 21.95606,0 c 2.20473,0 3.99202,-4 3.99202,-4 l -2.99401,-22 c 0,0 13.97204,-8 31.93609,-23.00001 l 10.97804,-1 c 2.20472,0 2.994,-5 2.994,-5 0,-2.84245 -1.996,-6.15756 -1.996,-9 16.96605,5 13.97204,-35 13.97204,-35 l -14.97004,0 C 209.20103,67 205.20902,45 200.219,40 z M 19.580466,78.999999 C 16.586456,73 20.578469,59 24.570481,60 c 3.992011,1 1.996006,14 -4.990015,18.999999 z">
+        </path>
+        <path id="pig6" d="m 200.219,40 c -4.99001,-5 -14.97004,-11 -22.95406,-14 -1.99601,0 -2.99401,1e-6 -4.99002,3.000001 l 4.42683,-20.2774269 c 1.4134,-6.4741989 -2.59753,-10.2562061 -8.93539,-8.34207988 0,0 -10.46148,2.61950578 -14.4535,5.61950578 -3.99201,2.9999999 -13.97204,21 -13.97204,21 0,0 0.99801,-15 -1.996,-17 C 73.472626,4.0000002 35.548513,44.999999 36.546516,84.999999 c -7.984023,1 -8.982027,1 -12.974038,-1 12.974038,-15 7.142654,-29.999999 0.998003,-30 -6.986025,0 -11.97604,8 -10.978033,26 -9.9800298,-1 -7.9840239,-19 -7.9840239,-23 -12.9740386,22 0.998003,31 10.9780329,30 5.988018,12 13.972041,7 20.958062,8 C 41.536531,121 52.143987,132.17915 52.143987,132.17915 l -3.992012,21 c 0,2.20914 3.992012,4 3.992012,4 l 19.960059,0 c 6.986021,-1 12.974039,-16 12.974039,-16 l 52.266735,8.82086 c 0,0 2.99401,11 10.97803,16 l 21.95606,0 c 2.20473,0 3.99202,-4 3.99202,-4 l -2.99401,-22 c 0,0 13.97204,-8 31.93609,-23.00001 l 10.97804,-1 c 2.20472,0 2.994,-5 2.994,-5 0,-2.84245 -1.996,-6.15756 -1.996,-9 16.96605,5 13.97204,-35 13.97204,-35 l -14.97004,0 C 209.20103,67 205.20902,45 200.219,40 z M 19.580466,78.999999 C 16.586456,73 20.578469,59 24.570481,60 c 3.992011,1 1.996006,14 -4.990015,18.999999 z">
+        </path>
+    </defs>
+    
+    <g transform="translate(0, 0)">
+        <g transform="translate(14, 10)">
+            <g transform="translate(33, 19)">
+                <g>
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">0</tspan>
+                </text>
+            </g>
+            <g transform="translate(115, 0)">
+							<g id="Coin">
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">1</tspan>
+                </text>
+            </g>
+            <g transform="translate(0, 64)">
+                <g stroke-linecap="round" stroke-linejoin="round">
+                    <use stroke-opacity="0.51" stroke="#FF8888" stroke-width="14" fill="#FF8888" fill-rule="evenodd" xlink:href="#pig1"></use>
+                    <use stroke="#FFFFFF" stroke-width="8" fill="#FF8888" xlink:href="#pig1"></use>
+                    <use stroke-width="0" fill="#FF8888" xlink:href="#pig1"></use>
+                </g>
+                <ellipse fill="#FFFFFF" cx="189" cy="63.5" rx="6" ry="12.5"></ellipse>
+            </g>
+        </g>
+    </g>
+		
+    <g transform="translate(0, 256)">
+        <g transform="translate(14, 10)">
+            <g transform="translate(33, 19)">
+                <g>
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">0</tspan>
+                </text>
+            </g>
+            <g transform="translate(115, 0)">
+							<g id="Coin">
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">1</tspan>
+                </text>
+            </g>
+            <g transform="translate(0, 64)">
+                <g stroke-linecap="round" stroke-linejoin="round">
+                    <use stroke-opacity="0.51" stroke="#FF8888" stroke-width="14" fill="#FF8888" fill-rule="evenodd" xlink:href="#pig2"></use>
+                    <use stroke="#FFFFFF" stroke-width="8" fill="#FF8888" xlink:href="#pig2"></use>
+                    <use stroke-width="0" fill="#FF8888" xlink:href="#pig2"></use>
+                </g>
+                <ellipse fill="#FFFFFF" cx="189" cy="63.5" rx="6" ry="12.5"></ellipse>
+            </g>
+        </g>
+    </g>
+		
+    <g transform="translate(0, 502)">
+        <g transform="translate(14, 10)">
+            <g transform="translate(33, 19)">
+                <g>
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">0</tspan>
+                </text>
+            </g>
+            <g transform="translate(115, 0)">
+							<g id="Coin">
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">1</tspan>
+                </text>
+            </g>
+            <g transform="translate(0, 64)">
+                <g stroke-linecap="round" stroke-linejoin="round">
+                    <use stroke-opacity="0.51" stroke="#FF8888" stroke-width="14" fill="#FF8888" fill-rule="evenodd" xlink:href="#pig3"></use>
+                    <use stroke="#FFFFFF" stroke-width="8" fill="#FF8888" xlink:href="#pig3"></use>
+                    <use stroke-width="0" fill="#FF8888" xlink:href="#pig3"></use>
+                </g>
+                <ellipse fill="#FFFFFF" cx="189" cy="63.5" rx="6" ry="12.5"></ellipse>
+            </g>
+        </g>
+    </g>
+		
+    <g transform="translate(0, 752)">
+        <g transform="translate(14, 10)">
+            <g transform="translate(33, 19)">
+                <g>
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">0</tspan>
+                </text>
+            </g>
+            <g transform="translate(115, 0)">
+							<g id="Coin">
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">1</tspan>
+                </text>
+            </g>
+            <g transform="translate(0, 64)">
+                <g stroke-linecap="round" stroke-linejoin="round">
+                    <use stroke-opacity="0.51" stroke="#FF8888" stroke-width="14" fill="#FF8888" fill-rule="evenodd" xlink:href="#pig4"></use>
+                    <use stroke="#FFFFFF" stroke-width="8" fill="#FF8888" xlink:href="#pig4"></use>
+                    <use stroke-width="0" fill="#FF8888" xlink:href="#pig4"></use>
+                </g>
+                <ellipse fill="#FFFFFF" cx="189" cy="63.5" rx="6" ry="12.5"></ellipse>
+            </g>
+        </g>
+    </g>
+		
+    <g transform="translate(0, 1014)">
+        <g transform="translate(14, 10)">
+            <g transform="translate(33, 19)">
+                <g>
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">0</tspan>
+                </text>
+            </g>
+            <g transform="translate(115, 0)">
+							<g id="Coin">
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">1</tspan>
+                </text>
+            </g>
+            <g transform="translate(0, 64)">
+                <g stroke-linecap="round" stroke-linejoin="round">
+                    <use stroke-opacity="0.51" stroke="#FF8888" stroke-width="14" fill="#FF8888" fill-rule="evenodd" xlink:href="#pig5"></use>
+                    <use stroke="#FFFFFF" stroke-width="8" fill="#FF8888" xlink:href="#pig5"></use>
+                    <use stroke-width="0" fill="#FF8888" xlink:href="#pig5"></use>
+                </g>
+                <ellipse fill="#FFFFFF" cx="189" cy="63.5" rx="6" ry="12.5"></ellipse>
+            </g>
+        </g>
+    </g>
+		
+    <g transform="translate(0, 1280)">
+        <g transform="translate(14, 10)">
+            <g transform="translate(33, 19)">
+                <g>
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">0</tspan>
+                </text>
+            </g>
+            <g transform="translate(115, 0)">
+							<g id="Coin">
+                    <use stroke-opacity="0.54" stroke="#FFEE41" stroke-width="8" fill="#FFEE41" fill-rule="evenodd" xlink:href="#coin"></use>
+                    <use stroke="#FFFFFF" stroke-width="4" fill="#FFEE41" xlink:href="#coin"></use>
+                    <use fill="#FFEE41" xlink:href="#coin"></use>
+                </g>
+                <text stroke="#FFFFFF" stroke-width="2" fill="#FFA400" font-family="Helvetica" font-size="70" font-weight="bold">
+                    <tspan x="19" y="68">1</tspan>
+                </text>
+            </g>
+            <g transform="translate(0, 64)">
+                <g stroke-linecap="round" stroke-linejoin="round">
+                    <use stroke-opacity="0.51" stroke="#FF8888" stroke-width="14" fill="#FF8888" fill-rule="evenodd" xlink:href="#pig6"></use>
+                    <use stroke="#FFFFFF" stroke-width="8" fill="#FF8888" xlink:href="#pig6"></use>
+                    <use stroke-width="0" fill="#FF8888" xlink:href="#pig6"></use>
+                </g>
+                <ellipse fill="#FFFFFF" cx="189" cy="63.5" rx="6" ry="12.5"></ellipse>
+            </g>
+        </g>
+    </g>
+
+</svg>
