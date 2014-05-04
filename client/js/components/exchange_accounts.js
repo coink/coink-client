@@ -4,7 +4,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
     var AddExchangeAccountFormFields = React.createClass({
         displayName: "ExchangeFields",
         getInitialState: function() {
-            return {nickname: ''}
+            return {nickname: ''};
         },
         componentWillReceiveProps: function(nextProps) {
             $('input.exchange-field').each(function() {
@@ -57,16 +57,16 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
             var errorArray = [];
 
             $.each(credentials, function(key, value) {
-                if(value == null || value.length == 0) {
+                if(value === null || value.length === 0) {
                     errorArray.push(key);
                 }
             });
 
-            if(nickname == null || nickname.length == 0) {
+            if(nickname === null || nickname.length === 0) {
                 errorArray.push("nickname");
             }
 
-            if(errorArray.length == 0) {
+            if(errorArray.length === 0) {
                 return true;
             }
             else {
@@ -131,7 +131,7 @@ function(React, notification, ExchangeAccount, ExchangeAccounts, MetaExchanges) 
         },
         setExchange: function(e) {
             var exchangeName = e.target.value;
-            var currentExchange = this.state.meta_exchanges.findWhere({exchangeName: exchangeName})
+            var currentExchange = this.state.meta_exchanges.findWhere({exchangeName: exchangeName});
             this.setState({"currentExchange": currentExchange});
         },
         render: function() {

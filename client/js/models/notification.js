@@ -34,5 +34,5 @@ define(['backbone'], function(Backbone) {
         }
     });
 
-    return new Notification;
+    return new Notification();
 });

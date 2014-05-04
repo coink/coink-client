@@ -6,7 +6,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
         displayName: 'Application',
 
         getInitialState: function() {
-            return {logged_in : profile.getToken() != null};
+            return {logged_in : profile.getToken() !== null};
         },
 
         render: function() {
@@ -36,12 +36,12 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
 
         componentDidMount: function () {
             profile.on('change:logged_in', function() {
-                this.setState({logged_in : profile.getToken() != null});
+                this.setState({logged_in : profile.getToken() !== null});
             }.bind(this));
         },
 
         setView: function(requirements, getView, requiresLogin) {
-            if(requiresLogin != null) {
+            if(requiresLogin !== null) {
                 // Don't render views that require user login
                 if(requiresLogin && !profile.get("logged_in")) {
                     this.navigate('login', {trigger: true});

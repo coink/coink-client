@@ -41,7 +41,7 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
                         return;
                 active = routeMap[view] ? routeMap[view].split('/') : [view];
                 this.setState({active: active});
-            }.bind(this))
+            }.bind(this));
         },
 
         render: function() {
@@ -56,7 +56,7 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
                             icon: subitem.icon,
                             route: subitem.route,
                             active: this.state.active && subitem.route.join('/') == this.state.active.join('/')
-                        })
+                        });
                     }.bind(this))) : null;
 
                 return SidebarListItem({

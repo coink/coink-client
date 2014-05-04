@@ -33,5 +33,5 @@ define(['backbone'], function(Backbone) {
         }
     });
 
-    return new Profile;
+    return new Profile();
 });
