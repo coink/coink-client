@@ -1,4 +1,4 @@
-define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallets, Wallet) {
+define(['react', 'collections/wallets', 'models/wallet', 'components/loader'], function(React, Wallets, Wallet, Loader) {
 
     var AddWalletForm = React.createClass({
         displayName: 'AddWalletForm',
@@ -113,8 +113,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         render: function() {
             var wallets = this.state.wallets;
             if (!wallets)
-                return React.DOM.div({}, React.DOM.h1({}, "My Wallets"),
-                    React.DOM.p({}, "Loading"));
+                return React.DOM.div({}, React.DOM.h1({}, "My Wallets"), new Loader());
             else if (wallets.isEmpty())
                 content = React.DOM.div({}, "No wallets");
             else

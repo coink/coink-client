@@ -1,5 +1,5 @@
-define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account', 'foundation'],
-function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccount, Foundation) {
+define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account', 'foundation', 'components/loader'],
+function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccount, Foundation, Loader) {
 
     var AddAccountForm = React.createClass({
         displayName: "AddAccountForm",
@@ -322,7 +322,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
             var meta_exchanges = this.state.meta_exchanges;
 
             if (!loaded) {
-                content = React.DOM.p({}, "Loading");
+                content = new Loader();
             }
             else if (exchange_accounts.isEmpty()) {
                 content = meta_exchanges.map(function(meta_exchange) {

@@ -34,6 +34,7 @@ clean = require 'gulp-clean'
 autowatch = require 'gulp-autowatch'
 svgmin = require 'gulp-svgmin'
 seq = require 'run-sequence'
+nib = require 'nib'
 
 # misc
 stylish = require 'jshint-stylish'
@@ -100,7 +101,7 @@ gulp.task 'jsx', ->
 gulp.task 'stylus', ->
   gulp.src(paths.stylus)
     .pipe(gfilter((i) -> i.path.match(/styles.styl$/)))
-    .pipe(stylus(use: ["nib"], "include css": true))
+    .pipe(stylus({use: [nib()], import: ["nib"], errors: true, "include css": true}))
     .pipe(gif(gutil.env.production, csso()))
     .pipe(gulp.dest('./public/css'))
 
