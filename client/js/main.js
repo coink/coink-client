@@ -9,7 +9,7 @@ require.config({
         'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', 'vendor/fastclick'],
         'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', 'vendor/modernizr'],
         'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', 'vendor/foundation'],
-        'coin': ["//coinwidget.com/widget/coin"],
+        'rsvp': ['//cdn.jsdelivr.net/rsvp/3.0/rsvp.amd.min'],
         'idle': ['vendor/idle']
     },
     shim: {
@@ -26,11 +26,18 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'react', 'components/application', 'router',
-    'models/profile', 'fastclick', 'modernizr', 'foundation', 'idle',
+require(['jquery', 'react', 'components/application', 'router',
+    'models/profile', 'fastclick', 'modernizr', 'foundation', 'idle', 'rsvp',
     "models/notification"],
-function($, Backbone, React, Application, router, profile, fastclick,
-    modernizr, foundation, idle, notification) {
+function($, React, Application, router, profile, fastclick,
+    modernizr, foundation, idle, RSVP, notification) {
+
+    $(document).foundation();
+
+    // Catch-all for errors within promises
+    RSVP.on('error', function(reason) {
+        console.assert(false, reason);
+    });
 
     // setup default routes
     router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
