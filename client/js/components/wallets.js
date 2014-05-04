@@ -91,7 +91,7 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
         }
     });
 
-    var Wallet = React.createClass({
+    return React.createClass({
         displayName: 'Wallet',
 
         getInitialState: function() {
@@ -123,6 +123,4 @@ define(['react', 'collections/wallets', 'models/wallet'], function(React, Wallet
                 AddWalletForm({wallets: wallets}), content);
         }
     });
-
-    return Wallet;
 });

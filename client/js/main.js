@@ -33,11 +33,11 @@ function($, Backbone, React, Application, router, profile, fastclick,
     modernizr, foundation, idle, notification) {
 
     // setup default routes
-    router.setDefaultRoute((profile.getToken() != null) ? 'wallets':'landing');
+    router.setDefaultRoute((profile.getToken() !== null) ? 'wallets':'landing');
 
     // auth change handlers for idle timing and page redirects
     profile.on("change:logged_in", function() {
-        if (profile.getToken() == null) {
+        if (profile.getToken() === null) {
             clearTimeout(idleTimer);
             router.setDefaultRoute('landing');
         } else {
@@ -55,24 +55,24 @@ function($, Backbone, React, Application, router, profile, fastclick,
     // reset the logout timer if we aren't already logged out.
     function awayCallback() {
         console.log(new Date().toTimeString() + ": away");
-        if (profile.getToken() != null) resetTimer();
-    };
+        if (profile.getToken() !== null) resetTimer();
+    }
 
     // stop logout timer when we return from idle.
     function awayBackCallback() {
         console.log(new Date().toTimeString() + ": back");
         clearTimeout(idleTimer);
-    };
+    }
 
     // no good use for this yet
     function visible() {
         console.log(new Date().toTimeString() + ": now looking at page");
-    };
+    }
 
     // no good use for this yet
     function hidden() {
         console.log(new Date().toTimeString() + ": not looking at page");
-    };
+    }
 
     var timer = new Idle();
     timer.setAwayTimeout(10 * 60 * 1000); // change this for longer idle time
@@ -115,11 +115,11 @@ function($, Backbone, React, Application, router, profile, fastclick,
 
         // Handle responsive navigation for mobile
         $("#coink").on("click", "#expand-btn", function() {
-            $("#sidebar").toggleClass("expanded")
+            $("#sidebar").toggleClass("expanded");
         });
 
         $("#coink").on("click", "#sidebar.expanded a", function() {
-            $("#sidebar").removeClass("expanded")
+            $("#sidebar").removeClass("expanded");
         });
     });
 });

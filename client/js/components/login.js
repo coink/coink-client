@@ -33,11 +33,11 @@ function(React, $, router, notification, profile) {
         },
 
         validateLogin: function(username, password) {
-            if ((username + password).length == 0)
+            if ((username + password).length === 0)
                 notification.warning("Please enter your email address and password");
-            else if (username.length == 0)
+            else if (username.length === 0)
                 notification.warning("Please enter your email address");
-            else if (password.length == 0)
+            else if (password.length === 0)
                 notification.warning("Please enter your password");
             else
                 return true;

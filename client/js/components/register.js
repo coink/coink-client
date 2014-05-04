@@ -37,15 +37,15 @@ function(React, $, router, notification, profile) {
         },
 
         validateRegistration: function(username, password, confirm) {
-            if ((username + password + confirm).length == 0)
+            if ((username + password + confirm).length === 0)
                 notification.warning("Please fill out the form");
-            else if (username.length == 0)
+            else if (username.length === 0)
                 notification.warning("Please enter a username");
-            else if (password.length == 0)
+            else if (password.length === 0)
                 notification.warning("Please enter a password");
             else if (password.length < 6)
                 notification.warning("Password must be at least six characters");
-            else if (confirm.length == 0)
+            else if (confirm.length === 0)
                 notification.warning("Please confirm your password");
             else if (password != confirm)
                 notification.warning("Passwords do not match");
@@ -57,7 +57,7 @@ function(React, $, router, notification, profile) {
         loginAfterRegistration: function(payload) {
             $.post(router.url_root + "/v1/login", JSON.stringify(payload),
                 function(data, textStatus, jqXHR) {
-                    profile.createSession(data.data.token, data.data.expires, payload['username']);
+                    profile.createSession(data.data.token, data.data.expires, payload.username);
                     notification.success("Successfully registered username " + profile.getUsername());
                 }).fail(
                 function() {

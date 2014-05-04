@@ -13,7 +13,7 @@ define(['react', 'models/notification'], function(React, notification) {
                 message : notification.get('message'),
                 type : notification.get('type'),
                 sticky : notification.get('sticky'),
-            }
+            };
         },
 
         render: function() {

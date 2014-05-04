@@ -38,7 +38,7 @@ define(['react', 'router', 'models/notification', 'models/profile'],
         handleClick: function(e) {
             e.preventDefault();
             var token = profile.getToken();
-            if(token == null) {
+            if(token === null) {
                 router.navigate('/', {trigger : true});
                 return;
             }
@@ -64,12 +64,12 @@ define(['react', 'router', 'models/notification', 'models/profile'],
         displayName: 'Header',
 
         render: function() {
-            var loginLink = profile.getToken() != null
-      ?  React.DOM.header({'className': 'clearfix'},
-          React.DOM.div({id: 'header-nav'},
-              React.DOM.span({}, LogoutLink(), " ")))
-      : React.DOM.div({});
-
+            var loginLink = profile.getToken() !== null ?
+                React.DOM.header({'className': 'clearfix'},
+                    React.DOM.div({id: 'header-nav'},
+                        React.DOM.span({}, LogoutLink(), " ")
+                    )
+                ) : React.DOM.div({});
             return loginLink;
         }
     });

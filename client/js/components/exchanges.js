@@ -4,7 +4,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
     var AddAccountForm = React.createClass({
         displayName: "AddAccountForm",
         getInitialState: function() {
-            return {nickname: ''}
+            return {nickname: ''};
         },
         setField: function(e) {
             var map = {};
@@ -48,16 +48,16 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
             var errorArray = [];
 
             $.each(credentials, function(key, value) {
-                if(value == null || value.length == 0) {
+                if(value === null || value.length === 0) {
                     errorArray.push(key);
                 }
             });
 
-            if(nickname == null || nickname.length == 0) {
+            if(nickname === null || nickname.length === 0) {
                 errorArray.push("nickname");
             }
 
-            if(errorArray.length == 0) {
+            if(errorArray.length === 0) {
                 return true;
             }
             else {
@@ -197,16 +197,13 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
         render: function() {
             var exchange_balances = this.state.balances;
             var exchange_account = this.props.exchange_account;
+            var currency_rows = null;
             if( exchange_balances.length > 0) {
                 var keyValues = exchange_balances.at(0).pairs();
-                var currency_rows  = _.map(keyValues, function(keyValue) {
+                currency_rows  = _.map(keyValues, function(keyValue) {
                     return CurrencyRow({key: keyValue[0], currency: keyValue[0], balance: keyValue[1]});
-                    return null;
                 }.bind(this));
-            } else {
-                var currency_rows = null;
             }
-            currency_rows = this.state.collapsed ? null : currency_rows;
             return React.DOM.tbody({className: "exchange-table-body"},
                 AccountRow({exchange_account: exchange_account, toggleCoins: this.toggleCoins, addModel: this.props.addModel, removeModel: this.props.removeModel}),
                 currency_rows
@@ -241,7 +238,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
 
             var table = null;
             var className = this.state.collapsed ? "hide" : "";
-            table = _.size(exchange) == 0 ? null :
+            table = _.size(exchange) === 0 ? null :
                 React.DOM.table({className: className, style: {width: "100%"}},
                     React.DOM.thead({},
                         React.DOM.tr({},
