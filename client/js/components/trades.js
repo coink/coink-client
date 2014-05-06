@@ -273,9 +273,73 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Trades, Foundatio
         }
     });
 
+    var TradeRow = React.createClass({
+        displayName: "TradeRow",
+        render: function() {
+            var trade = this.props.trade;
+            return React.DOM.tr({},
+                React.DOM.td({}, trade.get('tradeType') + " " + trade.get('baseCurrency')
+                    + "/" + trade.get('counterCurrency')),
+                React.DOM.td({}, trade.get('price') + " " + trade.get('counterCurrency')),
+                React.DOM.td({}, trade.get('quantity') + " " + trade.get('baseCurrency')),
+                React.DOM.td({}, trade.get('fee') + " " + trade.get('counterCurrency'))
+            );
+        }
+    });
+
+    var ExchangeAccountTableBody = React.createClass({
+        displayName: "ExchangeAccountTableBody",
+        getInitialState: function() {
+            var trades = new Trades();
+            return {trades: trades};
+        },
+        componentWillMount: function() {
+            var trades = new Trades([], {accountID: this.props.exchange_account.get('accountID')});
+            trades.fetch({
+                success: function(collection) {
+                    if(this.isMounted()) {
+                        this.setState({trades: collection});
+                    }
+                }.bind(this),
+                error: function(collection) {
+                    if(this.isMounted()) {
+                        notification.error("AJAX error can't load exchange accounts");
+                    }
+                }.bind(this)
+            });
+        },
+        render: function() {
+            var trades = this.state.trades;
+            var exchange_account = this.props.exchange_account;
+            var className = this.props.isCurrent ? "" : "hide";
+
+            var tradeRows = trades.map( function(trade) {
+                return TradeRow({trade: trade});
+            }.bind(this));
+            return React.DOM.tbody({className: className},
+                tradeRows
+            );
+        }
+    });
+
     var TradeTable = React.createClass({
         render: function() {
-            return React.DOM.div({}, "The current account is: " + JSON.stringify(this.props.current_account));
+            var exchange_accounts = this.props.exchange_accounts;
+            var exchange_account_table_bodies = exchange_accounts.map( function(exchange_account) {
+                var isCurrent = exchange_account.get('accountID') === this.props.current_account.get('accountID');
+                return ExchangeAccountTableBody({exchange_account: exchange_account, isCurrent: isCurrent});
+            }.bind(this));
+            return React.DOM.table({style: {width: "100%"}},
+                React.DOM.thead({},
+                    React.DOM.tr({},
+                        React.DOM.th({}, "Action"),
+                        React.DOM.th({}, "Price"),
+                        React.DOM.th({}, "Quantity"),
+                        React.DOM.th({}, "Fee")
+                    )
+                ),
+                exchange_account_table_bodies
+            );
         }
     });
 
@@ -338,7 +402,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Trades, Foundatio
             }
             else {
                 var exchangeSelector = ExchangeSelector({exchange_accounts: exchange_accounts, onChange: this.changeAccount});
-                var tradeTable = TradeTable({current_account: this.state.current_account});
+                var tradeTable = TradeTable({current_account: this.state.current_account, exchange_accounts: exchange_accounts});
 
                 content = React.DOM.div({},
                     React.DOM.div({}, "Trade history for: "),
