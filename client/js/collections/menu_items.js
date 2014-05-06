@@ -18,7 +18,18 @@ define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
         {
             text: 'Exchanges',
             route: ['exchanges'],
-            icon: 'exchange'
+            icon: 'exchange',
+            menu: [
+            {
+                text: 'Trades',
+                route: ['exchanges', 'trades'],
+                icon: 'trades'
+            },
+            {
+                text: 'Orders',
+                route: ['exchanges', 'orders'],
+                icon: 'orders'
+            }]
         },
         {
             text: 'Help',
