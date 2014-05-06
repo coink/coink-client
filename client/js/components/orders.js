@@ -83,7 +83,6 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Orders, Foundatio
         displayName: "Orders",
         changeAccount: function(e) {
             var current_account = this.state.exchange_accounts.findWhere({accountID: parseInt(e.target.value, 10)});
-            console.log("Current account is now: " + JSON.stringify(current_account));
             this.setState({current_account: current_account});
         },
         getInitialState: function() {
@@ -98,7 +97,6 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Orders, Foundatio
                 success: function(collection) {
                     if(this.isMounted()) {
                         this.setState({"exchange_accounts": collection, "loaded": true, "current_account": collection.at(0)});
-                        console.log("current_account: " + JSON.stringify(collection.at(0)));
                     }
                 }.bind(this),
                 error: function(collection) {
