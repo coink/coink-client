@@ -1,5 +1,5 @@
-define(['react', 'models/notification', 'collections/exchanges', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account', 'foundation', 'components/loader'],
-function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccount, Foundation, Loader) {
+define(['react', 'models/notification', 'collections/exchange_accounts', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account', 'foundation', 'components/loader'],
+function(React, notification, ExchangeAccounts, MetaExchanges, Balances, ExchangeAccount, Foundation, Loader) {
 
     var AddAccountForm = React.createClass({
         displayName: "AddAccountForm",
@@ -204,6 +204,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
                     return CurrencyRow({key: keyValue[0], currency: keyValue[0], balance: keyValue[1]});
                 }.bind(this));
             }
+            currency_rows = this.state.collapsed ? null : currency_rows;
             return React.DOM.tbody({className: "exchange-table-body"},
                 AccountRow({exchange_account: exchange_account, toggleCoins: this.toggleCoins, addModel: this.props.addModel, removeModel: this.props.removeModel}),
                 currency_rows
@@ -265,12 +266,12 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
     var ExchangesView = React.createClass({
         displayName: "Exchanges",
         getInitialState: function() {
-            var exchange_accounts = new Exchanges();
+            var exchange_accounts = new ExchangeAccounts();
             var meta_exchanges = new MetaExchanges();
             return {"exchange_accounts" : exchange_accounts, "meta_exchanges": meta_exchanges, "loaded": false};
         },
         componentWillMount: function() {
-            var exchange_accounts = new Exchanges();
+            var exchange_accounts = new ExchangeAccounts();
             exchange_accounts.comparator = 'exchangeName';
             exchange_accounts.fetch({
                 success: function(collection) {
@@ -356,7 +357,7 @@ function(React, notification, Exchanges, MetaExchanges, Balances, ExchangeAccoun
                 }.bind(this));
             }
 
-            return React.DOM.div({}, React.DOM.h1({}, "My Exchange Accounts"),
+            return React.DOM.div({}, React.DOM.h1({}, "My Exchanges"),
                 content);
         }
     });
