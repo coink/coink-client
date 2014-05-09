@@ -1,4 +1,4 @@
-define(['react', 'components/exchanges', 'components/loader'], function(React, Exchanges, Loader) {
+define(['react', 'collections/exchange_accounts', 'collections/balances', 'components/loader', 'models/notification'], function(React, ExchangeAccounts, Balances, Loader, notification) {
     
     var DataTable = React.createClass({
         displayName: "DataTable",
@@ -28,8 +28,40 @@ define(['react', 'components/exchanges', 'components/loader'], function(React, E
         }
     });
 
+    // exchange accounts --> balances
+    var allBalances = {};
+
     var AllView = React.createClass({
         displayName: "AllView",
+        retrieveBalances: function(exchangeAccounts) {
+            exchangeAccounts.forEach( function(exchangeAccount) {
+                var balances = new Balances([], {accountID: exchangeAccount.get('accountID')});
+                balances.fetch({
+                    success: function(collection) {
+                        if(this.isMounted()) {
+                            collection.forEach( function(d) {
+                                console.log(d);
+                            });
+                        }
+                    }.bind(this)
+                });
+            }.bind(this));
+        },
+        componentWillMount: function() {
+            var exchangeAccounts = new ExchangeAccounts();
+            exchangeAccounts.fetch({
+                success: function(collection) {
+                    if(this.isMounted()) {
+                        console.log("Go and retrieve balances");
+                        this.retrieveBalances(collection);
+                        this.setState({exchangeAccounts: collection});
+                    }
+                }.bind(this),
+                error: function(collection) {
+                    notification.error("AJAX error: Can't load account data");
+                }
+            });
+        },
         render: function() {
 
             var loaded = true;
