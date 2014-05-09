@@ -1,10 +1,11 @@
 LD_SIZE=128px
+LD_FRAME_SIZE=300px/256px
 LD_FRAMES=6
 
 @keyframes run
 	for i in (0..LD_FRAMES)
 		{100% * (i/LD_FRAMES)}
-			background-position 0 (-(LD_SIZE*i))
+			background-position 0 (-(LD_FRAME_SIZE*LD_SIZE*i))
 
 #loader-container
 	text-align center
@@ -16,4 +17,4 @@ LD_FRAMES=6
 	height @width
 	background url('/img/RunningPigAll.svg')
 	background-size 100%
-	animation run infinite (0.2s * LD_FRAMES) steps(1)
+	animation run infinite (0.135s * LD_FRAMES) steps(1)
