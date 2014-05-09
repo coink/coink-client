@@ -10,6 +10,8 @@ function(Backbone, _, React, profile) {
             'wallets': 'wallets',
             'exchanges': 'exchanges',
             'all': 'all',
+            'exchanges/trades': 'trades',
+            'exchanges/orders': 'orders',
             'help': 'help',
             'about': 'about',
             'about/contact': 'contact',
@@ -46,6 +48,11 @@ function(Backbone, _, React, profile) {
             this.requiresLogin = false;
         },
 
+        all: function() {
+            this.current = "all";
+            this.requiresLogin = true;
+        },
+
         wallets: function() {
             this.current = "wallets";
             this.requiresLogin = true;
@@ -56,8 +63,13 @@ function(Backbone, _, React, profile) {
             this.requiresLogin = true;
         },
 
-        all: function() {
-            this.current = "all";
+        trades: function() {
+            this.current = 'trades';
+            this.requiresLogin = true;
+        },
+
+        orders: function() {
+            this.current = 'orders';
             this.requiresLogin = true;
         },
 
