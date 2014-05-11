@@ -6,6 +6,10 @@ define(['backbone'], function(Backbone) {
             this.set("logged_in", token);
         },
 
+        isLoggedIn: function() {
+            return this.get("logged_in");
+        },
+
         getToken: function() {
             var auth_token = sessionStorage.getItem('auth_token');
             var expires = sessionStorage.getItem('expires');

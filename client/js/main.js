@@ -39,38 +39,44 @@ function($, React, Application, router, profile, fastclick,
         console.assert(false, reason);
     });
 
-    var authToken = profile.getToken();
+    var authToken = (profile.isLoggedIn()) ? "token " + profile.getToken() : null;
 
     var loggedInRoute = 'all';
     var loggedOutRoute = 'landing';
     // on page load setup default route
-    var defaultRoute = (authToken !== null) ? loggedInRoute : loggedOutRoute;
+    var defaultRoute = (profile.isLoggedIn()) ? loggedInRoute : loggedOutRoute;
     router.setDefaultRoute(defaultRoute);
 
     // on page load setup request header auth token
-    $.ajaxSetup({
-          beforeSend: function (request) {
-              if (authToken !== null) {
-                  request.setRequestHeader("Authorization", authToken);
-              }
-        }
-    });
+    if (profile.isLoggedIn()) {
+        $.ajaxSetup({
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", authToken);
+            }
+        });
+    }
 
     // auth event handler
     profile.on("change:logged_in", function() {
-        authToken = profile.getToken();
-        // change stuff when logged out
-        if (authToken === null) {
-            clearTimeout(idleTimer);
-            defaultRoute = loggedOutRoute;
+        authToken = (profile.isLoggedIn()) ? "token " + profile.getToken() : null;
         // change stuff when logged in
-        } else {
+        if (profile.isLoggedIn()) {
+            // ad auth heading
             $.ajaxSetup({
                 beforeSend: function (request) {
                     request.setRequestHeader("Authorization", authToken);
                 }
             });
             defaultRoute = loggedInRoute;
+        // change stuff when logged out
+        } else {
+            // remove auth heading
+            $.ajaxSetup({
+                beforeSend: function (request) {
+                }
+            });
+            clearTimeout(idleTimer);
+            defaultRoute = loggedOutRoute;
         }
         router.setDefaultRoute(defaultRoute);
         router.navigate(router.defaultRoute, {trigger: true});
@@ -79,7 +85,7 @@ function($, React, Application, router, profile, fastclick,
     // reset the logout timer if we aren't already logged out.
     function awayCallback() {
         console.log(new Date().toTimeString() + ": away");
-        if (profile.getToken() !== null) resetTimer();
+        if (profile.isLoggedIn()) resetTimer();
     }
 
     // stop logout timer when we return from idle.
