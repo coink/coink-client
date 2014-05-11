@@ -39,24 +39,40 @@ function($, React, Application, router, profile, fastclick,
         console.assert(false, reason);
     });
 
-    // setup default routes
-    var defaultRoute = 'all';
-    router.setDefaultRoute((profile.getToken() !== null) ? defaultRoute:'landing');
+    var authToken = profile.getToken();
 
-    // auth change handlers for idle timing and page redirects
+    var loggedInRoute = 'all';
+    var loggedOutRoute = 'landing';
+    // on page load setup default route
+    var defaultRoute = (authToken !== null) ? loggedInRoute : loggedOutRoute;
+    router.setDefaultRoute(defaultRoute);
+
+    // on page load setup request header auth token
+    $.ajaxSetup({
+          beforeSend: function (request) {
+              if (authToken !== null) {
+                  request.setRequestHeader("Authorization", authToken);
+              }
+        }
+    });
+
+    // auth event handler
     profile.on("change:logged_in", function() {
-        if (profile.getToken() === null) {
+        authToken = profile.getToken();
+        // change stuff when logged out
+        if (authToken === null) {
             clearTimeout(idleTimer);
-            router.setDefaultRoute('landing');
+            defaultRoute = loggedOutRoute;
+        // change stuff when logged in
         } else {
-            // setup request header token if not logged in
             $.ajaxSetup({
                 beforeSend: function (request) {
-                    request.setRequestHeader("Authorization", profile.getToken());
+                    request.setRequestHeader("Authorization", authToken);
                 }
             });
-            router.setDefaultRoute(defaultRoute);
+            defaultRoute = loggedInRoute;
         }
+        router.setDefaultRoute(defaultRoute);
         router.navigate(router.defaultRoute, {trigger: true});
     });
 
@@ -83,7 +99,8 @@ function($, React, Application, router, profile, fastclick,
     }
 
     var timer = new Idle();
-    timer.setAwayTimeout(10 * 60 * 1000); // change this for longer idle time
+    var idleTime = 10 * 60 * 1000;
+    timer.setAwayTimeout(idleTime); // change this for longer idle time
     timer.onAway = awayCallback;
     timer.onAwayBack = awayBackCallback;
     timer.onVisible = visible;
