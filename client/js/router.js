@@ -1,5 +1,5 @@
 define(['backbone', 'underscore', 'react'],
-function(Backbone, _, React, profile) {
+function(Backbone, _, React) {
 
     var Router = Backbone.Router.extend({
         routes: {
