@@ -9,7 +9,6 @@ require.config({
         'fastclick': [cdnRoot + 'fastclick/1.0.0/fastclick.min', 'vendor/fastclick'],
         'modernizr': [cdnRoot + 'modernizr/2.7.1/modernizr.min', 'vendor/modernizr'],
         'foundation': [cdnRoot + 'foundation/5.2.1/js/foundation.min', 'vendor/foundation'],
-        'rsvp': ['//cdn.jsdelivr.net/rsvp/3.0/rsvp.amd.min'],
         'idle': ['vendor/idle']
     },
     shim: {
@@ -27,22 +26,15 @@ require.config({
 });
 
 require(['jquery', 'react', 'components/application', 'router',
-    'models/profile', 'fastclick', 'modernizr', 'foundation', 'idle', 'rsvp',
+    'models/profile', 'fastclick', 'modernizr', 'idle',
     "models/notification"],
 function($, React, Application, router, profile, fastclick,
-    modernizr, foundation, idle, RSVP, notification) {
-
-    $(document).foundation();
-
-    // Catch-all for errors within promises
-    RSVP.on('error', function(reason) {
-        console.assert(false, reason);
-    });
+    modernizr, idle, notification) {
 
     var authToken = (profile.isLoggedIn()) ? "token " + profile.getToken() : null;
-
     var loggedInRoute = 'all';
     var loggedOutRoute = 'landing';
+
     // on page load setup default route
     var defaultRoute = (profile.isLoggedIn()) ? loggedInRoute : loggedOutRoute;
     router.setDefaultRoute(defaultRoute);
