@@ -20,13 +20,22 @@ function(React, $, router, notification, profile) {
                     data: JSON.stringify(payload),
                     processData: false,
                     contentType: 'application/json'
+                    statusCode: {
+                      503: function() {
+                        notification.error("503 error: is the api up?");
+                        router.navigate(router.getDefault, {trigger: true});
+                      }
+                      400: function() {
+                        notification.error("400 error: Bad Request");
+                        router.navigate(router.getDefault, {trigger: true});
+                    }
                 })
                 .done(function(data) {
                     profile.createSession(data.data.token, data.data.expires, username);
                     notification.success("Oink! Welcome back " + profile.getUsername() + "!");
                 })
-                .fail(function() {
-                    notification.error("error: login-error");
+                .fail(function(code) {
+                    notification.error("error: ajax login-error");
                     router.navigate(router.getDefault, {trigger: true});
                 });
             }

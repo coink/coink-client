@@ -1,35 +1,4 @@
 define(['react', 'collections/exchange_accounts', 'collections/balances', 'components/loader', 'models/notification'], function(React, ExchangeAccounts, Balances, Loader, notification) {
-    
-    var DataTable = React.createClass({
-        displayName: "DataTable",
-        render: function() {
-            /*
-            var rows = ___.map(function(coin) {
-                return CoinRow({});
-            });
-            */
-            var rows = React.DOM.tr({});
-            return React.DOM.table({}, 
-                React.DOM.thead({},
-                    React.DOM.tr({},
-                        React.DOM.td({}, "Ticker"),
-                        React.DOM.td({}, "Name"),
-                        React.DOM.td({}, "Quantity"),
-                        React.DOM.td({}, "Cost per coin (bitcoin)"),
-                        React.DOM.td({}, "Total cost"),
-                        React.DOM.td({}, "Current sell value"),
-                        React.DOM.td({}, "Last price per coin")
-                    )
-                ),
-                React.DOM.tbody({},
-                    rows
-                )
-            );
-        }
-    });
-
-    // exchange accounts --> balances
-    var allBalances = {};
 
     var AllView = React.createClass({
         displayName: "AllView",
@@ -74,6 +43,38 @@ define(['react', 'collections/exchange_accounts', 'collections/balances', 'compo
            }
         }
     });
+
+    var DataTable = React.createClass({
+        displayName: "DataTable",
+        render: function() {
+            /*
+            var rows = ___.map(function(coin) {
+                return CoinRow({});
+            });
+            */
+            var rows = React.DOM.tr({});
+            return React.DOM.table({},
+                React.DOM.thead({},
+                    React.DOM.tr({},
+                        React.DOM.td({}, "Ticker"),
+                        React.DOM.td({}, "Name"),
+                        React.DOM.td({}, "Quantity"),
+                        React.DOM.td({}, "Cost per coin (bitcoin)"),
+                        React.DOM.td({}, "Total cost"),
+                        React.DOM.td({}, "Current sell value"),
+                        React.DOM.td({}, "Last price per coin")
+                    )
+                ),
+                React.DOM.tbody({},
+                    rows
+                )
+            );
+        }
+    });
+
+    // exchange accounts --> balances
+    var allBalances = {};
+
 
     return AllView;
 });
