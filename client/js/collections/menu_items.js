@@ -11,6 +11,11 @@ define(['backbone', 'models/menu_item'], function(Backbone, MenuItem) {
 
     var menuItems = [
         {
+            text: 'All',
+            route: ['all'],
+            icon: 'all'
+        },
+        {
             text: 'Wallets',
             route: ['wallets'],
             icon: 'wallet'

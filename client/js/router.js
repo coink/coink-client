@@ -9,6 +9,7 @@ function(Backbone, _, React, profile) {
             'register': 'register',
             'wallets': 'wallets',
             'exchanges': 'exchanges',
+            'all': 'all',
             'exchanges/trades': 'trades',
             'exchanges/orders': 'orders',
             'help': 'help',
@@ -45,6 +46,11 @@ function(Backbone, _, React, profile) {
         register: function() {
             this.current = "register";
             this.requiresLogin = false;
+        },
+
+        all: function() {
+            this.current = "all";
+            this.requiresLogin = true;
         },
 
         wallets: function() {

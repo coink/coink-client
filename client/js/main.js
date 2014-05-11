@@ -40,7 +40,8 @@ function($, React, Application, router, profile, fastclick,
     });
 
     // setup default routes
-    router.setDefaultRoute((profile.getToken() !== null) ? 'wallets':'landing');
+    var defaultRoute = 'all';
+    router.setDefaultRoute((profile.getToken() !== null) ? defaultRoute:'landing');
 
     // auth change handlers for idle timing and page redirects
     profile.on("change:logged_in", function() {
@@ -54,7 +55,7 @@ function($, React, Application, router, profile, fastclick,
                     request.setRequestHeader("Authorization", profile.getToken());
                 }
             });
-            router.setDefaultRoute('wallets');
+            router.setDefaultRoute(defaultRoute);
         }
         router.navigate(router.defaultRoute, {trigger: true});
     });
