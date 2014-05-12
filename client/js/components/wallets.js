@@ -6,7 +6,13 @@ define(['react', 'collections/wallets', 'models/wallet', 'components/loader', 'm
         handleSubmit: function(e) {
             e.preventDefault();
             var address = this.refs.address.getDOMNode().value.trim();
+            if(address.length < 27 || address.length > 35) {
+                notification.warning("Crypto Money addresses are between 27 " +
+                    "and 35 characters long. Please enter a valid address.");
+                return;
+            }
             this.props.handleAdd(address);
+            this.refs.address.getDOMNode().value = "";
         },
 
         render: function() {
