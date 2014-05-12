@@ -4,13 +4,21 @@ define(['backbone'], function(Backbone) {
         defaults: {
             "ticker": "XXX",
             "name": "nullCoin",
+            "price": 0,
             "quantity": 0,
-            "costPer": 0,
-            "totalCost": 0
+            "gain": 0,
+            "gainPercent": 0,
+            "totalCost": 0,
+            "marketValue": 0
         },
 
-        addCoins: function(coins) {
-            this.set("quantity", this.get("quantity") + coins);
+        mergeCoins: function(coin) {
+            this.set("quantity", this.get("quantity") + coin.get("quantity"));
+            this.set("gain", this.get("gain") + coin.get("gain"));
+            this.set("gainPercent", this.get("gainPercent") + coin.get("gainPercent"));
+            this.set("totalCost", this.get("totalCost") + coin.get("totalCost"));
+            this.set("price", this.get("totalCost")/this.get("quantity"));
+            this.set("marketValue", coin.get("marketValue"));
         },
 
         currencyTicker: function() {
@@ -25,8 +33,8 @@ define(['backbone'], function(Backbone) {
             return this.get("quantity");
         },
 
-        costPerCoin: function() {
-            return this.get("costPer");
+        getPrice: function() {
+            return this.get("price");
         },
 
         totalCost: function() {
