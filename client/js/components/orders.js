@@ -145,7 +145,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Orders, Foundatio
                 );
             }
 
-            return React.DOM.div({}, React.DOM.h1({}, "Orders"),
+            return React.DOM.div({}, React.DOM.h1({}, "My Orders"),
                 content);
         }
     });

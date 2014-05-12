@@ -147,7 +147,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Trades, Foundatio
                 );
             }
 
-            return React.DOM.div({}, React.DOM.h1({}, "Trades"),
+            return React.DOM.div({}, React.DOM.h1({}, "My Trades"),
                 content);
         }
     });
