@@ -2,25 +2,32 @@ define(['react', 'underscore', 'components/header', 'components/footer',
         'components/sidebar', 'components/notification', 'models/notification', 'models/profile'],
 function (React, _, Header, Footer, Sidebar, Notification, notification, profile) {
 
+    "use strict";
     var Application = React.createClass({
         displayName: 'Application',
-
         getInitialState: function() {
-            return {logged_in : profile.getToken() !== null};
+            return {loggedIn: profile.isLoggedIn()};
         },
 
         render: function() {
-            var mainContentWidth = this.state.logged_in ? 9 : 12;
-            return React.DOM.div({id : 'wrapper', className: 'row left'},
-                Header({loggedIn: this.state.logged_in}),
-                Sidebar({loggedIn: this.state.logged_in}),
-                React.DOM.div({id: 'content-wrapper', className: 'large-' + mainContentWidth + ' medium-' + mainContentWidth + ' columns'},
+            var loggedIn = this.state.loggedIn;
+            var mainContentWidth = loggedIn ? 9 : 12;
+            return React.DOM.div({id : 'coink'},
+                new Header({
+                    handleLogout: this.handleLogout,
+                    loggedIn: loggedIn,
+                    username: profile.getUsername()
+                }),
+                new Sidebar({loggedIn: loggedIn}),
+                React.DOM.div({
+                    id: 'content-wrapper',
+                    className:
+                        ' medium-' + mainContentWidth + ' columns'
+                },
                     React.DOM.div({className: 'floatfix'},
-                        React.DOM.div({className: 'wrap'},
-                            Notification(),
-                            React.DOM.div({id: 'main'})
-                        ),
-                        Footer()
+                        new Notification(),
+                        React.DOM.div({id: 'main'}),
+                        new Footer()
                     )
                 )
             );
@@ -36,18 +43,36 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
 
         componentDidMount: function () {
             profile.on('change:logged_in', function() {
-                this.setState({logged_in : profile.getToken() !== null});
+                this.setState({loggedIn : profile.isLoggedIn()});
             }.bind(this));
+        },
+
+        handleLogout: function() {
+            if(profile.isLoggedIn()) {
+                var router = this.props.router;
+                $.ajax({
+                    type: "POST",
+                    url: router.url_root + "/v1/logout",
+                    data: {"token" : profile.getToken()},
+                    success: function() {
+                        var name = profile.getUsername();
+                        profile.destroySession();
+                        notification.success("Oink oink. See you later " +
+                            name + "!");
+                    }
+                });
+            }
+            router.navigate(router.defaultRoute, {trigger : true});
         },
 
         setView: function(requirements, getView, requiresLogin) {
             if(requiresLogin !== null) {
                 // Don't render views that require user login
-                if(requiresLogin && !profile.get("logged_in")) {
+                if(requiresLogin && !profile.isLoggedIn()) {
                     this.navigate('login', {trigger: true});
                     return;
                 // Don't render views that require user is not logged in
-                } else if (!requiresLogin && profile.get("logged_in")) {
+                } else if (!requiresLogin && profile.isLoggedIn()) {
                     return;
                 }
             }
@@ -63,7 +88,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
         onRoute: function() {
             console.log("Route current changed to: " + this.props.router.current);
             this.setView(['components/' + this.props.router.current], function(NewView) {
-                return NewView();
+                return new NewView();
             }, this.props.router.requiresLogin);
         }
 
