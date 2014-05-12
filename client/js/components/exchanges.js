@@ -303,16 +303,27 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
                     exchangeTableBodies
                 );
             }
+            count = this.props.exchange.length > 0 ?
+                [React.DOM.span({className: 'strong'},
+                    this.props.exchangeName),
+                " ( ", React.DOM.span({className: 'strong'},
+                        this.props.exchange.length), " )"
+                ] : "No " + this.props.exchangeName + " Accounts :(";
+
             return React.DOM.div({className: "collapse-parent"},
                 React.DOM.div({
                         onClick: this.toggleCollapse,
-                        className: "collapse-header"
-                }, this.props.exchangeName,
-                    React.DOM.a({
-                        className: 'right',
-                        href: '#',
-                        onClick: this.handleAddAccount
-                    }, "Add Account")),
+                        className: "row collapse-header"
+                }, React.DOM.div({
+                    className: "medium-12 medium-centered columns"
+                }, count,
+
+                React.DOM.a({
+                    className: 'right',
+                    href: '#',
+                    onClick: this.handleAddAccount
+                }, "Add Account"))),
+
                 addAccountForm, table);
         }
     });
