@@ -69,13 +69,11 @@ function (React, _, router, MenuItem, MenuItems, Logo, Glyphicon) {
 
             return React.DOM.div({
                 id: 'sidebar',
-                className: 'large-3 medium-3 columns'
+                className: 'medium-3 columns'
             },
-            React.DOM.div({className: 'wrap'},
-                Logo(),
-                React.DOM.button({id: 'expand-btn'}, '☰'),
-                React.DOM.ul({className: 'nav'}, items))
-            );
+            Logo(),
+            React.DOM.button({id: 'expand-btn'}, '☰'),
+            React.DOM.ul({className: 'nav'}, items));
         }
     });
 
