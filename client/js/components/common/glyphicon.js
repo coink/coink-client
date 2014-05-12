@@ -4,7 +4,9 @@ define(['react'], function(React) {
         displayName: "Glyphicon",
 
         render: function() {
-            return React.DOM.i({className: 'glyphicon glyphicon-' + this.props.name});
+            return React.DOM.span({
+                className: 'glyphicon glyphicon-' + this.props.name
+            });
         }
     });
 
