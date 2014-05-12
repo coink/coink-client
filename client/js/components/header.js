@@ -1,5 +1,5 @@
-define(['react', 'router', 'models/notification', 'models/profile', 'scripts/md5'],
-function(React, router, notification, profile, hash) {
+define(['react', 'router', 'models/notification', 'scripts/md5'],
+function(React, router, notification, hash) {
 
     var LoginLink = React.createClass({
         displayName: 'LoginLink',
@@ -39,26 +39,14 @@ function(React, router, notification, profile, hash) {
 
         handleClick: function(e) {
             e.preventDefault();
-            if(profile.isLoggedIn()) {
-                $.ajax({
-                    type: "POST",
-                    url: router.url_root + "/v1/logout",
-                    data: {"token" : profile.getToken()},
-                    success: function(msg) {
-                        notification.success("See you later " +
-                            profile.getUsername() + "! Oink oink.");
-                        profile.destroySession();
-                    }
-                });
-            }
-            router.navigate(router.defaultRoute, {trigger : true});
+            this.props.handleLogout();
         },
 
         render: function() {
             return React.DOM.a({
                 href: 'logout',
                 onClick: this.handleClick
-            }, "Logout " + profile.getUsername());
+            }, "Logout " + this.props.username);
         }
     });
 
@@ -68,8 +56,8 @@ function(React, router, notification, profile, hash) {
         render: function() {
             var links = React.DOM.li({}, LoginLink(),
                     React.DOM.li({}, RegisterLink()));
-            if(profile.isLoggedIn()) {
-                var hash = md5(profile.getUsername());
+            if(this.props.loggedIn) {
+                var hash = md5(this.props.username);
                 var src = 'http://www.gravatar.com/avatar/' +
                     hash + '?d=identicon';
 
@@ -77,14 +65,17 @@ function(React, router, notification, profile, hash) {
                     'id': 'avatar',
                     'src': src
                 }),
-                React.DOM.li({}, LogoutLink()));
+                React.DOM.li({}, LogoutLink({
+                    handleLogout: this.props.handleLogout,
+                    username: this.props.username
+                })));
             }
-            return React.DOM.nav({'className': 'top-bar'},
-                React.DOM.ul({'className': 'title-area'},
-                    React.DOM.li({'className': 'name'},
+            return React.DOM.nav({className: 'show-for-medium-up top-bar'},
+                React.DOM.ul({className: 'title-area'},
+                    React.DOM.li({className: 'name'},
                         React.DOM.h1(React.DOM.a({'href' : '#'}, "Coink")))),
-                React.DOM.section({'className': 'top-bar-section'},
-                    React.DOM.ul({'className': 'right'}, links)))
+                React.DOM.section({className: 'top-bar-section'},
+                    React.DOM.ul({className: 'right'}, links)));
         }
 
     });
