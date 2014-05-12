@@ -5,53 +5,30 @@ define(['react', 'collections/wallets', 'models/wallet', 'components/loader', 'm
 
         handleSubmit: function(e) {
             e.preventDefault();
-            var wallets = this.props.wallets;
             var address = this.refs.address.getDOMNode().value.trim();
-            // MIGHT BE REDUNDANT WHEN SERVER IS WORKING
-            wallets.add({address: address});
-            wallets.create({address: address}, {
-                wait: true,
-                success: function(wallet, q) {
-                    notification.success("Successfully added address: " + address + ".");
-                },
-                fail: function() {
-                    notification.error("Error could not add address: " + address + ".");
-                }
-            });
+            this.props.handleAdd(address);
         },
 
         render: function() {
-            return React.DOM.form({onSubmit: this.handleSubmit, onEnter: this.handleSubmit},
-                React.DOM.label({}, "New Address",
+            return React.DOM.form({
+                onSubmit: this.handleSubmit,
+                onEnter: this.handleSubmit
+            }, React.DOM.label({}, "New Address",
                 React.DOM.input({
                     placeholder: 'Address',
                     type: 'text',
                     ref: 'address'
-                })),
-                React.DOM.button({className: 'radius primary'},
-                "Add"));
+                })
+            ), React.DOM.button({className: 'radius primary'}, "Add"));
        }
     });
 
     var WalletRow = React.createClass({
         displayName: 'WalletRow',
 
-        handleDelete: function(e) {
+        handleClick: function(e) {
             e.preventDefault();
-
-            var address = this.props.wallet.get('address');
-            if (!confirm("Are you sure you want to delete address: " + address + " ?"))
-                return;
-
-            this.props.wallet.destroy({
-                wait: true,
-                success: function() {
-                    notification.success("Successfully removed address: " + address + ".");
-                },
-                fail: function() {
-                    notification.error("Error could not add address: " + address + ".");
-                }
-            });
+            this.props.handleDelete(this.props.wallet);
         },
 
         render: function() {
@@ -62,7 +39,7 @@ define(['react', 'collections/wallets', 'models/wallet', 'components/loader', 'm
                 React.DOM.td({}, wallet.get('value')),
                 React.DOM.td({}, React.DOM.a({
                     href: '#',
-                    onClick: this.handleDelete
+                    onClick: this.handleClick
                 }, "Delete")));
         }
     });
@@ -72,20 +49,22 @@ define(['react', 'collections/wallets', 'models/wallet', 'components/loader', 'm
 
         render: function() {
             var wallets = this.props.wallets;
-            if (wallets) {
-            var wallet_rows = wallets.map(function(wallet) {
-                return WalletRow({
-                    key: wallet.cid,
-                    wallet: wallet
-                });
-            });
-            return React.DOM.table({id: 'wallet-table'},
-                React.DOM.tr({},
-                    React.DOM.th({}, "Currency"),
-                    React.DOM.th({}, "Address"),
-                    React.DOM.th({}, "Balance"),
-                    React.DOM.th({}, "Action")),
-                wallet_rows);
+            if (wallets && wallets.length) {
+                var wallet_rows = wallets.map(function(wallet) {
+                    return WalletRow({
+                        handleDelete: this.props.handleDelete,
+                        key: wallet.cid,
+                        wallet: wallet
+                    });
+                }.bind(this));
+                return React.DOM.table({id: 'wallet-table'},
+                    React.DOM.thead({},
+                        React.DOM.tr({},
+                            React.DOM.th({}, "Currency"),
+                            React.DOM.th({}, "Address"),
+                            React.DOM.th({}, "Balance"),
+                            React.DOM.th({}, "Action"))),
+                    React.DOM.tbody({}, wallet_rows));
             }
             return React.DOM.div({}, "No wallets");
         }
@@ -95,33 +74,54 @@ define(['react', 'collections/wallets', 'models/wallet', 'components/loader', 'm
         displayName: 'Wallet',
 
         getInitialState: function() {
-            return {"wallets" : []};
+            return {
+                "wallets" : new Wallets(),
+                "loading" : true
+            };
+        },
+
+        handleDelete: function(model) {
+            var address = model.get('address');
+            if (!confirm("Are you sure you want to delete address: " + address + " ?"))
+                return;
+
+            model.destroy({
+                wait: true,
+                success: function() {
+                    notification.success("Successfully removed address: " + address + ".");
+                    this.setState({"wallets" : this.state.wallets});
+                }.bind(this),
+                fail: function() {
+                    notification.error("Error could not add address: " + address + ".");
+                }
+            });
+        },
+
+        handleAdd: function(address) {
+            this.state.wallets.create({address: address}, {
+                success: function() {
+                    notification.success("Successfully added address: " + address + ".");
+                    this.setState({"wallets" : this.state.wallets});
+                }.bind(this),
+                fail: function() {
+                    notification.error("Error could not add address: " + address + ".");
+                }
+            });
         },
 
         componentWillMount: function() {
             var wallets = new Wallets();
-            wallets.on("sync", this.updateWallets.bind(this,null));
-            wallets.on("add destroy", this.updateWallets);
-            wallets.fetch();
-        },
-
-        updateWallets: function(wallet, wallets) {
-            console.log(wallet);
-            if(this.isMounted()) {
-                if(wallets.length > 0) {
-                    this.replaceState({"wallets" : wallets});
-                } else {
-                    this.replaceState({"wallets" : null});
-                }
-            }
+            wallets.fetch({success: function(wallets) {
+                this.setState({wallets: wallets});
+            }.bind(this)});
         },
 
         render: function() {
             var wallets = this.state.wallets;
             return React.DOM.div({id: 'wallet_container'},
                 React.DOM.h1({}, "My Wallets"),
-                AddWalletForm({wallets: wallets}),
-                WalletTable({wallets: wallets}));
+                AddWalletForm({handleAdd: this.handleAdd, wallets: wallets}),
+                WalletTable({handleDelete: this.handleDelete, wallets: wallets}));
         }
     });
 
