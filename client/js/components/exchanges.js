@@ -1,16 +1,22 @@
-define(['react', 'models/notification', 'collections/exchange_accounts', 'collections/meta_exchanges', 'collections/balances', 'models/exchange_account', 'foundation', 'components/loader'],
-function(React, notification, ExchangeAccounts, MetaExchanges, Balances, ExchangeAccount, Foundation, Loader) {
+define(['react', 'models/notification', 'collections/exchange_accounts',
+        'collections/meta_exchanges', 'collections/balances',
+        'models/exchange_account', 'components/loader'],
+function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
+    ExchangeAccount, Loader) {
 
     var AddAccountForm = React.createClass({
         displayName: "AddAccountForm",
+
         getInitialState: function() {
             return {nickname: ''};
         },
+
         setField: function(e) {
             var map = {};
             map[e.target.id] = e.target.value;
             this.setState(map);
         },
+
         handleSubmit: function(e) {
             e.preventDefault();
 
@@ -44,6 +50,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                 this.props.addModel(model);
             }
         },
+
         validateAccount: function(credentials, nickname) {
             var errorArray = [];
 
@@ -65,6 +72,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                 return false;
             }
         },
+
         validationError: function(errorArray) {
             var message = "Please enter your ";
             if(errorArray.length == 1) {
@@ -77,6 +85,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                 return message.concat(errorArray.join(', ') + ", and " + end);
             }
         },
+
         render: function() {
             var meta_exchange = this.props.meta_exchange;
             var fields = meta_exchange.get('requiredFields').map(function(field) {
@@ -101,21 +110,18 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                             id: 'nickname',
                             className: 'exchange-field',
                             onChange: this.setField
-                        })
-                    )
-                ),
+                        }))),
                 React.DOM.div({},
                     React.DOM.label({htmlFor: 'submit'},
                         React.DOM.span(),
-                        React.DOM.input({type: 'submit', value: "Add"})
-                    )
-                )
+                        React.DOM.input({type: 'submit', value: "Add"})))
             );
         }
     });
 
     var AccountRow = React.createClass({
         displayName: "AccountRow",
+
         handleDelete: function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -138,29 +144,37 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
             //Optimistically remove the row from the view
             this.props.removeModel(this.props.exchange_account);
         },
+
         render: function() {
             var exchange_account = this.props.exchange_account;
-            return React.DOM.tr({onClick: this.props.toggleCoins, className: "account-row"},
-                React.DOM.td({}, exchange_account.get('nickname')),
-                React.DOM.td({}, exchange_account.get('accountID')),
-                React.DOM.td({}),
-                React.DOM.td({}),
+            var accountID = exchange_account.get('accountID');
+            var nickname = exchange_account.get('nickname');
+            nickname = nickname ?
+                nickname : exchange_account.get("exchangeName");
+
+            return React.DOM.tr({
+                className: "account-row",
+                onClick: this.props.toggleCoins
+            },
+                React.DOM.td({}, "Account: ", nickname),
+                React.DOM.td({}, "ID: ", accountID),
                 React.DOM.td({},
-                    React.DOM.a({
-                        href: '#',
+                    React.DOM.button({
+                        className: 'primary tiny',
                         onClick: this.handleDelete,
-                    }, "Delete")
-                )
-            );
+                    }, "Remove"),
+                    React.DOM.br(),
+                    React.DOM.button({
+                        className: 'disabled tiny'
+                    }, "Rename")));
         }
     });
 
     var CurrencyRow = React.createClass({
         displayName: "CurrencyRow",
+
         render: function() {
             return React.DOM.tr({className: "currency-row"},
-                React.DOM.td({}),
-                React.DOM.td({}),
                 React.DOM.td({}, this.props.currency),
                 React.DOM.td({}, this.props.balance),
                 React.DOM.td({})
@@ -170,30 +184,41 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
 
     var ExchangeTableBody = React.createClass({
         displayName: "ExchangeTableBody",
+
         getInitialState: function() {
-            var balances = new Balances();
-            return {balances: balances, collapsed: false};
+            return {
+                balances: new Balances({
+                    accountID: this.props.exchange_account.get('accountID')
+                }),
+                collapsed: false
+            };
         },
+
         componentWillMount: function() {
-            var balances = new Balances([], {accountID: this.props.exchange_account.get('accountID')});
-            balances.fetch({
+            this.state.balances.fetch({
                 success: function(collection) {
                     if(this.isMounted()) {
-                        this.setState({balances: collection, "loaded": true});
+                        this.setState({
+                            balances: collection,
+                            "loading": false
+                        });
                     }
                 }.bind(this),
                 error: function(collection) {
                     if(this.isMounted()) {
-                        this.setState({"loaded": true});
-                        notification.error("AJAX error can't load exchange accounts");
+                        this.setState({"loading": false});
+                        var error = "AJAX error can't load exchange accounts";
+                        notification.error(error);
                     }
                 }.bind(this)
             });
         },
+
         toggleCoins: function(e) {
             e.preventDefault();
             this.setState({collapsed: !this.state.collapsed});
         },
+
         render: function() {
             var exchange_balances = this.state.balances;
             var exchange_account = this.props.exchange_account;
@@ -201,87 +226,123 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
             if( exchange_balances.length > 0) {
                 var keyValues = exchange_balances.at(0).pairs();
                 currency_rows  = _.map(keyValues, function(keyValue) {
-                    return CurrencyRow({key: keyValue[0], currency: keyValue[0], balance: keyValue[1]});
+                    return CurrencyRow({
+                        key: keyValue[0],
+                        currency: keyValue[0],
+                        balance: keyValue[1]
+                    });
                 }.bind(this));
             }
-            currency_rows = this.state.collapsed ? null : currency_rows;
+            currency_rows = this.state.collapsed ?
+                React.DOM.div() : currency_rows;
             return React.DOM.tbody({className: "exchange-table-body"},
-                AccountRow({exchange_account: exchange_account, toggleCoins: this.toggleCoins, addModel: this.props.addModel, removeModel: this.props.removeModel}),
-                currency_rows
-            );
+                AccountRow({
+                    exchange_account: exchange_account,
+                    toggleCoins: this.toggleCoins,
+                    addModel: this.props.addModel,
+                    removeModel: this.props.removeModel
+                }), currency_rows);
         }
     });
 
     var ExchangeGroup = React.createClass({
         displayName: "ExchangeGroup",
+
         getInitialState: function() {
-            return {collapsed: false, hideAddAccountForm: true};
+            return {
+                collapsed: false,
+                formHidden: true
+            };
         },
+
         handleAddAccount: function(e) {
             e.preventDefault();
             e.stopPropagation();
-            this.setState({hideAddAccountForm: !this.state.hideAddAccountForm});
+            this.toggleAddAccount();
         },
+
         toggleAddAccount: function() {
-            this.setState({hideAddAccountForm: !this.state.hideAddAccountForm});
+            this.setState({formHidden: !this.state.formHidden});
         },
+
         toggleCollapse: function() {
             var collapsed = !_.isEmpty(this.props.exchange) && !this.state.collapsed;
             this.setState({collapsed: collapsed});
         },
+
         render: function() {
             var exchange = this.props.exchange;
-            var exchangeTableBodies = _.map(this.props.exchange, function(exchange_account) {
-                return ExchangeTableBody({exchange_account: exchange_account, addModel: this.props.addModel, removeModel: this.props.removeModel});
-            }.bind(this));
+            var exchangeTableBodies = _.map(this.props.exchange,
+                    function(exchange_account) {
+                        return ExchangeTableBody({
+                            exchange_account: exchange_account,
+                            addModel: this.props.addModel,
+                            removeModel: this.props.removeModel
+                        });
+                    }.bind(this));
 
-            var addAccountForm = this.state.hideAddAccountForm ? null : AddAccountForm({meta_exchange: this.props.meta_exchange, addModel: this.props.addModel, exchangeName: this.props.exchangeName, toggleAddAccount: this.toggleAddAccount});
+            var addAccountForm = this.state.formHidden ?  React.DOM.div() :
+                AddAccountForm({
+                    meta_exchange: this.props.meta_exchange,
+                    addModel: this.props.addModel,
+                    exchangeName: this.props.exchangeName,
+                    toggleAddAccount: this.toggleAddAccount
+                });
 
-            var table = null;
-            var className = this.state.collapsed ? "hide" : "";
-            table = _.size(exchange) === 0 ? null :
-                React.DOM.table({className: className, style: {width: "100%"}},
-                    React.DOM.thead({},
+            var table = React.DOM.div();
+            if (exchange.length !== 0) {
+                table = React.DOM.table({
+                    className: this.state.collapsed ? "hide" : ""
+                }, React.DOM.thead({},
                         React.DOM.tr({},
-                            React.DOM.th({}, "Account Nickname"),
-                            React.DOM.th({}, "Account ID"),
                             React.DOM.th({}, "Currency"),
                             React.DOM.th({}, "Balance"),
-                            React.DOM.th({}, "Action")
+                            React.DOM.th({})
                         )
                     ),
                     exchangeTableBodies
                 );
+            }
             return React.DOM.div({className: "collapse-parent"},
-                React.DOM.div({onClick: this.toggleCollapse, className: "collapse-header"},
-                    this.props.exchangeName,
-                    React.DOM.a({href: "#", onClick: this.handleAddAccount, style: {position: "absolute", right: 15}}, "Add Account")
-                ),
-                table,
-                addAccountForm
-            );
+                React.DOM.div({
+                        onClick: this.toggleCollapse,
+                        className: "collapse-header"
+                }, this.props.exchangeName,
+                    React.DOM.a({
+                        className: 'right',
+                        href: '#',
+                        onClick: this.handleAddAccount
+                    }, "Add Account")),
+                addAccountForm, table);
         }
     });
 
     var ExchangesView = React.createClass({
         displayName: "Exchanges",
+
         getInitialState: function() {
-            var exchange_accounts = new ExchangeAccounts();
-            var meta_exchanges = new MetaExchanges();
-            return {"exchange_accounts" : exchange_accounts, "meta_exchanges": meta_exchanges, "loaded": false};
+            return {
+                "exchange_accounts" : new ExchangeAccounts(),
+                "meta_exchanges": new MetaExchanges(),
+                "loading": true
+            };
         },
+
         componentWillMount: function() {
             var exchange_accounts = new ExchangeAccounts();
             exchange_accounts.comparator = 'exchangeName';
             exchange_accounts.fetch({
                 success: function(collection) {
                     if(this.isMounted()) {
-                        this.setState({"exchange_accounts": collection, "loaded": true});
+                        this.setState({
+                            "exchange_accounts": collection,
+                            "loading": false
+                        });
                     }
                 }.bind(this),
                 error: function(collection) {
                     if(this.isMounted()) {
-                        this.setState({"loaded": true});
+                        this.setState({"loading": false});
                         notification.error("AJAX error can't load exchange accounts");
                     }
                 }.bind(this)
@@ -302,6 +363,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                 }.bind(this)
             });
         },
+
         addModel: function(model) {
             var exchange_accounts = this.state.exchange_accounts;
             exchange_accounts.add(model);
@@ -309,6 +371,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                 this.setState({"exchange_accounts": exchange_accounts});
             }
         },
+
         removeModel: function(model) {
             var exchange_accounts = this.state.exchange_accounts;
             exchange_accounts.remove(model);
@@ -316,13 +379,14 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances, Exchang
                 this.setState({"exchange_accounts": exchange_accounts});
             }
         },
+
         render: function() {
             var content;
-            var loaded = this.state.loaded;
+            var loading = this.state.loading;
             var exchange_accounts = this.state.exchange_accounts;
             var meta_exchanges = this.state.meta_exchanges;
 
-            if (!loaded) {
+            if (loading) {
                 content = new Loader();
             }
             else if (exchange_accounts.isEmpty()) {
