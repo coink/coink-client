@@ -2,7 +2,6 @@ define(['react', 'underscore', 'components/header', 'components/footer',
         'components/sidebar', 'components/notification', 'models/notification', 'models/profile'],
 function (React, _, Header, Footer, Sidebar, Notification, notification, profile) {
 
-    "use strict";
     var Application = React.createClass({
         displayName: 'Application',
         getInitialState: function() {
@@ -13,22 +12,19 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
             var loggedIn = this.state.loggedIn;
             var mainContentWidth = loggedIn ? 9 : 12;
             return React.DOM.div({id : 'coink'},
-                new Header({
+                Header({
                     handleLogout: this.handleLogout,
                     loggedIn: loggedIn,
                     username: profile.getUsername()
                 }),
-                new Sidebar({loggedIn: loggedIn}),
-                React.DOM.div({
-                    id: 'content-wrapper',
-                    className:
+                Sidebar({loggedIn: loggedIn}),
+                React.DOM.div({ className:
+                        'large-' + mainContentWidth +
                         ' medium-' + mainContentWidth + ' columns'
                 },
-                    React.DOM.div({className: 'floatfix'},
-                        new Notification(),
-                        React.DOM.div({id: 'main'}),
-                        new Footer()
-                    )
+                    Notification(),
+                    React.DOM.div({id: 'main'}),
+                    Footer()
                 )
             );
         },
@@ -88,7 +84,7 @@ function (React, _, Header, Footer, Sidebar, Notification, notification, profile
         onRoute: function() {
             console.log("Route current changed to: " + this.props.router.current);
             this.setView(['components/' + this.props.router.current], function(NewView) {
-                return new NewView();
+                return NewView();
             }, this.props.router.requiresLogin);
         }
 
