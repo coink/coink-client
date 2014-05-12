@@ -1,8 +1,9 @@
 define(['react', 'models/notification', 'collections/exchange_accounts',
         'collections/meta_exchanges', 'collections/balances',
-        'models/exchange_account', 'components/loader'],
+        'models/exchange_account', 'components/loader',
+        'components/common/glyphicon'],
 function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
-    ExchangeAccount, Loader) {
+    ExchangeAccount, Loader, Glyphicon) {
 
     var AddAccountForm = React.createClass({
         displayName: "AddAccountForm",
@@ -25,9 +26,11 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
             map.exchangeName = this.props.meta_exchange.get('exchangeName');
             map.nickname = this.state.nickname;
             map.credentials = {};
-            $.each(this.props.meta_exchange.get('requiredFields'), function(index, field) {
-                map.credentials[field.machineName] = this.state[field.machineName];
-            }.bind(this));
+            $.each(this.props.meta_exchange.get('requiredFields'),
+                function(index, field) {
+                    map.credentials[field.machineName] = this.state[field.machineName];
+                }.bind(this)
+            );
 
             //Only create and save the model if the input is valid
             if(this.validateAccount(map.credentials, map.nickname)) {
@@ -38,10 +41,14 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
                 //This is where we save the entry on the server
                 model.save({}, {
                     success: function(model, response, options) {
-                        notification.success("Successfully added an exchange account " + model.get('nickname'));
+                        notification.success(
+                            "Successfully saved an exchange account: " +
+                            model.get('nickname'));
                     },
                     error: function(model, response, options) {
-                        notification.error("Unable to add exchange account " + model.get('nickname'));
+                        notification.error(
+                            "Unable to save exchange account on the server: " +
+                            model.get('nickname'));
                         this.props.removeModel(model);
                     }.bind(this)
                 });
@@ -86,35 +93,47 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
             }
         },
 
+        handleClose: function(e) {
+            e.preventDefault();
+            this.props.toggleAddAccount();
+        },
+
         render: function() {
             var meta_exchange = this.props.meta_exchange;
             var fields = meta_exchange.get('requiredFields').map(function(field) {
-                return React.DOM.label({key: field.machineName, htmlFor: field.machineName, className: "large-3 medium-3 small-6 columns"},
-                    React.DOM.span({}, field.displayName),
+                return React.DOM.span({}, field.displayName),
                     React.DOM.input({
                         type: 'text',
+                        placeholder: field.displayName,
                         id: field.machineName,
                         className: 'exchange-field',
                         onChange: this.setField
-                    })
-                );
+                    });
             }.bind(this));
 
-            return React.DOM.form({onSubmit: this.handleSubmit},
-                fields,
+            return React.DOM.div({className: 'panel'},
+                React.DOM.p({}, "Fill " +
+                    "out the fields below with the account info found on " +
+                    "the " + this.props.exchangeName + " exchange website."),
+                React.DOM.form({onSubmit: this.handleSubmit},
                 React.DOM.div({},
                     React.DOM.label({htmlFor: 'nickname'},
-                        React.DOM.span({}, 'Nickname'),
                         React.DOM.input({
                             type: 'text',
+                            placeholder: 'Nickname',
                             id: 'nickname',
                             className: 'exchange-field',
                             onChange: this.setField
                         }))),
-                React.DOM.div({},
-                    React.DOM.label({htmlFor: 'submit'},
-                        React.DOM.span(),
-                        React.DOM.input({type: 'submit', value: "Add"})))
+                fields,
+                React.DOM.button({
+                    className: 'success tiny radius',
+                    type: 'submit'
+                }, Glyphicon({name: "plus"})),
+                React.DOM.button({
+                    className: 'alert right tiny radius',
+                    onClick: this.handleClose
+                }, Glyphicon({name: "remove"})))
             );
         }
     });
@@ -145,6 +164,12 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
             this.props.removeModel(this.props.exchange_account);
         },
 
+        handleRename: function(e) {
+            e.preventDefault();
+            //TODO: Implement rename
+            alert("Not yet implemented.");
+        },
+
         render: function() {
             var exchange_account = this.props.exchange_account;
             var accountID = exchange_account.get('accountID');
@@ -160,13 +185,16 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
                 React.DOM.td({}, "ID: ", accountID),
                 React.DOM.td({},
                     React.DOM.button({
-                        className: 'primary tiny',
-                        onClick: this.handleDelete,
-                    }, "Remove"),
-                    React.DOM.br(),
+                        title: 'Rename an Account Nickname',
+                        className: 'secondary radius tiny',
+                        onClick: this.handleRename,
+                    }, Glyphicon({name: "edit"})),
+                    " ",
                     React.DOM.button({
-                        className: 'disabled tiny'
-                    }, "Rename")));
+                        className: 'alert radius tiny',
+                        title: 'Remove an Account',
+                        onClick: this.handleDelete,
+                    }, Glyphicon({name: "trash"}))))
         }
     });
 
@@ -312,8 +340,8 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
 
             return React.DOM.div({className: "collapse-parent"},
                 React.DOM.div({
-                        onClick: this.toggleCollapse,
-                        className: "row collapse-header"
+                    onClick: this.toggleCollapse,
+                    className: "row collapse-header"
                 }, React.DOM.div({
                     className: "medium-12 medium-centered columns"
                 }, count,
@@ -376,16 +404,14 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
         },
 
         addModel: function(model) {
-            var exchange_accounts = this.state.exchange_accounts;
-            exchange_accounts.add(model);
+            this.state.exchange_accounts.add(model);
             if(this.isMounted()) {
                 this.setState({"exchange_accounts": exchange_accounts});
             }
         },
 
         removeModel: function(model) {
-            var exchange_accounts = this.state.exchange_accounts;
-            exchange_accounts.remove(model);
+            this.state.exchange_accounts.remove(model);
             if(this.isMounted()) {
                 this.setState({"exchange_accounts": exchange_accounts});
             }
@@ -433,6 +459,12 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
             }
 
             return React.DOM.div({}, React.DOM.h1({}, "My Exchanges"),
+                    React.DOM.div({className: 'panel callout radius'},
+                    React.DOM.p({className: 'strong'},
+                    "When you link your exchange accounts to Coink you can " +
+                    "then view detailed info about your balances and " +
+                    "purchase history. Oink Oink.")
+                    ),
                 content);
         }
     });
