@@ -123,7 +123,10 @@ function(React, Wallets, Wallet, Loader, notification, Glyphicon) {
                 success: function() {
                     notification.success(
                         "Successfully removed address: " + address + ".");
-                    this.setState({"wallets" : this.state.wallets});
+                    this.setState({
+                        wallets: this.state.wallets,
+                        loading: false
+                    });
                 }.bind(this),
                 fail: function() {
                     notification.error(
@@ -137,7 +140,10 @@ function(React, Wallets, Wallet, Loader, notification, Glyphicon) {
                 success: function() {
                     notification.success(
                         "Successfully added address: " + address + ".");
-                    this.setState({"wallets" : this.state.wallets});
+                    this.setState({
+                        wallets: this.state.wallets,
+                        loading: false
+                    });
                 }.bind(this),
                 fail: function() {
                     notification.error(
@@ -148,11 +154,15 @@ function(React, Wallets, Wallet, Loader, notification, Glyphicon) {
 
         handleRefresh: function(address) {
             this.state.wallets.fetch({
-                success: function() {
+                success: function(wallets) {
+                    this.setState({
+                        wallets: wallets,
+                        loading: false
+                    });
                     notification.success(
                         "Oinkers, here's some fresh account data as of " +
                             new Date() + ".");
-                },
+                }.bind(this),
                 fail: function() {
                     notification.error("Error: could not refresh data. :(");
                 }
@@ -166,8 +176,14 @@ function(React, Wallets, Wallet, Loader, notification, Glyphicon) {
                         wallets: wallets,
                         loading: false
                     });
-                }.bind(this)
+                }.bind(this),
+                fail: function() {
+                    notification.error("Error: could not fetch data. :(");
+                }
             });
+            this.state.wallets.on("request", function() {
+                this.setState({loading: true});
+            }.bind(this));
         },
 
         render: function() {
