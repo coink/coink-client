@@ -1,5 +1,9 @@
+#avatar
+    width 42px
+    padding-top 2px
+
 #sidebar
-	background url('/img/darkbg.png')
+	background #999
 	overflow-x hidden
 	overflow-y auto
 
@@ -82,7 +86,6 @@
 						font-size 0.85em
 
 				&.active
-					
 					border-top 1px solid darken(SIDEBARBG, 25%)
 					border-bottom 1px solid darken(SIDEBARBG, 25%)
 					&+li
@@ -103,7 +106,7 @@
 							height @width
 							right (-1.1 * (@width / 2))
 							margin-top (-1 * (@width / 2))
-							
+
 							top 50%
 							transform rotateZ(45deg)
 							background BG url('/img/bg.png')
@@ -138,7 +141,7 @@
 
 			text-align right
 			display none
-			
+
 			a
 				padding 0.8em
 				padding-left 3.7em
@@ -147,7 +150,7 @@
 				text-outline 1px rgba(SIDEBARFG2, 0.4)
 				background-position 0.75em center
 				background-repeat no-repeat
-				background-size 2.25em 
+				background-size 2.25em
 
 			&>li
 				&>a
@@ -204,7 +207,6 @@ header
 
 #sidebar
 	@media only screen and (max-width: 40em)
-		
 		text-align right
 		#expand-btn
 			display inline-block
