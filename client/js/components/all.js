@@ -1,25 +1,27 @@
-define(['react', 'collections/exchange_accounts', 'collections/coins',
-        'components/loader', 'models/notification', 'models/coin'],
-function(React, ExchangeAccounts, Coins, Loader, notification, Coin) {
+define(['react', 'collections/exchange_accounts', 'components/loader',
+        'models/notification', 'models/coin', 'collections/coins'],
+function(React, ExchangeAccounts, Loader, notification, Coin, Coins) {
 
     var AllView = React.createClass({
 
         displayName: "AllView",
 
         getInitialState: function() {
-            return {coins : new Coins()};
+            return {
+                loading: true,
+                coins: new Coins()
+            };
         },
 
         retrieveBalances: function(exchangeAccounts) {
             exchangeAccounts.map(function(account) {
-
                 $.ajax(urlRoot + "/v1/exchanges/" +
-                    account.get('accountID') + "/balances", {
+                    account.get('accountID') + "/profits", {
                     type: 'GET',
                     contentType: 'application/json'
                 })
                 .done(function(data) {
-                    _.each(data['data'], function(n,c){console.log(n + c);})
+                    _.each(data['data'], function(n){console.log(_.map(n, function(m) { return m;}));})
                 })
                 .fail(function() {
                     console.log("balance retrieval error");
@@ -44,13 +46,14 @@ function(React, ExchangeAccounts, Coins, Loader, notification, Coin) {
             });
         },
         render: function() {
-
-            var loaded = true;
-            var content = DataTable({});
-            if(!loaded) {
-                content = React.DOM.div({}, React.DOM.h1({}, "All"), new Loader());
+            var loading = this.state.loading;
+            var content;
+            if(!loading) {
+                content = new Loader();
+            } else {
+                content = new DataTable({coins: this.state.coins});
             }
-            return content;
+            return React.DOM.div({}, React.DOM.h1({}, "All Coins"), content);
         }
 });
 
