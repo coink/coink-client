@@ -215,7 +215,7 @@ function(React, notification, ExchangeAccounts, MetaExchanges, Balances,
 
         getInitialState: function() {
             return {
-                balances: new Balances({
+                balances: new Balances([],{
                     accountID: this.props.exchange_account.get('accountID')
                 }),
                 collapsed: false
