@@ -1,17 +1,19 @@
-define(['react', 'router', 'models/notification', 'models/profile'],
-    function(React, router, notification, profile) {
+define(['react', 'router', 'models/notification', 'models/profile', 'scripts/md5'],
+function(React, router, notification, profile, hash) {
 
     var LoginLink = React.createClass({
         displayName: 'LoginLink',
 
         handleClick: function(e) {
             e.preventDefault();
-            router.navigate('login', {trigger : true});
+            router.navigate('landing', {trigger : true});
         },
 
         render: function() {
-            return React.DOM.a({href: 'login', onClick: this.handleClick},
-                "Login");
+            return React.DOM.a({
+                href: 'landing',
+                onClick: this.handleClick
+            }, "Login");
         }
 
     });
@@ -37,26 +39,26 @@ define(['react', 'router', 'models/notification', 'models/profile'],
 
         handleClick: function(e) {
             e.preventDefault();
-            var token = profile.getToken();
-            if(token === null) {
-                router.navigate('/', {trigger : true});
-                return;
+            if(profile.isLoggedIn()) {
+                $.ajax({
+                    type: "POST",
+                    url: router.url_root + "/v1/logout",
+                    data: {"token" : profile.getToken()},
+                    success: function(msg) {
+                        notification.success("See you later " +
+                            profile.getUsername() + "! Oink oink.");
+                        profile.destroySession();
+                    }
+                });
             }
-            $.ajax({
-                type: "POST",
-                url: router.url_root + "/v1/logout",
-                data: {"token" : token},
-                success: function(msg) {
-                    var name = profile.getUsername();
-                    profile.destroySession();
-                    notification.success("See you later " + name + "! Oink oink.");
-                }
-            });
+            router.navigate(router.defaultRoute, {trigger : true});
         },
 
         render: function() {
-            return React.DOM.a({href: 'logout', onClick: this.handleClick},
-                "Logout " + profile.getUsername());
+            return React.DOM.a({
+                href: 'logout',
+                onClick: this.handleClick
+            }, "Logout " + profile.getUsername());
         }
     });
 
@@ -64,14 +66,27 @@ define(['react', 'router', 'models/notification', 'models/profile'],
         displayName: 'Header',
 
         render: function() {
-            var loginLink = profile.getToken() !== null ?
-                React.DOM.header({'className': 'clearfix'},
-                    React.DOM.div({id: 'header-nav'},
-                        React.DOM.span({}, LogoutLink(), " ")
-                    )
-                ) : React.DOM.div({});
-            return loginLink;
+            var links = React.DOM.li({}, LoginLink(),
+                    React.DOM.li({}, RegisterLink()));
+            if(profile.isLoggedIn()) {
+                var hash = md5(profile.getUsername());
+                var src = 'http://www.gravatar.com/avatar/' +
+                    hash + '?d=identicon';
+
+                links = React.DOM.li({}, React.DOM.img({
+                    'id': 'avatar',
+                    'src': src
+                }),
+                React.DOM.li({}, LogoutLink()));
+            }
+            return React.DOM.nav({'className': 'top-bar'},
+                React.DOM.ul({'className': 'title-area'},
+                    React.DOM.li({'className': 'name'},
+                        React.DOM.h1(React.DOM.a({'href' : '#'}, "Coink")))),
+                React.DOM.section({'className': 'top-bar-section'},
+                    React.DOM.ul({'className': 'right'}, links)))
         }
+
     });
 
     return Header;
